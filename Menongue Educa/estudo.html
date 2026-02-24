@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menongue Educa - Biblioteca Digital</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+/* BODY E FUNDO GLOBAL */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    background: #121212;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 300px;
+    background: url('imagens/vunongue.png') no-repeat center center;
+    background-size: cover;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+    backdrop-filter: blur(4px);
+    color: #fff;
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+/* Barra de pesquisa */
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+.search-bar input::placeholder { color: rgba(255,255,255,0.7); }
+
+.search-bar input:focus {
+    background: rgba(0,0,0,0.7);
+    box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+/* CARDS DE LIVROS */
+.livro-card {
+    background: rgba(0,0,0,0.6);
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    transition: transform 0.4s, box-shadow 0.4s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.livro-card::before {
+    content: "📚";
+    font-size: 1.3rem;
+}
+
+.livro-card:hover {
+    transform: translateX(5px) scale(1.03);
+    box-shadow: 0 12px 20px rgba(0, 255, 255, 0.4);
+}
+
+/* CARD CALENDÁRIO */
+.livro-card.calendar {
+    background: rgba(255,255,0,0.4);
+    color: #000;
+    font-weight: 700;
+}
+.livro-card.calendar:hover {
+    background: rgba(255,255,0,0.6);
+    box-shadow: 0 12px 25px rgba(255,255,0,0.5);
+}
+
+/* AREA PRINCIPAL */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(18,18,18,0.95);
+}
+
+/* TOPO */
+.topbar {
+    background: rgba(0,0,0,0.7);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.btn-download {
+    background: #28a745;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.btn-download:hover { filter: brightness(1.1); }
+
+.btn-voltar { 
+    background: #dc3545; 
+    color: #fff; 
+    font-weight: 600; 
+    transition: all 0.3s; 
+}
+.btn-voltar:hover { filter: brightness(1.1); }
+
+/* VISUALIZADOR PDF */
+.viewer {
+    flex: 1;
+    margin: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    position: relative;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+iframe.show {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+
+<script>
+function abrirLivro(caminho) {
+    const iframe = document.getElementById("pdfViewer");
+    iframe.classList.remove("show");
+    setTimeout(() => {
+        iframe.src = caminho;
+        document.getElementById("downloadBtn").href = caminho;
+        iframe.classList.add("show");
+    }, 200);
+}
+
+function filtrarLivros() {
+    const filtro = document.getElementById("searchInput").value.toLowerCase();
+    const livros = document.getElementsByClassName("livro-card");
+    for (let livro of livros) {
+        livro.style.display = livro.textContent.toLowerCase().includes(filtro) ? "flex" : "none";
+    }
+}
+</script>
+
+</head>
+<body>
+
+<div class="d-flex h-100">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>Biblioteca Digital</h2>
+        <div class="search-bar">
+            <input type="text" id="searchInput" onkeyup="filtrarLivros()" placeholder="🔍 Pesquisar livro...">
+        </div>
+
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_1_classe.pdf')">Matemática 1ª Classe</div>
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_2_classe.pdf')">Matemática 2ª Classe</div>
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_3_classe.pdf')">Matemática 3ª Classe</div>
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_4_classe.pdf')">Matemática 4ª Classe</div>
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_5_classe.pdf')">Matemática 5ª Classe</div>
+        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_6_classe.pdf')">Matemática 6ª Classe</div>
+        <div class="livro-card calendar" onclick="abrirLivro('pdfs/calendario_escolar.pdf')">📅 Calendário Escolar 2025/2026</div>
+    </div>
+
+    <!-- AREA PRINCIPAL -->
+    <div class="main d-flex flex-column">
+        <div class="topbar">
+            <a id="downloadBtn" href="#" download>
+                <button class="btn btn-download">Baixar PDF</button>
+            </a>
+            <a href="index.html">
+                <button class="btn btn-voltar">Voltar ao Menu Inicial</button>
+            </a>
+        </div>
+
+        <div class="viewer flex-fill">
+            <iframe id="pdfViewer" src=""></iframe>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

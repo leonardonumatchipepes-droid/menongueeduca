@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menongue Educa - Jogos</title>
+
+<!-- Tipografia moderna -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* Reset básico */
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body{
+    font-family:'Roboto', sans-serif;
+    background: linear-gradient(135deg, #e0f2ff, #f4f8fb);
+    color:#1a1a1a;
+}
+
+/* Header moderno */
+header{
+    background:#0d47a1;
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border-bottom-left-radius:15px;
+    border-bottom-right-radius:15px;
+}
+
+header .left, header .right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+header img{
+    height:55px;
+}
+
+/* Container central com grid */
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:50px 20px;
+    display:grid;
+    gap:40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Card futurista (glassmorphism) */
+.card{
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor:pointer;
+}
+.card:hover{
+    transform: translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* Títulos modernos */
+h2{
+    font-family:'Poppins', sans-serif;
+    color:#0d47a1;
+    font-weight:700;
+    font-size:26px;
+    margin-bottom:20px;
+}
+
+/* Botões tecnológicos */
+.card button{
+    display:inline-block;
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:15px 28px;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    transition: all 0.3s ease-in-out;
+    cursor:pointer;
+    box-shadow: 0 6px 20px rgba(13,71,161,0.5);
+}
+.card button:hover{
+    transform: scale(1.08);
+    box-shadow:0 10px 30px rgba(13,71,161,0.7);
+    background: linear-gradient(135deg, #1565c0, #90caf9);
+}
+
+/* Cards descrição */
+.card p{
+    font-size:15px;
+    color:#1a1a1a;
+    margin-bottom:20px;
+}
+
+/* Footer clean */
+footer{
+    text-align:center;
+    padding:20px;
+    background:#e3f2fd;
+    font-size:14px;
+    color:#0d47a1;
+    font-weight:500;
+    margin-top:50px;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+}
+</style>
+</head>
+<body>
+
+<!-- Header moderno com logos -->
+<header>
+    <div class="left">
+        <img src="imagens/logo.png" alt="Menongue Educa Logo">
+        <span style="font-size:20px; font-weight:600;">🎮 Plataforma de Jogos Educativos</span>
+    </div>
+    <div class="right">
+        <img src="imagens/insignia.png" alt="República de Angola Insígnia">
+    </div>
+</header>
+
+<div class="container">
+
+<!-- Card Quiz -->
+<div class="card">
+    <h2>📘 Jogar com Questões</h2>
+    <p>Escolha a sua classe e nível na próxima página e teste seus conhecimentos!</p>
+    <button onclick="window.location.href='questoes.html'">Ir para Questões</button>
+</div>
+
+<!-- Card Corrida -->
+<div class="card">
+    <h2>🏃 Corrida Menongue</h2>
+    <p>Corra pelas ruas de Menongue enquanto aprende e se diverte!</p>
+    <button onclick="window.location.href='corrida.html'">Ir para Corrida</button>
+</div>
+
+</div>
+
+<footer>
+    Administração Municipal de Menongue | Direção Municipal da Educação | © 2026
+</footer>
+
+</body>
+</html>
