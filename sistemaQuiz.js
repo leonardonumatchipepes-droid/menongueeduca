@@ -126,6 +126,8 @@ function salvarResultado() {
     localStorage.setItem("historicoQuiz", JSON.stringify(historico));
 }
 
+window.finalizarQuiz(pontos);
+
 // ===============================
 // REINICIAR QUIZ
 // ============================
