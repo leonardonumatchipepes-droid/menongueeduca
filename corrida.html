@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corrida Menongue - Subway Surf 3D Matemática</title>
+<title>Corrida Menongue - Subway Surf Matemática</title>
 <style>
-body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#87CEEB;}
+body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
 header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
 header img {height:40px;}
-#gameCanvas {display:block; margin:auto; border-radius:12px; background:#87CEEB;}
-#btnMenu, #btnIniciar {position:absolute; top:15px; right:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
-#btnMenu:hover, #btnIniciar:hover {background:#1565c0;}
+#gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
+#btnMenu, #btnIniciar {position:absolute; top:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
+#btnMenu {right:15px;}
 #btnIniciar {right:150px;}
+#btnMenu:hover, #btnIniciar:hover {background:#1565c0;}
 footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 </style>
 </head>
@@ -19,7 +20,7 @@ footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 
 <header>
     <img src="imagens/logo.png" alt="Logo Menongue">
-    Corrida Menongue - Subway Surf 3D Matemática
+    Corrida Menongue - Subway Surf Matemática
 </header>
 
 <button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
@@ -38,17 +39,14 @@ const ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-// Fundo parallax 3D
-const fundoCamadas = [
-  {img: new Image(), y:0, velocidade:1.5}, // prédios atrás
-  {img: new Image(), y:0, velocidade:3},   // ruas
-];
-fundoCamadas[0].img.src="imagens/camada1.png"; 
-fundoCamadas[1].img.src="imagens/camada2.png";
+// Fundo 3D da estrada Menongue (link direto Google Drive)
+const fundoImg = new Image();
+fundoImg.src = "https://drive.google.com/uc?export=download&id=1XmOvJvCNpxgszBNVFM2nnQP1Cnc3BieZ";
+let fundoY = 0;
 
-// Avatar africano (spritesheet)
+// Avatar africano com spritesheet
 const jogadorSprite = new Image();
-jogadorSprite.src = "imagens/jogador.png";
+jogadorSprite.src = "imagens/jogador.png"; // spritesheet correndo
 
 // Sons
 const somAcerto = new Audio("sons/acerto.mp3");
@@ -87,23 +85,14 @@ function gerarPergunta(){
   perguntaAtual = bancoPerguntas[Math.floor(Math.random()*bancoPerguntas.length)];
   baloes=[];
   for(let i=0;i<3;i++){
-    baloes.push({
-      x:faixasX[i], 
-      y:-100, 
-      largura:120, 
-      altura:60, 
-      texto:perguntaAtual.opcoes[i], 
-      correta:i===perguntaAtual.resposta,
-      offsetY:0,
-      pulse:0
-    });
+    baloes.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
   }
 }
 
 // Obstáculos e moedas
 function gerarObstaculosEMoedas(){
   for(let i=0;i<3;i++){
-    moedas.push({x:faixasX[i]+10, y:-Math.random()*800, largura:40, altura:40, tipo:"moeda", brilho:Math.random()*Math.PI*2});
+    moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
     obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
   }
 }
@@ -130,7 +119,9 @@ function desenharJogador(){
   if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
   else if(jogador.estado==="deslize") jogador.yOffset = 20;
   else jogador.yOffset = 0;
+
   ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
+
   jogador.frameCount++;
   if(jogador.frameCount%8===0){
     jogador.frame++;
@@ -140,24 +131,19 @@ function desenharJogador(){
   }
 }
 
-// Criar partículas
-function criarParticula(x,y,cor="yellow"){
-  particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1, cor});
-}
+// Partículas
+function criarParticula(x,y){ particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1}); }
 
-// ===== LOOP PRINCIPAL =====
+// Loop principal
 function loop(){
   if(!jogoAtivo) return;
 
-  // Fundo 3D parallax
-  fundoCamadas.forEach(c=>{
-    c.y += c.velocidade;
-    if(c.y >= canvas.height) c.y = 0;
-    ctx.drawImage(c.img,0,c.y,width,height);
-    ctx.drawImage(c.img,0,c.y-height,width,height);
-  });
+  // Fundo infinito 3D
+  fundoY+=5; if(fundoY>=canvas.height) fundoY=0;
+  ctx.drawImage(fundoImg,0,fundoY,width,height);
+  ctx.drawImage(fundoImg,0,fundoY-height,width,height);
 
-  // Pergunta com pulse
+  // Pergunta
   perguntaCor = perguntaCor==="black"?"white":"black";
   ctx.fillStyle=perguntaCor;
   ctx.font="28px Arial";
@@ -172,45 +158,39 @@ function loop(){
   // Jogador
   desenharJogador();
 
-  // Balões / perguntas com pulse
-  baloes.forEach((b)=>{
-    b.y += velocidadeBaloes;
-    b.pulse += 0.1;
-    let pulseOffset = Math.sin(b.pulse)*5;
-    ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+pulseOffset,b.largura,b.altura);
-    ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+35+pulseOffset);
-
+  // Balões / perguntas
+  baloes.forEach((b,i)=>{
+    b.y+=velocidadeBaloes;
+    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+    ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
+    ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
     if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
-       jogador.y+jogador.yOffset < b.y + b.altura+pulseOffset && jogador.y+jogador.altura > b.y+pulseOffset){
+       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
       if(b.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
       else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0) gameOver(); else gerarPergunta(); }
     }
-    if(b.y>height) gerarPergunta();
+    if(b.y>height){ gerarPergunta(); }
   });
 
-  // Moedas animadas
+  // Moedas
   moedas.forEach(m=>{
-    m.y += 4;
-    m.brilho += 0.1;
-    ctx.fillStyle=`rgba(255,215,0,${0.6 + 0.4*Math.sin(m.brilho)})`;
-    ctx.beginPath();
-    ctx.arc(m.x+20,m.y+20,15 + Math.sin(m.brilho)*3,0,Math.PI*2);
-    ctx.fill();
-
+    m.y+=4;
+    ctx.fillStyle="gold"; ctx.beginPath();
+    ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2); ctx.fill();
     if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
        jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
-      pontos += 2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
+      pontos+=2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
     }
     if(m.y>height) m.y=-Math.random()*800;
   });
 
   // Obstáculos
   obstaculos.forEach(o=>{
-    o.y += 6;
+    o.y+=6;
     ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
     if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
        jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
-      jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2,"red"); somErro.play(); o.y=-Math.random()*1200;
+      jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
       if(jogador.vidas<=0) gameOver();
     }
     if(o.y>height) o.y=-Math.random()*1200;
@@ -219,13 +199,9 @@ function loop(){
   // Partículas
   particulas.forEach((p,i)=>{
     ctx.fillStyle = `rgba(255,255,0,${p.alpha})`;
-    if(p.cor==="red") ctx.fillStyle = `rgba(255,0,0,${p.alpha})`;
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y+=p.vy;
-    p.alpha-=0.03;
-    if(p.alpha<=0) particulas.splice(i,1);
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    p.y+=p.vy; p.alpha-=0.03; if(p.alpha<=0) particulas.splice(i,1);
   });
 
   requestAnimationFrame(loop);
