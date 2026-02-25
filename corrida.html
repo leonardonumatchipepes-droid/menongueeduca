@@ -3,157 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corrida Menongue - Mini Subway Surf Matemática</title>
+<title>Corrida Menongue - Menongue Educa</title>
 <style>
-body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
-header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
+/* ===== RESET E ESTILO BASE ===== */
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
+header {background:#0d47a1; color:white; padding:10px 15px; display:flex; align-items:center; gap:10px; font-size:18px; font-weight:600;}
 header img {height:40px;}
 #gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
-button {padding:10px 15px; border:none; background:#0d47a1; color:white; border-radius:8px; cursor:pointer; margin-top:10px;}
-button:hover {background:#1565c0;}
-footer {margin-top:10px; font-size:13px; color:#555;}
+#btnMenu {position:absolute; top:15px; right:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
+#btnMenu:hover {background:#1565c0;}
+footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
+
+/* Responsivo */
+@media (max-width:768px){
+  #gameCanvas {width:95%; height:auto;}
+}
 </style>
 </head>
 <body>
 
 <header>
     <img src="imagens/logo.png" alt="Logo Menongue">
-    <span>🏃 Corrida Menongue - Mini Subway Surf Matemática</span>
+    Corrida Menongue - Menongue Educa
 </header>
 
+<button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
+
 <canvas id="gameCanvas" width="800" height="500"></canvas>
-<div>
-<button onclick="iniciarJogo()">Iniciar Corrida</button>
-</div>
 
 <footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
 
-<!-- Importa banco de perguntas externo -->
-<script src="bancoPerguntas.js"></script>
+<script src="bancoPerguntas.js"></script> <!-- Banco de perguntas -->
 
 <script>
 // ===== CONFIGURAÇÃO =====
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+let width = canvas.width;
+let height = canvas.height;
 
 // Fundo
 const fundoImg = new Image();
 fundoImg.src = "imagens/menonguestreet.png";
-let fundoY = 0;
 
-// Avatar africano (spritesheet)
-const jogadorSprite = new Image();
-jogadorSprite.src = "imagens/jogador.png"; // spritesheet do avatar africano
+// Avatar africano
+const jogadorImg = new Image();
+jogadorImg.src = "imagens/jogador.png";
 
-// Sons
+// Sons opcionais
 const somAcerto = new Audio("sons/acerto.mp3");
 const somErro = new Audio("sons/erro.mp3");
-const somPulo = new Audio("sons/pulo.mp3");
-const somCorrida = new Audio("sons/corrida.mp3");
-somCorrida.loop = true; somCorrida.volume = 0.2;
 
 // Jogador
 const faixasX = [150, 350, 550];
-let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, vidas:3, estado:"corrida", frame:0, frameCount:0, yOffset:0};
+let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, estado:"corrida", yOffset:0};
 
-// Perguntas (serão carregadas do bancoPerguntas.js)
-let perguntaAtual, baloes=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false, perguntaCor="black";
+// Obstáculos / itens
+let itens = [];
 
-// Spritesheet config
-const spriteWidth=70, spriteHeight=70, animFrames={corrida:4, pulo:3, deslize:3};
+// Perguntas
+let perguntaAtual;
+let pontos=0;
+
+// Controle do jogo
+let jogoAtivo=false;
+let perguntaCor="black";
 
 // ===== FUNÇÕES =====
 function iniciarJogo(){
-  if(typeof bancoPerguntas === "undefined"){ alert("O arquivo bancoPerguntas.js não foi carregado!"); return; }
-  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; fundoY=0; jogador.yOffset=0;
+  if(typeof bancoPerguntas === "undefined"){ alert("bancoPerguntas.js não carregado!"); return; }
+  itens = [];
+  pontos = 0;
   gerarPergunta();
+  jogoAtivo=true;
   document.addEventListener("keydown", moverJogador);
-  somCorrida.play();
+  document.addEventListener("touchstart", touchControle);
   requestAnimationFrame(loop);
 }
 
 function gerarPergunta(){
   perguntaAtual = bancoPerguntas[Math.floor(Math.random()*bancoPerguntas.length)];
-  baloes=[];
+  itens = [];
   for(let i=0;i<3;i++){
-    baloes.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
+    itens.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
   }
 }
 
+// Controle teclado
 function moverJogador(e){
   if(!jogoAtivo) return;
   if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
   if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
-  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
-  if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
 }
 
+// Controle toque mobile
+function touchControle(e){
+  if(!jogoAtivo) return;
+  let touchX = e.touches[0].clientX;
+  if(touchX < window.innerWidth/2 && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
+  else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+}
+
+// Desenha jogador
 function desenharJogador(){
-  let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
-  if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
-  else if(jogador.estado==="deslize") jogador.yOffset = 20;
-  else jogador.yOffset = 0;
-
-  ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
-  
-  jogador.frameCount++;
-  if(jogador.frameCount%10===0){
-    jogador.frame++;
-    if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
-    if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
-    if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
-  }
+  ctx.drawImage(jogadorImg,jogador.x,jogador.y+jogador.yOffset,jogador.largura,jogador.altura);
 }
 
+// Loop principal
 function loop(){
   if(!jogoAtivo) return;
 
-  // fundo infinito
-  fundoY+=5; if(fundoY>=canvas.height) fundoY=0;
-  ctx.drawImage(fundoImg,0,fundoY,canvas.width,canvas.height);
-  ctx.drawImage(fundoImg,0,fundoY-canvas.height,canvas.width,canvas.height);
+  // fundo fixo
+  ctx.clearRect(0,0,width,height);
+  ctx.drawImage(fundoImg,0,0,width,height);
 
-  // pergunta alternando cor
+  // pergunta topo
   perguntaCor = perguntaCor==="black"?"white":"black";
   ctx.fillStyle=perguntaCor;
   ctx.font="28px Arial";
   ctx.fillText(perguntaAtual.pergunta, 20, 50);
 
-  // info
+  // info pontos
   ctx.fillStyle="white";
   ctx.font="18px Arial";
   ctx.fillText(`Pontos: ${pontos}`,20,30);
-  ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
 
   // jogador
   desenharJogador();
 
-  // balões com oscilação
-  baloes.forEach(b=>{
-    b.y+=velocidadeBaloes;
-    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
-    ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
-    ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
+  // itens / balões
+  itens.forEach(item=>{
+    item.y += 5;
+    item.offsetY = Math.sin(Date.now()/200 + item.x)*5;
+    ctx.fillStyle="orange";
+    ctx.fillRect(item.x,item.y+item.offsetY,item.largura,item.altura);
+    ctx.fillStyle="black";
+    ctx.font="18px Arial";
+    ctx.fillText(item.texto, item.x+20, item.y+item.offsetY+35);
 
     // colisão
-    if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
-       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura+jogador.yOffset > b.y+b.offsetY){
-      if(b.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
-      else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0) gameOver(); else gerarPergunta(); }
+    if(jogador.x < item.x + item.largura && jogador.x + jogador.largura > item.x &&
+       jogador.y < item.y+item.offsetY + item.altura && jogador.y + jogador.altura > item.y+item.offsetY){
+      if(item.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
+      else{ somErro.play(); gerarPergunta(); }
     }
 
-    if(b.y>canvas.height){ gerarPergunta(); }
+    if(item.y>height){ gerarPergunta(); }
   });
 
   requestAnimationFrame(loop);
 }
 
-function gameOver(){
-  jogoAtivo=false;
-  somCorrida.pause();
-  alert(`💀 Fim do jogo! Pontuação: ${pontos}`);
-  location.reload();
-}
+// Botão voltar
+function voltarMenu(){ location.href="index.html"; } // ajuste para o menu principal
 </script>
 
 </body>
