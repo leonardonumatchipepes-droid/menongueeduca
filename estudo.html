@@ -13,19 +13,26 @@
 
 <style>
 /* BODY E FUNDO GLOBAL */
-body {
+body, html {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    height: 100vh;
-    display: flex;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     background: #121212;
     color: #fff;
+}
+
+/* CONTAINER PRINCIPAL */
+.d-flex.h-100 {
+    height: 100vh;
     overflow: hidden;
 }
 
 /* SIDEBAR */
 .sidebar {
     width: 300px;
+    max-width: 80%;
     background: url('imagens/vunongue.png') no-repeat center center;
     background-size: cover;
     padding: 20px;
@@ -42,7 +49,6 @@ body {
     font-weight: 700;
     margin-bottom: 20px;
     font-size: 1.8rem;
-    color: #fff;
     text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
@@ -63,7 +69,6 @@ body {
     transition: 0.3s;
 }
 .search-bar input::placeholder { color: rgba(255,255,255,0.7); }
-
 .search-bar input:focus {
     background: rgba(0,0,0,0.7);
     box-shadow: 0 0 10px rgba(0,255,255,0.3);
@@ -110,6 +115,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     background: rgba(18,18,18,0.95);
 }
 
@@ -144,11 +150,10 @@ body {
 /* VISUALIZADOR PDF */
 .viewer {
     flex: 1;
-    margin: 15px;
-    border-radius: 12px;
+    margin: 0;
+    border-radius: 0;
     overflow: hidden;
-    background: rgba(0,0,0,0.6);
-    box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    background: rgba(0,0,0,0.9);
     position: relative;
 }
 
@@ -156,38 +161,33 @@ iframe {
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 12px;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-iframe.show {
-    opacity: 1;
-    transform: scale(1);
+/* OVERLAY PARA PDF EM TELA CHEIA */
+#pdfOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    flex-direction: column;
 }
-</style>
-
-<script>
-function abrirLivro(caminho) {
-    const iframe = document.getElementById("pdfViewer");
-    iframe.classList.remove("show");
-    setTimeout(() => {
-        iframe.src = caminho;
-        document.getElementById("downloadBtn").href = caminho;
-        iframe.classList.add("show");
-    }, 200);
+#pdfOverlay iframe {
+    flex: 1;
+    width: 100%;
+    height: 100%;
 }
 
-function filtrarLivros() {
-    const filtro = document.getElementById("searchInput").value.toLowerCase();
-    const livros = document.getElementsByClassName("livro-card");
-    for (let livro of livros) {
-        livro.style.display = livro.textContent.toLowerCase().includes(filtro) ? "flex" : "none";
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
     }
 }
-</script>
-
+</style>
 </head>
 <body>
 
@@ -215,17 +215,49 @@ function filtrarLivros() {
             <a id="downloadBtn" href="#" download>
                 <button class="btn btn-download">Baixar PDF</button>
             </a>
-            <a href="index.html">
-                <button class="btn btn-voltar">Voltar ao Menu Inicial</button>
-            </a>
         </div>
 
         <div class="viewer flex-fill">
             <iframe id="pdfViewer" src=""></iframe>
         </div>
     </div>
-
 </div>
+
+<!-- OVERLAY PARA PDF EM TELA CHEIA -->
+<div id="pdfOverlay" class="d-flex">
+    <div style="padding:10px;text-align:right;">
+        <button onclick="fecharLivro()" style="padding:10px 15px;font-weight:600;background:#dc3545;color:#fff;border:none;border-radius:8px;">Voltar</button>
+    </div>
+    <iframe id="pdfFullViewer"></iframe>
+</div>
+
+<script>
+function abrirLivro(caminho) {
+    // Abrir em overlay
+    const overlay = document.getElementById("pdfOverlay");
+    const iframe = document.getElementById("pdfFullViewer");
+    overlay.style.display = "flex";
+    iframe.src = caminho;
+
+    // Atualiza botão de download
+    document.getElementById("downloadBtn").href = caminho;
+}
+
+function fecharLivro() {
+    const overlay = document.getElementById("pdfOverlay");
+    const iframe = document.getElementById("pdfFullViewer");
+    iframe.src = "";
+    overlay.style.display = "none";
+}
+
+function filtrarLivros() {
+    const filtro = document.getElementById("searchInput").value.toLowerCase();
+    const livros = document.getElementsByClassName("livro-card");
+    for (let livro of livros) {
+        livro.style.display = livro.textContent.toLowerCase().includes(filtro) ? "flex" : "none";
+    }
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
