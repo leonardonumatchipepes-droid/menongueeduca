@@ -3,29 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corrida Menongue - Menongue Educa</title>
+<title>Corrida Menongue - Subway Surf Matemática</title>
 <style>
-/* ===== RESET E ESTILO BASE ===== */
-* {margin:0; padding:0; box-sizing:border-box;}
-body {font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
-header {background:#0d47a1; color:white; padding:10px 15px; display:flex; align-items:center; gap:10px; font-size:18px; font-weight:600;}
+body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
+header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
 header img {height:40px;}
 #gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
 #btnMenu {position:absolute; top:15px; right:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
 #btnMenu:hover {background:#1565c0;}
 footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
-
-/* Responsivo */
-@media (max-width:768px){
-  #gameCanvas {width:95%; height:auto;}
-}
 </style>
 </head>
 <body>
 
 <header>
     <img src="imagens/logo.png" alt="Logo Menongue">
-    Corrida Menongue - Menongue Educa
+    Corrida Menongue - Subway Surf Matemática
 </header>
 
 <button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
@@ -34,7 +27,7 @@ footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 
 <footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
 
-<script src="bancoPerguntas.js"></script> <!-- Banco de perguntas -->
+<script src="bancoPerguntas.js"></script>
 
 <script>
 // ===== CONFIGURAÇÃO =====
@@ -43,50 +36,58 @@ const ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-// Fundo
+// Fundo fixo
 const fundoImg = new Image();
 fundoImg.src = "imagens/menonguestreet.png";
 
-// Avatar africano
-const jogadorImg = new Image();
-jogadorImg.src = "imagens/jogador.png";
+// Avatar com spritesheet
+const jogadorSprite = new Image();
+jogadorSprite.src = "imagens/jogador.png";
 
-// Sons opcionais
+// Sons
 const somAcerto = new Audio("sons/acerto.mp3");
 const somErro = new Audio("sons/erro.mp3");
+const somPulo = new Audio("sons/pulo.mp3");
+const somCorrida = new Audio("sons/corrida.mp3");
+somCorrida.loop = true; somCorrida.volume = 0.2;
 
 // Jogador
 const faixasX = [150, 350, 550];
-let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, estado:"corrida", yOffset:0};
+let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, vidas:3, estado:"corrida", frame:0, frameCount:0, yOffset:0};
 
-// Obstáculos / itens
-let itens = [];
+// Perguntas / balões / moedas / obstáculos
+let perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false, perguntaCor="black";
 
-// Perguntas
-let perguntaAtual;
-let pontos=0;
-
-// Controle do jogo
-let jogoAtivo=false;
-let perguntaCor="black";
+// Spritesheet config
+const spriteWidth=70, spriteHeight=70, animFrames={corrida:6, pulo:4, deslize:3};
 
 // ===== FUNÇÕES =====
 function iniciarJogo(){
   if(typeof bancoPerguntas === "undefined"){ alert("bancoPerguntas.js não carregado!"); return; }
-  itens = [];
-  pontos = 0;
-  gerarPergunta();
-  jogoAtivo=true;
+  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; moedas=[]; obstaculos=[]; jogador.yOffset=0;
+  gerarPergunta(); gerarObstaculosEMoedas();
   document.addEventListener("keydown", moverJogador);
   document.addEventListener("touchstart", touchControle);
+  somCorrida.play();
   requestAnimationFrame(loop);
 }
 
+// Perguntas
 function gerarPergunta(){
   perguntaAtual = bancoPerguntas[Math.floor(Math.random()*bancoPerguntas.length)];
-  itens = [];
+  baloes=[];
   for(let i=0;i<3;i++){
-    itens.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
+    baloes.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
+  }
+}
+
+// Obstáculos e moedas
+function gerarObstaculosEMoedas(){
+  for(let i=0;i<3;i++){
+    // moedas
+    moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
+    // obstáculos
+    obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
   }
 }
 
@@ -95,68 +96,128 @@ function moverJogador(e){
   if(!jogoAtivo) return;
   if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
   if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
+  if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
 }
 
-// Controle toque mobile
+// Controle mobile
 function touchControle(e){
-  if(!jogoAtivo) return;
   let touchX = e.touches[0].clientX;
   if(touchX < window.innerWidth/2 && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
   else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
 }
 
-// Desenha jogador
+// Desenhar jogador com spritesheet
 function desenharJogador(){
-  ctx.drawImage(jogadorImg,jogador.x,jogador.y+jogador.yOffset,jogador.largura,jogador.altura);
+  let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
+  if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
+  else if(jogador.estado==="deslize") jogador.yOffset = 20;
+  else jogador.yOffset = 0;
+
+  ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
+
+  jogador.frameCount++;
+  if(jogador.frameCount%8===0){
+    jogador.frame++;
+    if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
+    if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
+    if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
+  }
+}
+
+// Partículas simples
+let particulas=[];
+function criarParticula(x,y){
+  particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1});
 }
 
 // Loop principal
 function loop(){
   if(!jogoAtivo) return;
 
-  // fundo fixo
   ctx.clearRect(0,0,width,height);
   ctx.drawImage(fundoImg,0,0,width,height);
 
-  // pergunta topo
+  // Pergunta topo alternando cor
   perguntaCor = perguntaCor==="black"?"white":"black";
   ctx.fillStyle=perguntaCor;
   ctx.font="28px Arial";
   ctx.fillText(perguntaAtual.pergunta, 20, 50);
 
-  // info pontos
+  // Info pontos
   ctx.fillStyle="white";
   ctx.font="18px Arial";
   ctx.fillText(`Pontos: ${pontos}`,20,30);
+  ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
 
-  // jogador
+  // Jogador
   desenharJogador();
 
-  // itens / balões
-  itens.forEach(item=>{
-    item.y += 5;
-    item.offsetY = Math.sin(Date.now()/200 + item.x)*5;
-    ctx.fillStyle="orange";
-    ctx.fillRect(item.x,item.y+item.offsetY,item.largura,item.altura);
-    ctx.fillStyle="black";
-    ctx.font="18px Arial";
-    ctx.fillText(item.texto, item.x+20, item.y+item.offsetY+35);
-
+  // Balões / perguntas
+  baloes.forEach(b=>{
+    b.y+=velocidadeBaloes;
+    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+    ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
+    ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
     // colisão
-    if(jogador.x < item.x + item.largura && jogador.x + jogador.largura > item.x &&
-       jogador.y < item.y+item.offsetY + item.altura && jogador.y + jogador.altura > item.y+item.offsetY){
-      if(item.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
-      else{ somErro.play(); gerarPergunta(); }
+    if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
+       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
+      if(b.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
+      else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0) gameOver(); else gerarPergunta(); }
     }
+    if(b.y>height){ gerarPergunta(); }
+  });
 
-    if(item.y>height){ gerarPergunta(); }
+  // Moedas
+  moedas.forEach(m=>{
+    m.y+=4;
+    ctx.fillStyle="gold"; ctx.beginPath();
+    ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2);
+    ctx.fill();
+    // coleta
+    if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
+       jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
+      pontos+=2; criarParticula(j.x+j.largura/2,j.y); m.y=-Math.random()*800; somAcerto.play();
+    }
+    if(m.y>height) m.y=-Math.random()*800;
+  });
+
+  // Obstáculos
+  obstaculos.forEach(o=>{
+    o.y+=6;
+    ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
+    // colisão
+    if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
+       jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
+      jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
+      if(jogador.vidas<=0) gameOver();
+    }
+    if(o.y>height) o.y=-Math.random()*1200;
+  });
+
+  // Partículas
+  particulas.forEach((p,i)=>{
+    ctx.fillStyle = `rgba(255,255,0,${p.alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=p.vy;
+    p.alpha-=0.03;
+    if(p.alpha<=0) particulas.splice(i,1);
   });
 
   requestAnimationFrame(loop);
 }
 
-// Botão voltar
-function voltarMenu(){ location.href="index.html"; } // ajuste para o menu principal
+function gameOver(){
+  jogoAtivo=false;
+  somCorrida.pause();
+  alert(`💀 Fim do jogo! Pontuação: ${pontos}`);
+  location.reload();
+}
+
+function voltarMenu(){ location.href="index.html"; }
+
 </script>
 
 </body>
