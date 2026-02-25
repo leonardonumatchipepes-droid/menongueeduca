@@ -9,8 +9,9 @@ body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#f4f
 header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
 header img {height:40px;}
 #gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
-#btnMenu {position:absolute; top:15px; right:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
-#btnMenu:hover {background:#1565c0;}
+#btnMenu, #btnIniciar {position:absolute; top:15px; right:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
+#btnMenu:hover, #btnIniciar:hover {background:#1565c0;}
+#btnIniciar {right:150px;}
 footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 </style>
 </head>
@@ -22,6 +23,7 @@ footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 </header>
 
 <button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
+<button id="btnIniciar" onclick="iniciarJogo()">▶ Iniciar Corrida</button>
 
 <canvas id="gameCanvas" width="800" height="500"></canvas>
 
@@ -36,11 +38,12 @@ const ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-// Fundo fixo
+// Fundo fixo estilo Subway Surf
 const fundoImg = new Image();
 fundoImg.src = "imagens/menonguestreet.png";
+let fundoY = 0;
 
-// Avatar com spritesheet
+// Avatar africano (spritesheet)
 const jogadorSprite = new Image();
 jogadorSprite.src = "imagens/jogador.png";
 
@@ -61,6 +64,9 @@ let perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBalo
 // Spritesheet config
 const spriteWidth=70, spriteHeight=70, animFrames={corrida:6, pulo:4, deslize:3};
 
+// Partículas
+let particulas=[];
+
 // ===== FUNÇÕES =====
 function iniciarJogo(){
   if(typeof bancoPerguntas === "undefined"){ alert("bancoPerguntas.js não carregado!"); return; }
@@ -69,6 +75,7 @@ function iniciarJogo(){
   document.addEventListener("keydown", moverJogador);
   document.addEventListener("touchstart", touchControle);
   somCorrida.play();
+  document.getElementById("btnIniciar").style.display="none"; // esconder botão iniciar
   requestAnimationFrame(loop);
 }
 
@@ -84,9 +91,7 @@ function gerarPergunta(){
 // Obstáculos e moedas
 function gerarObstaculosEMoedas(){
   for(let i=0;i<3;i++){
-    // moedas
     moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
-    // obstáculos
     obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
   }
 }
@@ -125,8 +130,7 @@ function desenharJogador(){
   }
 }
 
-// Partículas simples
-let particulas=[];
+// Criar partículas
 function criarParticula(x,y){
   particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1});
 }
@@ -135,16 +139,18 @@ function criarParticula(x,y){
 function loop(){
   if(!jogoAtivo) return;
 
-  ctx.clearRect(0,0,width,height);
-  ctx.drawImage(fundoImg,0,0,width,height);
+  // Fundo infinito
+  fundoY+=5; if(fundoY>=canvas.height) fundoY=0;
+  ctx.drawImage(fundoImg,0,fundoY,width,height);
+  ctx.drawImage(fundoImg,0,fundoY-height,width,height);
 
-  // Pergunta topo alternando cor
+  // Pergunta
   perguntaCor = perguntaCor==="black"?"white":"black";
   ctx.fillStyle=perguntaCor;
   ctx.font="28px Arial";
   ctx.fillText(perguntaAtual.pergunta, 20, 50);
 
-  // Info pontos
+  // Pontos e vidas
   ctx.fillStyle="white";
   ctx.font="18px Arial";
   ctx.fillText(`Pontos: ${pontos}`,20,30);
@@ -154,7 +160,7 @@ function loop(){
   desenharJogador();
 
   // Balões / perguntas
-  baloes.forEach(b=>{
+  baloes.forEach((b,i)=>{
     b.y+=velocidadeBaloes;
     b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
     ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
@@ -174,10 +180,9 @@ function loop(){
     ctx.fillStyle="gold"; ctx.beginPath();
     ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2);
     ctx.fill();
-    // coleta
     if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
        jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
-      pontos+=2; criarParticula(j.x+j.largura/2,j.y); m.y=-Math.random()*800; somAcerto.play();
+      pontos+=2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
     }
     if(m.y>height) m.y=-Math.random()*800;
   });
@@ -186,7 +191,6 @@ function loop(){
   obstaculos.forEach(o=>{
     o.y+=6;
     ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
-    // colisão
     if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
        jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
       jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
@@ -217,7 +221,6 @@ function gameOver(){
 }
 
 function voltarMenu(){ location.href="index.html"; }
-
 </script>
 
 </body>
