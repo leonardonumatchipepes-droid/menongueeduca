@@ -1,67 +1,138 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-AO">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz - Menongue Educa</title>
+<title>Quiz Futurista - Menongue Educa</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    text-align:center;
-    padding:20px;
+/* Reset básico */
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Roboto', sans-serif; }
+
+/* Body e fundo */
+body {
+    background: url('vunongue.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
 }
 
-.container{
-    max-width:700px;
-    margin:auto;
-    background:rgba(0,0,0,0.5);
-    padding:20px;
-    border-radius:10px;
+/* Container do quiz */
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(0,0,0,0.75);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    transition: all 0.3s ease;
 }
 
-button{
-    padding:10px 15px;
-    margin:5px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
+/* Cabeçalho */
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f1c40f;
+    text-shadow: 1px 1px 8px #000;
 }
 
-.opcao{
-    display:block;
-    width:100%;
-    margin:8px 0;
-    background:#3498db;
-    color:white;
+/* Controles */
+#controls select, #controls button {
+    padding: 12px 18px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
 }
 
-.opcao:hover{
-    background:#2980b9;
+#controls button:hover, .opcao:hover {
+    transform: scale(1.05);
+    background-color: #e67e22 !important;
 }
 
-#timer{
-    font-size:18px;
-    margin:10px 0;
+/* Perguntas e opções */
+#quiz h3 {
+    margin: 20px 0 15px 0;
+    font-size: 1.5em;
+    color: #f39c12;
+    text-shadow: 1px 1px 5px #000;
 }
 
-.medalha{
-    font-size:40px;
+.opcao {
+    display: block;
+    width: 100%;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-#ranking{
-    margin-top:20px;
-    text-align:left;
+/* Feedback */
+.opcao.correta { background-color: #2ecc71 !important; }
+.opcao.errada { background-color: #e74c3c !important; }
+
+/* Timer */
+#timer {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: right;
 }
+
+/* Barra de progresso */
+#barraProgresso {
+    width: 100%;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    height: 15px;
+    margin-bottom: 15px;
+}
+
+#progressoInner {
+    height: 100%;
+    width: 0%;
+    background: #f1c40f;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* Resultado */
+#resultado h2 {
+    margin-bottom: 10px;
+}
+
+.medalha {
+    font-size: 3em;
+    margin: 10px 0;
+}
+
+/* Ranking */
+#ranking { margin-top: 25px; text-align: left; }
+#ranking h3 { margin-bottom: 10px; }
+
 </style>
 </head>
 <body>
 
 <div class="container">
-
-<h1>📚 Quiz Menongue Educa</h1>
+<h1>📚 Quiz Futurista Menongue Educa</h1>
 
 <div id="controls">
     <select id="classe">
@@ -73,28 +144,22 @@ button{
         <option value="5">5ª Classe</option>
         <option value="6">6ª Classe</option>
     </select>
-
     <button id="btnIniciar">Iniciar Quiz</button>
 </div>
 
 <div id="quiz" style="display:none;">
-    <div id="timer"></div>
-    <div id="progresso"></div>
+    <div id="timer">⏳ Tempo: 15s</div>
+    <div id="barraProgresso"><div id="progressoInner"></div></div>
     <h3 id="pergunta"></h3>
     <div id="opcoes"></div>
 </div>
 
 <div id="resultado"></div>
-
 <div id="ranking"></div>
-
 </div>
 
 <script src="bancoPerguntas.js"></script>
-<script src="sistemaQuiz.js"></script>
-
 <script>
-
 const classeSelect = document.getElementById('classe');
 const btnIniciar = document.getElementById('btnIniciar');
 const quizDiv = document.getElementById('quiz');
@@ -102,44 +167,100 @@ const controls = document.getElementById('controls');
 const timerDiv = document.getElementById('timer');
 const resultadoDiv = document.getElementById('resultado');
 const rankingDiv = document.getElementById('ranking');
+const progressoInner = document.getElementById('progressoInner');
 
+let perguntasFiltradas = [];
+let perguntaAtual = 0;
+let pontos = 0;
 let tempo;
 let tempoRestante = 15;
 
-btnIniciar.addEventListener('click', () => {
+btnIniciar.addEventListener('click', ()=>{
     const classe = classeSelect.value;
-
     if(!classe){
         alert("Selecione a classe.");
         return;
     }
-
     iniciarQuizCompleto(classe);
 });
 
 function iniciarQuizCompleto(classe){
-    resultadoDiv.innerHTML="";
-    controls.style.display="none";
-    quizDiv.style.display="block";
-
+    resultadoDiv.innerHTML = "";
+    controls.style.display = "none";
+    quizDiv.style.display = "block";
     gerarQuiz(classe,"matematica");
     iniciarTimer();
 }
 
+function gerarQuiz(classe, disciplina){
+    perguntasFiltradas = bancoPerguntas.filter(p => p.classe === classe && p.disciplina === disciplina);
+    perguntaAtual = 0;
+    pontos = 0;
+    progressoInner.style.width = '0%';
+    mostrarPergunta();
+}
+
+function mostrarPergunta(){
+    if(perguntaAtual >= perguntasFiltradas.length || perguntaAtual >= 10){
+        finalizarQuiz(pontos);
+        return;
+    }
+    const p = perguntasFiltradas[perguntaAtual];
+    document.getElementById('pergunta').textContent = p.pergunta;
+
+    const opcoesDiv = document.getElementById('opcoes');
+    opcoesDiv.innerHTML = "";
+    p.opcoes.forEach((op, i)=>{
+        const btn = document.createElement('button');
+        btn.textContent = op;
+        btn.className = "opcao";
+        btn.onclick = ()=>verificarResposta(i, btn);
+        opcoesDiv.appendChild(btn);
+    });
+
+    progressoInner.style.width = `${((perguntaAtual)/10)*100}%`;
+    document.getElementById('timer').textContent = `⏳ Tempo: ${tempoRestante}s`;
+}
+
+function verificarResposta(indice, btnClicado){
+    const p = perguntasFiltradas[perguntaAtual];
+    if(indice === p.resposta){
+        pontos++;
+        btnClicado.classList.add('correta');
+    } else {
+        btnClicado.classList.add('errada');
+        // mostrar qual era correta
+        const botoes = document.querySelectorAll('.opcao');
+        botoes[p.resposta].classList.add('correta');
+    }
+
+    pararTimer();
+
+    // próximo depois de 1s
+    setTimeout(()=>{
+        perguntaAtual++;
+        tempoRestante = 15;
+        mostrarPergunta();
+        iniciarTimer();
+    },1000);
+}
+
+function proximaPergunta(){
+    perguntaAtual++;
+    mostrarPergunta();
+}
+
 function iniciarTimer(){
     tempoRestante = 15;
-    timerDiv.innerHTML = "⏳ Tempo: " + tempoRestante + "s";
-
+    timerDiv.textContent = `⏳ Tempo: ${tempoRestante}s`;
     tempo = setInterval(()=>{
         tempoRestante--;
-        timerDiv.innerHTML = "⏳ Tempo: " + tempoRestante + "s";
-
+        timerDiv.textContent = `⏳ Tempo: ${tempoRestante}s`;
         if(tempoRestante <=0){
             clearInterval(tempo);
             proximaPergunta();
             iniciarTimer();
         }
-
     },1000);
 }
 
@@ -149,7 +270,8 @@ function pararTimer(){
 
 function finalizarQuiz(pontos){
     pararTimer();
-    quizDiv.style.display="none";
+    quizDiv.style.display = "none";
+    progressoInner.style.width = '100%';
 
     let medalha="";
     if(pontos >=8) medalha="🥇 Ouro";
@@ -162,7 +284,6 @@ function finalizarQuiz(pontos){
         <div class="medalha">${medalha}</div>
         <button onclick="location.reload()">Jogar Novamente</button>
     `;
-
     salvarRanking(pontos);
     mostrarRanking();
 }
@@ -177,16 +298,12 @@ function salvarRanking(pontos){
 
 function mostrarRanking(){
     let ranking = JSON.parse(localStorage.getItem("rankingQuiz")) || [];
+    if(ranking.length===0) return;
     let html="<h3>🏆 Ranking Top 5</h3><ol>";
-
-    ranking.forEach(p=>{
-        html+=`<li>${p} pontos</li>`;
-    });
-
+    ranking.forEach(p=> html+=`<li>${p} pontos</li>`);
     html+="</ol>";
     rankingDiv.innerHTML=html;
 }
-
 </script>
 
 </body>
