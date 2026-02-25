@@ -52,9 +52,8 @@ const bancoPerguntas = [
     {pergunta:"Ana tem 6 lápis, compra 4. Quantos agora?", opcoes:["9","10","11","12"], resposta:1, nivel:"dificil", classe:"1", disciplina:"matematica"},
     {pergunta:"Se João tem 5 balas e ganha 3, quantas balas?", opcoes:["7","8","9","10"], resposta:1, nivel:"dificil", classe:"1", disciplina:"matematica"},
 
-];
+
 // 2ª Classe - Banco de Perguntas
-const bancoPerguntas = [
 
     // =====================
     // 2ª Classe - Básico (20 perguntas)
@@ -104,9 +103,9 @@ const bancoPerguntas = [
     {pergunta:"Resolva: 5 x 2 - 3 = ?", opcoes:["6","7","8","9"], resposta:1, nivel:"dificil", classe:"2", disciplina:"matematica"},
     {pergunta:"Se tenho 8 lápis e compro 5, quantos agora?", opcoes:["12","13","14","15"], resposta:2, nivel:"dificil", classe:"2", disciplina:"matematica"}
 
-];
+
 // 3ª Classe - Banco de Perguntas
-const bancoPerguntas = [
+
 
     // =====================
     // 3ª Classe - Básico (20 perguntas)
@@ -156,9 +155,9 @@ const bancoPerguntas = [
     {pergunta:"Resolva: 8 x 2 - 6 = ?", opcoes:["10","11","12","13"], resposta:2, nivel:"dificil", classe:"3", disciplina:"matematica"},
     {pergunta:"Se tenho 18 balas e como 7, quantas sobram?", opcoes:["10","11","12","13"], resposta:2, nivel:"dificil", classe:"3", disciplina:"matematica"}
 
-];
+
 // 4ª Classe - Banco de Perguntas
-const bancoPerguntas = [
+
 
     // =====================
     // 4ª Classe - Básico (20 perguntas)
@@ -208,9 +207,8 @@ const bancoPerguntas = [
     {pergunta:"Se João tem 18 balas e dá 7, quantas sobram?", opcoes:["10","11","12","13"], resposta:2, nivel:"dificil", classe:"4", disciplina:"matematica"},
     {pergunta:"Resolva: 9 x 2 - 5 = ?", opcoes:["12","13","14","15"], resposta:2, nivel:"dificil", classe:"4", disciplina:"matematica"}
 
-];
+
 // 5ª Classe - Banco de Perguntas
-const bancoPerguntas = [
 
     // =====================
     // 5ª Classe - Básico (20 perguntas)
@@ -260,9 +258,8 @@ const bancoPerguntas = [
     {pergunta:"Se João tem 21 balas e dá 8, quantas sobram?", opcoes:["12","13","14","15"], resposta:2, nivel:"dificil", classe:"5", disciplina:"matematica"},
     {pergunta:"Resolva: 14 x 2 - 9 = ?", opcoes:["18","19","20","21"], resposta:2, nivel:"dificil", classe:"5", disciplina:"matematica"}
 
-];
+
 // 6ª Classe - Banco de Perguntas
-const bancoPerguntas = [
 
     // =====================
     // 6ª Classe - Básico (20 perguntas)
@@ -313,3 +310,4 @@ const bancoPerguntas = [
     {pergunta:"Resolva: 21 x 2 - 15 = ?", opcoes:["25","26","27","28"], resposta:2, nivel:"dificil", classe:"6", disciplina:"matematica"}
 
 ];
+
