@@ -4,39 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📘 Quiz Educativo - Menongue Educa</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    margin:0; padding:0; background-color:#f0f4f8; display:flex; flex-direction:column; min-height:100vh;
+body{
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    background:linear-gradient(135deg,#0d47a1,#1565c0);
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    color:#333;
 }
-header {
-    background-color:#0d47a1; color:white; padding:1rem; text-align:center; font-size:1.5rem;
+
+header{
+    background:#0b3c91;
+    color:white;
+    padding:1rem;
+    text-align:center;
+    font-size:1.4rem;
+    font-weight:600;
 }
-main { flex:1; display:flex; justify-content:center; align-items:flex-start; padding:2rem; }
-.quiz-container {
-    background:white; padding:2rem; border-radius:12px; max-width:700px; width:100%; box-shadow:0 6px 10px rgba(0,0,0,0.1);
+
+main{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:2rem;
 }
-.controls { display:flex; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
-select { padding:0.6rem; border-radius:6px; border:1px solid #ccc; font-size:1rem; }
-button { background-color:#0d47a1; color:white; border:none; padding:0.8rem 1.5rem; border-radius:6px; cursor:pointer; font-size:1rem; }
-button:hover { background-color:#1565c0; }
-.questao-card { display:none; flex-direction:column; gap:1rem; }
-.questao-card.active { display:flex; }
-.opcao { padding:0.8rem 1rem; border:1px solid #ccc; border-radius:6px; cursor:pointer; transition:background 0.3s; }
-.opcao:hover { background-color:#e0e0e0; }
-.opcao.correto { background-color:#4caf50; color:white; border-color:#4caf50; }
-.opcao.incorreto { background-color:#f44336; color:white; border-color:#f44336; }
-.progresso { margin-top:1rem; font-weight:bold; }
-.resultado { text-align:center; display:none; }
-footer { background-color:#0d47a1; color:white; text-align:center; padding:1rem; font-size:0.9rem; }
-@media (max-width:600px){ .controls{ flex-direction:column; } }
+
+.quiz-container{
+    background:white;
+    width:100%;
+    max-width:750px;
+    padding:2rem;
+    border-radius:15px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.2);
+}
+
+.controls{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+select{
+    padding:0.7rem;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:1rem;
+}
+
+button{
+    padding:0.8rem 1.5rem;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:1rem;
+    background:#0d47a1;
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1565c0;
+}
+
+.questao-card{
+    display:none;
+    flex-direction:column;
+    gap:1rem;
+    margin-top:1.5rem;
+}
+
+.questao-card.active{
+    display:flex;
+}
+
+.opcao-btn{
+    padding:0.8rem;
+    border:1px solid #ccc;
+    border-radius:8px;
+    cursor:pointer;
+    background:#f5f5f5;
+    transition:0.3s;
+}
+
+.opcao-btn:hover{
+    background:#e0e0e0;
+}
+
+.progresso, .pontuacao{
+    font-weight:600;
+    margin-top:0.5rem;
+}
+
+.resultado{
+    text-align:center;
+}
+
+footer{
+    background:#0b3c91;
+    color:white;
+    text-align:center;
+    padding:1rem;
+    font-size:0.9rem;
+}
+
+@media(max-width:600px){
+    .controls{
+        flex-direction:column;
+    }
+}
 </style>
 </head>
+
 <body>
-<header>📘 Quiz Educativo - Menongue Educa</header>
+
+<header>
+📘 Quiz Educativo - Menongue Educa
+</header>
+
 <main>
 <div class="quiz-container">
+
+    <!-- CONTROLES -->
     <div class="controls" id="controls">
         <select id="classe">
             <option value="" disabled selected>Selecione a Classe</option>
@@ -47,105 +143,58 @@ footer { background-color:#0d47a1; color:white; text-align:center; padding:1rem;
             <option value="5">5ª Classe</option>
             <option value="6">6ª Classe</option>
         </select>
-        <select id="nivel">
-            <option value="" disabled selected>Selecione o Nível</option>
-            <option value="basico">Básico</option>
-            <option value="dificil">Difícil</option>
-        </select>
+
         <button id="btnIniciar">Iniciar Quiz</button>
     </div>
 
+    <!-- QUIZ -->
     <div id="quiz" class="questao-card">
-        <h2 id="pergunta">Pergunta aqui</h2>
-        <div id="opcoes" class="opcoes"></div>
-        <div class="progresso" id="progresso">Pergunta X de Y</div>
-        <div class="pontuacao" id="pontuacao">Pontuação: 0</div>
-        <button id="btnProxima" style="display:none;">Próxima</button>
+        <h2 id="pergunta"></h2>
+        <div id="opcoes"></div>
+        <div class="progresso" id="progresso"></div>
+        <div class="pontuacao" id="pontuacao"></div>
     </div>
 
-    <div id="resultado" class="resultado">
-        <h2>Quiz Concluído!</h2>
-        <p id="mensagemResultado">Você acertou X de Y perguntas.</p>
-        <button id="btnReiniciar">Reiniciar Quiz</button>
+    <!-- RESULTADO -->
+    <div id="resultado" class="resultado" style="display:none;">
+        <h2>🎉 Quiz Concluído!</h2>
+        <p id="mensagemResultado"></p>
+        <button onclick="reiniciarQuiz()">Refazer Quiz</button>
     </div>
+
 </div>
 </main>
-<footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
 
-<!-- Importa o banco de perguntas -->
+<footer>
+Administração Municipal de Menongue | Direção Municipal da Educação
+</footer>
+
+<!-- BANCO DE DADOS -->
 <script src="bancoPerguntas.js"></script>
 
+<!-- SISTEMA -->
+<script src="sistemaQuiz.js"></script>
+
 <script>
-let perguntas = [];
-let currentIndex = 0;
-let pontuacao = 0;
 
-const classeSelect = document.getElementById('classe');
-const nivelSelect = document.getElementById('nivel');
-const btnIniciar = document.getElementById('btnIniciar');
-const quizContainer = document.getElementById('quiz');
-const perguntaEl = document.getElementById('pergunta');
-const opcoesEl = document.getElementById('opcoes');
-const progressoEl = document.getElementById('progresso');
-const pontuacaoEl = document.getElementById('pontuacao');
-const btnProxima = document.getElementById('btnProxima');
-const resultadoEl = document.getElementById('resultado');
-const mensagemResultado = document.getElementById('mensagemResultado');
-const controlsEl = document.getElementById('controls');
+// BOTÃO INICIAR
+document.getElementById("btnIniciar").addEventListener("click", function(){
 
-btnIniciar.addEventListener('click', iniciarQuiz);
-btnProxima.addEventListener('click', mostrarProxima);
-document.getElementById('btnReiniciar').addEventListener('click', () => location.reload());
+    const classe = document.getElementById("classe").value;
 
-function iniciarQuiz() {
-    const classe = classeSelect.value;
-    const nivel = nivelSelect.value;
-    if(!classe || !nivel){ alert("Selecione a classe e o nível."); return; }
-    perguntas = bancoPerguntas.filter(p => p.classe==classe && p.nivel==nivel);
-    if(perguntas.length==0){ alert("Nenhuma pergunta disponível."); return; }
-    controlsEl.style.display='none';
-    quizContainer.classList.add('active');
-    currentIndex=0; pontuacao=0;
-    mostrarPergunta();
-}
-
-function mostrarPergunta() {
-    const p = perguntas[currentIndex];
-    perguntaEl.textContent = p.pergunta;
-    opcoesEl.innerHTML = '';
-    btnProxima.style.display='none';
-    p.opcoes.forEach((opcao,i)=>{
-        const btn = document.createElement('div');
-        btn.classList.add('opcao'); btn.textContent=opcao;
-        btn.addEventListener('click',()=>verificarResposta(btn,i==p.resposta));
-        opcoesEl.appendChild(btn);
-    });
-    progressoEl.textContent=`Pergunta ${currentIndex+1} de ${perguntas.length}`;
-    pontuacaoEl.textContent=`Pontuação: ${pontuacao}`;
-}
-
-function verificarResposta(btn, correta){
-    const todos = document.querySelectorAll('.opcao'); todos.forEach(b=>b.style.pointerEvents='none');
-    if(correta){ btn.classList.add('correto'); pontuacao++; }
-    else{ btn.classList.add('incorreto'); 
-        todos.forEach(b=>{
-            if(b.textContent==perguntas[currentIndex].opcoes[perguntas[currentIndex].resposta]) b.classList.add('correto');
-        });
+    if(!classe){
+        alert("Selecione a classe.");
+        return;
     }
-    pontuacaoEl.textContent=`Pontuação: ${pontuacao}`;
-    btnProxima.style.display='block';
-}
 
-function mostrarProxima() {
-    currentIndex++;
-    if(currentIndex>=perguntas.length){ mostrarResultado(); }
-    else{ mostrarPergunta(); }
-}
+    document.getElementById("controls").style.display = "none";
+    document.getElementById("quiz").classList.add("active");
 
-function mostrarResultado(){
-    quizContainer.classList.remove('active'); resultadoEl.style.display='block';
-    mensagemResultado.textContent=`Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
-}
+    // sempre matemática por agora
+    gerarQuiz(classe, "matematica");
+});
+
 </script>
+
 </body>
 </html>
