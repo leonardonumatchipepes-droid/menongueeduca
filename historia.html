@@ -1,132 +1,149 @@
 <!DOCTYPE html>
 <html lang="pt-AO">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>História do Povo Nganguela</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>História e Cultura do Povo Nganguela</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #fafafa;
-            color: #222;
-        }
+<style>
+    body {
+        margin:0;
+        font-family: 'Inter', sans-serif;
+        background: url('imagens/vunogue.png') no-repeat center center fixed;
+        background-size: cover;
+        color:#222;
+    }
 
-        header {
-            background: #0b3d91;
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-        }
+    /* Camada de sobreposição para escurecer o fundo */
+    body::before {
+        content:"";
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background: rgba(255,255,255,0.85);
+        z-index:0;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
+    header {
+        position: relative;
+        z-index:1;
+        background: rgba(11,61,145,0.9);
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+    }
 
-        main {
-            padding: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    header h1 {
+        margin:0;
+        font-size:2rem;
+    }
 
-        .section {
-            margin-bottom: 2.5rem;
-        }
+    main {
+        position: relative;
+        z-index:1;
+        padding: 2rem;
+        max-width: 1100px;
+        margin:0 auto;
+    }
 
-        .section h2 {
-            color: #0b3d91;
-            margin-bottom: 0.8rem;
-            font-size: 1.6rem;
-        }
+    .section {
+        margin-bottom: 2.5rem;
+    }
 
-        .section p {
-            text-align: justify;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
+    .section h2 {
+        color: #0b3d91;
+        margin-bottom: 0.8rem;
+        font-size:1.6rem;
+    }
 
-        .btn-voltar {
-            display: inline-block;
-            background: #0b3d91;
-            color: white;
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            margin-top: 1.5rem;
-        }
+    .section p {
+        text-align: justify;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-size:1rem;
+    }
 
-        .btn-voltar:hover {
-            background: #134ab8;
-            transform: scale(1.05);
-        }
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        margin: 2rem auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    }
 
-        footer {
-            background: #0b3d91;
-            color: white;
-            text-align: center;
-            padding: 0.7rem;
-            font-size: 0.8rem;
-        }
+    .carousel-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
 
-        /* Carrossel */
-        .carousel {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            margin: 2rem auto;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
+    .carousel-images img {
+        width:100%;
+        flex-shrink:0;
+        object-fit:cover;
+        max-height:450px;
+    }
 
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
+    .caption {
+        text-align:center;
+        font-size:0.9rem;
+        color:#0b3d91;
+        margin-top:0.5rem;
+    }
 
-        .carousel-images img {
-            width: 100%;
-            flex-shrink: 0;
-            object-fit: cover;
-            max-height: 400px;
-        }
+    .carousel-buttons {
+        position:absolute;
+        top:50%;
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        transform:translateY(-50%);
+    }
 
-        .carousel-buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
+    .carousel-buttons button {
+        background: rgba(11,61,145,0.8);
+        border:none;
+        color:white;
+        padding:0.5rem 1rem;
+        cursor:pointer;
+        border-radius:30px;
+        font-size:1rem;
+        transition:0.3s;
+    }
 
-        .carousel-buttons button {
-            background: rgba(11,61,145,0.8);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 30px;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
+    .carousel-buttons button:hover {
+        background:#134ab8;
+    }
 
-        .carousel-buttons button:hover {
-            background: #134ab8;
-        }
+    .btn-voltar {
+        display:inline-block;
+        background:#0b3d91;
+        color:white;
+        padding:0.8rem 1.8rem;
+        border-radius:30px;
+        text-decoration:none;
+        font-weight:600;
+        transition:0.3s;
+        margin-top:1.5rem;
+    }
 
-        @media(max-width:600px){
-            header h1 { font-size:1.5rem; }
-        }
-    </style>
+    .btn-voltar:hover { background:#134ab8; transform:scale(1.05); }
+
+    footer {
+        background:#0b3d91;
+        color:white;
+        text-align:center;
+        padding:0.7rem;
+        font-size:0.8rem;
+    }
+
+    @media(max-width:600px){
+        header h1 { font-size:1.5rem; }
+    }
+</style>
 </head>
 <body>
 
@@ -135,13 +152,25 @@
 </header>
 
 <main>
-    <!-- Carrossel de imagens -->
+    <!-- Carrossel de imagens com legendas -->
     <div class="carousel">
         <div class="carousel-images" id="carousel-images">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Nganguela_mask.jpg" alt="Máscara Nganguela">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Angola_ethnic_map_1970.png" alt="Mapa Étnico Angola">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Traditional_Angolan_village.jpg" alt="Aldeia Tradicional">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Bambara_women_culture.jpg" alt="Cultura e Dança Nganguela">
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Nganguela_mask.jpg" alt="Máscara Nganguela">
+                <div class="caption">Máscara tradicional Nganguela usada em rituais culturais</div>
+            </div>
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Angola_ethnic_map_1970.png" alt="Mapa Étnico Angola">
+                <div class="caption">Mapa étnico de Angola mostrando áreas do povo Nganguela</div>
+            </div>
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Traditional_Angolan_village.jpg" alt="Aldeia Tradicional">
+                <div class="caption">Aldeia tradicional mostrando habitações típicas e organização comunitária</div>
+            </div>
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Bambara_women_culture.jpg" alt="Cultura e Dança Nganguela">
+                <div class="caption">Dança e rituais culturais que preservam tradições ancestrais</div>
+            </div>
         </div>
         <div class="carousel-buttons">
             <button id="prev">&#10094;</button>
@@ -149,36 +178,30 @@
         </div>
     </div>
 
-    <!-- Conteúdo detalhado -->
+    <!-- História detalhada em várias seções -->
     <div class="section">
         <h2>Origem e Identidade</h2>
-        <p>
-            Os Nganguela são um conjunto de grupos étnicos do leste e sudeste de Angola, incluindo subgrupos como Mbunda, Lwena, Luchazi e outros. Cada grupo possui sua própria língua, tradições e rituais comunitários.
-        </p>
-        <p>
-            Historicamente, os Nganguela mantiveram práticas agrícolas, criação de animais e cerimônias comunitárias, preservando valores ancestrais e a identidade cultural coletiva.
-        </p>
+        <p>O povo Nganguela é formado por diversos subgrupos étnicos do leste e sudeste de Angola, incluindo Mbunda, Lwena, Luchazi e outros. Cada grupo mantém tradições próprias, línguas, crenças e cerimônias comunitárias que fortalecem a identidade coletiva.</p>
     </div>
 
     <div class="section">
         <h2>Línguas e Educação</h2>
-        <p>
-            Os subgrupos falam línguas da família Bantu. A transmissão de conhecimentos ocorre através de provérbios, cantos, histórias orais e rituais, fortalecendo a educação das novas gerações e preservando a identidade cultural.
-        </p>
+        <p>As línguas faladas são de origem Bantu, transmitidas oralmente de geração em geração. A educação tradicional ocorre por meio de histórias, provérbios, cantos e rituais, preservando conhecimentos sobre agricultura, caça e sabedoria ancestral.</p>
     </div>
 
     <div class="section">
         <h2>Economia e Vida Tradicional</h2>
-        <p>
-            A economia tradicional baseia-se na agricultura de subsistência, na criação de animais e na coleta de recursos naturais. As festas de colheita, celebrações e rituais comunitários são centrais para a coesão social e preservação cultural.
-        </p>
+        <p>A economia baseia-se na agricultura de subsistência, criação de animais e coleta de recursos naturais. Festas de colheita, celebrações comunitárias e rituais religiosos reforçam a coesão social e a transmissão de valores culturais.</p>
     </div>
 
     <div class="section">
         <h2>História e Resistência</h2>
-        <p>
-            Desde o século XVII, os Nganguela estabeleceram relações comerciais com europeus, fornecendo mel, cera e marfim. Durante o período colonial, líderes como Mwene Vunongue se tornaram símbolos de resistência e preservação da autonomia do povo.
-        </p>
+        <p>Desde o século XVII, os Nganguela interagiram com comerciantes europeus, fornecendo mel, cera e marfim. Durante o período colonial, líderes locais se destacaram na resistência à dominação, preservando a autonomia e cultura do povo.</p>
+    </div>
+
+    <div class="section">
+        <h2>Rituais, Danças e Máscaras</h2>
+        <p>As danças tradicionais e máscaras possuem papel central na espiritualidade e nas festividades. Cada ritual reforça os laços comunitários e ensina aos jovens sobre os valores, a história e a moral do grupo.</p>
     </div>
 
     <a href="index.html" class="btn-voltar">⬅️ Voltar à Página Inicial</a>
@@ -189,26 +212,26 @@
 </footer>
 
 <script>
-    // Carrossel simples
-    const carouselImages = document.getElementById('carousel-images');
-    const images = carouselImages.querySelectorAll('img');
-    const total = images.length;
+    // Carrossel com legenda
+    const carousel = document.getElementById('carousel-images');
+    const slides = carousel.querySelectorAll('div');
+    const total = slides.length;
     let index = 0;
 
-    document.getElementById('next').addEventListener('click', () => {
+    document.getElementById('next').addEventListener('click', ()=>{
         index = (index + 1) % total;
-        carouselImages.style.transform = `translateX(${-index * 100}%)`;
+        carousel.style.transform = `translateX(${-index*100}%)`;
     });
 
-    document.getElementById('prev').addEventListener('click', () => {
+    document.getElementById('prev').addEventListener('click', ()=>{
         index = (index - 1 + total) % total;
-        carouselImages.style.transform = `translateX(${-index * 100}%)`;
+        carousel.style.transform = `translateX(${-index*100}%)`;
     });
 
-    setInterval(() => {
-        index = (index + 1) % total;
-        carouselImages.style.transform = `translateX(${-index * 100}%)`;
-    }, 5000);
+    setInterval(()=>{
+        index = (index +1)%total;
+        carousel.style.transform = `translateX(${-index*100}%)`;
+    },5000);
 </script>
 
 </body>
