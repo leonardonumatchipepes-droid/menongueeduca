@@ -3,173 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>História e Cultura do Povo Nganguela</title>
+<title>História Interativa do Povo Nganguela</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        margin:0;
-        font-family: 'Inter', sans-serif;
-        background: url('imagens/vunogue.png') no-repeat center center fixed;
-        background-size: cover;
-        color:#222;
-    }
+body {
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background: url('imagens/vunogue.png') no-repeat center center fixed;
+    background-size: cover;
+    color:#222;
+}
 
-    /* Camada de sobreposição para escurecer o fundo */
-    body::before {
-        content:"";
-        position:fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: rgba(255,255,255,0.85);
-        z-index:0;
-    }
+/* Fundo esmaecido */
+body::before {
+    content:"";
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(255,255,255,0.90);
+    z-index:0;
+}
 
-    header {
-        position: relative;
-        z-index:1;
-        background: rgba(11,61,145,0.9);
-        color: white;
-        text-align: center;
-        padding: 1.5rem;
-    }
+header {
+    position:relative;
+    z-index:1;
+    background: rgba(11,61,145,0.9);
+    color:white;
+    text-align:center;
+    padding:1.5rem;
+}
 
-    header h1 {
-        margin:0;
-        font-size:2rem;
-    }
+header h1 { margin:0; font-size:2rem; }
 
-    main {
-        position: relative;
-        z-index:1;
-        padding: 2rem;
-        max-width: 1100px;
-        margin:0 auto;
-    }
+main {
+    position:relative;
+    z-index:1;
+    padding:2rem;
+    max-width:1000px;
+    margin:0 auto;
+}
 
-    .section {
-        margin-bottom: 2.5rem;
-    }
+.section {
+    margin-bottom:2rem;
+    padding:1rem;
+    border-radius:12px;
+    transition: background 0.5s;
+}
 
-    .section h2 {
-        color: #0b3d91;
-        margin-bottom: 0.8rem;
-        font-size:1.6rem;
-    }
+.section.active { background: rgba(11,61,145,0.1); }
 
-    .section p {
-        text-align: justify;
-        line-height: 1.7;
-        margin-bottom: 1rem;
-        font-size:1rem;
-    }
+.section h2 { color:#0b3d91; margin-bottom:0.5rem; font-size:1.6rem; }
+.section p { text-align:justify; line-height:1.7; font-size:1rem; }
 
-    .carousel {
-        position: relative;
-        width: 100%;
-        max-width: 1000px;
-        margin: 2rem auto;
-        overflow: hidden;
-        border-radius: 12px;
-        box-shadow:0 8px 20px rgba(0,0,0,0.2);
-    }
+.carousel { position:relative; width:100%; max-width:1000px; margin:2rem auto; overflow:hidden; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+.carousel-images { display:flex; transition: transform 0.5s ease-in-out;}
+.carousel-images img { width:100%; flex-shrink:0; object-fit:cover; max-height:450px;}
+.caption { text-align:center; font-size:0.9rem; color:#0b3d91; margin-top:0.5rem;}
+.carousel-buttons { position:absolute; top:50%; width:100%; display:flex; justify-content:space-between; transform:translateY(-50%);}
+.carousel-buttons button { background: rgba(11,61,145,0.8); border:none; color:white; padding:0.5rem 1rem; cursor:pointer; border-radius:30px; font-size:1rem; transition:0.3s;}
+.carousel-buttons button:hover { background:#134ab8; }
 
-    .carousel-images {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-    }
+.btn-voltar { display:inline-block; background:#0b3d91; color:white; padding:0.8rem 1.8rem; border-radius:30px; text-decoration:none; font-weight:600; transition:0.3s; margin-top:1.5rem; }
+.btn-voltar:hover { background:#134ab8; transform:scale(1.05); }
 
-    .carousel-images img {
-        width:100%;
-        flex-shrink:0;
-        object-fit:cover;
-        max-height:450px;
-    }
+footer { background:#0b3d91; color:white; text-align:center; padding:0.7rem; font-size:0.8rem; }
 
-    .caption {
-        text-align:center;
-        font-size:0.9rem;
-        color:#0b3d91;
-        margin-top:0.5rem;
-    }
-
-    .carousel-buttons {
-        position:absolute;
-        top:50%;
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        transform:translateY(-50%);
-    }
-
-    .carousel-buttons button {
-        background: rgba(11,61,145,0.8);
-        border:none;
-        color:white;
-        padding:0.5rem 1rem;
-        cursor:pointer;
-        border-radius:30px;
-        font-size:1rem;
-        transition:0.3s;
-    }
-
-    .carousel-buttons button:hover {
-        background:#134ab8;
-    }
-
-    .btn-voltar {
-        display:inline-block;
-        background:#0b3d91;
-        color:white;
-        padding:0.8rem 1.8rem;
-        border-radius:30px;
-        text-decoration:none;
-        font-weight:600;
-        transition:0.3s;
-        margin-top:1.5rem;
-    }
-
-    .btn-voltar:hover { background:#134ab8; transform:scale(1.05); }
-
-    footer {
-        background:#0b3d91;
-        color:white;
-        text-align:center;
-        padding:0.7rem;
-        font-size:0.8rem;
-    }
-
-    @media(max-width:600px){
-        header h1 { font-size:1.5rem; }
-    }
+@media(max-width:600px){
+    header h1 { font-size:1.5rem; }
+}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>História e Cultura do Povo Nganguela</h1>
+    <h1>História Interativa do Povo Nganguela</h1>
 </header>
 
 <main>
-    <!-- Carrossel de imagens com legendas -->
+    <!-- Carrossel -->
     <div class="carousel">
         <div class="carousel-images" id="carousel-images">
             <div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Nganguela_mask.jpg" alt="Máscara Nganguela">
-                <div class="caption">Máscara tradicional Nganguela usada em rituais culturais</div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Angola_ethnic_map_1970.png" alt="Mapa Étnico Angola">
+                <div class="caption">Distribuição dos povos Nganguela</div>
             </div>
             <div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Angola_ethnic_map_1970.png" alt="Mapa Étnico Angola">
-                <div class="caption">Mapa étnico de Angola mostrando áreas do povo Nganguela</div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Nganguela_mask.jpg" alt="Máscara Nganguela">
+                <div class="caption">Máscara cultural tradicional</div>
             </div>
             <div>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Traditional_Angolan_village.jpg" alt="Aldeia Tradicional">
-                <div class="caption">Aldeia tradicional mostrando habitações típicas e organização comunitária</div>
+                <div class="caption">Aldeia típica do sudeste de Angola</div>
             </div>
             <div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Bambara_women_culture.jpg" alt="Cultura e Dança Nganguela">
-                <div class="caption">Dança e rituais culturais que preservam tradições ancestrais</div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Bambara_women_culture.jpg" alt="Rituais e Danças">
+                <div class="caption">Dança e rituais culturais</div>
             </div>
         </div>
         <div class="carousel-buttons">
@@ -178,30 +108,30 @@
         </div>
     </div>
 
-    <!-- História detalhada em várias seções -->
-    <div class="section">
-        <h2>Origem e Identidade</h2>
-        <p>O povo Nganguela é formado por diversos subgrupos étnicos do leste e sudeste de Angola, incluindo Mbunda, Lwena, Luchazi e outros. Cada grupo mantém tradições próprias, línguas, crenças e cerimônias comunitárias que fortalecem a identidade coletiva.</p>
+    <!-- Seções narradas -->
+    <div class="section" id="sec1">
+        <h2>Quem são os Nganguela</h2>
+        <p>O termo Nganguela designa um conjunto de povos do leste e sudeste de Angola, incluindo Lwena, Luvale, Mbunda, Lwimbi e Camachi, cada um mantendo identidade própria.</p>
     </div>
 
-    <div class="section">
-        <h2>Línguas e Educação</h2>
-        <p>As línguas faladas são de origem Bantu, transmitidas oralmente de geração em geração. A educação tradicional ocorre por meio de histórias, provérbios, cantos e rituais, preservando conhecimentos sobre agricultura, caça e sabedoria ancestral.</p>
+    <div class="section" id="sec2">
+        <h2>Línguas e Cultura</h2>
+        <p>Falantes de línguas Bantu, com tradições transmitidas oralmente através de histórias, provérbios e cantos.</p>
     </div>
 
-    <div class="section">
-        <h2>Economia e Vida Tradicional</h2>
-        <p>A economia baseia-se na agricultura de subsistência, criação de animais e coleta de recursos naturais. Festas de colheita, celebrações comunitárias e rituais religiosos reforçam a coesão social e a transmissão de valores culturais.</p>
+    <div class="section" id="sec3">
+        <h2>Monarquia Tradicional</h2>
+        <p>Mwene Vunongue foi o líder histórico que resistiu à ocupação portuguesa. O atual líder tradicional é Augusto Cambinda Calilo (Mwene Vunongue VI), representando a continuidade cultural.</p>
     </div>
 
-    <div class="section">
-        <h2>História e Resistência</h2>
-        <p>Desde o século XVII, os Nganguela interagiram com comerciantes europeus, fornecendo mel, cera e marfim. Durante o período colonial, líderes locais se destacaram na resistência à dominação, preservando a autonomia e cultura do povo.</p>
+    <div class="section" id="sec4">
+        <h2>Colonização e Resistência</h2>
+        <p>Durante a colonização, os Nganguela mantiveram sua autonomia cultural e resistiram às imposições externas, preservando a língua, rituais e estrutura comunitária.</p>
     </div>
 
-    <div class="section">
-        <h2>Rituais, Danças e Máscaras</h2>
-        <p>As danças tradicionais e máscaras possuem papel central na espiritualidade e nas festividades. Cada ritual reforça os laços comunitários e ensina aos jovens sobre os valores, a história e a moral do grupo.</p>
+    <div class="section" id="sec5">
+        <h2>Economia e Vida Comunitária</h2>
+        <p>Agricultura, criação de animais, pesca e coleta de recursos naturais formavam a base econômica, complementada por festas e celebrações sociais.</p>
     </div>
 
     <a href="index.html" class="btn-voltar">⬅️ Voltar à Página Inicial</a>
@@ -211,27 +141,46 @@
     Administração Municipal de Menongue | Direção Municipal da Educação | © 2026
 </footer>
 
+<audio id="audioNarration" src="audio/historia_nganguela_pt.mp3" preload="auto"></audio>
+
 <script>
-    // Carrossel com legenda
+    // Carrossel
     const carousel = document.getElementById('carousel-images');
     const slides = carousel.querySelectorAll('div');
     const total = slides.length;
     let index = 0;
 
-    document.getElementById('next').addEventListener('click', ()=>{
-        index = (index + 1) % total;
-        carousel.style.transform = `translateX(${-index*100}%)`;
+    document.getElementById('next').addEventListener('click', ()=> { index = (index + 1) % total; carousel.style.transform = `translateX(${-index*100}%)`; });
+    document.getElementById('prev').addEventListener('click', ()=> { index = (index - 1 + total) % total; carousel.style.transform = `translateX(${-index*100}%)`; });
+    setInterval(()=> { index = (index +1)%total; carousel.style.transform = `translateX(${-index*100}%)`; },5000);
+
+    // Áudio narrativo e destaque de seção
+    const audio = document.getElementById('audioNarration');
+    const sections = document.querySelectorAll('.section');
+
+    let currentSection = 0;
+
+    function highlightSection(i){
+        sections.forEach(s=>s.classList.remove('active'));
+        if(sections[i]) sections[i].classList.add('active');
+    }
+
+    // Inicia narração e destaque automático
+    audio.addEventListener('play', ()=>{
+        currentSection = 0;
+        highlightSection(currentSection);
     });
 
-    document.getElementById('prev').addEventListener('click', ()=>{
-        index = (index - 1 + total) % total;
-        carousel.style.transform = `translateX(${-index*100}%)`;
+    audio.addEventListener('timeupdate', ()=>{
+        const t = audio.currentTime;
+        if(t>0 && t<15) highlightSection(0);
+        else if(t>=15 && t<30) highlightSection(1);
+        else if(t>=30 && t<50) highlightSection(2);
+        else if(t>=50 && t<65) highlightSection(3);
+        else if(t>=65) highlightSection(4);
     });
 
-    setInterval(()=>{
-        index = (index +1)%total;
-        carousel.style.transform = `translateX(${-index*100}%)`;
-    },5000);
+    audio.play(); // iniciar automático
 </script>
 
 </body>
