@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estude com IA — VUNONGUE</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b3d91;
+            --card-bg: rgba(255,255,255,0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: url('imagens/vunogue.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(11,61,145,0.85);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        header img {
+            width: 45px;
+        }
+
+        header h1 {
+            flex: 1;
+            text-align: center;
+            font-size: 1.6rem;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: #1a4ebf;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 0.6rem;
+            font-size: 0.75rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media(max-width:600px){
+            .card { padding:2rem 1rem; }
+            .card h2 { font-size:1.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="imagens/insignia.png" alt="Insígnia de Angola">
+    <h1>ESTUDE COM IA — VUNONGUE</h1>
+    <img src="imagens/logo01.png" alt="Logo Menongue Educa">
+</header>
+
+<main>
+    <div class="card">
+        <h2>EM BREVE ESTARÁ DISPONÍVEL</h2>
+
+        <p>
+            A plataforma inteligente VUNONGUE está a ser preparada para oferecer 
+            aprendizagem personalizada com Inteligência Artificial.
+        </p>
+
+        <p>
+            Enquanto isso, navegue pela história do povo <strong>Nganguela</strong>, 
+            conheça as suas origens, tradições culturais, organização social 
+            e o seu papel histórico na região do Cuando Cubango.
+        </p>
+
+        <p>
+            Valorize a identidade cultural angolana e aproveite para estudar, 
+            crescer e preparar-se para um futuro tecnológico e inovador.
+        </p>
+
+        <a href="index.html" class="btn-voltar">Voltar ao Início</a>
+    </div>
+</main>
+
+<footer>
+    Administração Municipal de Menongue | Direção Municipal da Educação | © 2026
+</footer>
+
+</body>
+</html>
