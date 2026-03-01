@@ -6,7 +6,6 @@
 <title>Quiz - Menongue Educa</title>
 
 <style>
-/* ====== Estilo Moderno ====== */
 body {
     font-family: 'Poppins', sans-serif;
     background: url('vunongue.png') no-repeat center center fixed;
@@ -19,7 +18,7 @@ body {
 .container {
     max-width: 800px;
     margin: 50px auto;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(0,0,0,0.7);
@@ -33,7 +32,7 @@ h1 {
     text-shadow: 2px 2px 6px #000;
 }
 
-select, button {
+select, button, input[type="text"] {
     padding: 12px 18px;
     margin: 10px 5px;
     border-radius: 8px;
@@ -42,9 +41,7 @@ select, button {
     cursor: pointer;
 }
 
-select {
-    width: 220px;
-}
+select, input[type="text"] { width: 220px; }
 
 button {
     background: #3498db;
@@ -86,26 +83,14 @@ button:hover {
     transition: 0.3s;
 }
 
-.opcao:hover {
-    background: #27ae60;
-}
+.opcao:hover { background: #27ae60; }
 
-#timer {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
+.opcao.correto { background: #4caf50; }
+.opcao.incorreto { background: #f44336; }
 
-.medalha {
-    width: 120px;
-    margin: 15px 0;
-}
-
-#ranking {
-    margin-top: 20px;
-    background: rgba(0,0,0,0.6);
-    padding: 15px;
-    border-radius: 10px;
-}
+#timer { font-size: 1.2rem; margin-bottom: 10px; }
+.medalha { width: 120px; margin: 15px 0; }
+#ranking { margin-top: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; }
 </style>
 </head>
 <body>
@@ -114,15 +99,18 @@ button:hover {
     <h1>📚 Quiz Menongue Educa</h1>
 
     <div id="controls">
-        <select id="classe">
-            <option value="" disabled selected>Selecione a Classe</option>
-            <option value="1">1ª Classe</option>
-            <option value="2">2ª Classe</option>
-            <option value="3">3ª Classe</option>
-            <option value="4">4ª Classe</option>
-            <option value="5">5ª Classe</option>
-            <option value="6">6ª Classe</option>
+        <input type="text" id="nomeAluno" placeholder="Digite seu nome" />
+
+        <select id="classesSelecionadas" multiple>
+            <option value="1-2">1ª e 2ª Classes - Ensino Inicial</option>
+            <option value="3-4">3ª e 4ª Classes - Consolidação do Básico</option>
+            <option value="5-6">5ª e 6ª Classes - Preparação para 2º Ciclo</option>
         </select>
+
+        <select id="disciplina">
+            <option value="" disabled selected>Selecione a disciplina</option>
+        </select>
+
         <button id="btnIniciar">Iniciar Quiz</button>
     </div>
 
@@ -137,13 +125,14 @@ button:hover {
     <div id="ranking"></div>
 </div>
 
-<!-- Sons -->
 <audio id="somCerto" src="som/certo.mp3"></audio>
 <audio id="somErrado" src="som/errado.mp3"></audio>
 
 <script src="bancoPerguntas.js"></script>
 <script>
-const classeSelect = document.getElementById('classe');
+const nomeInput = document.getElementById('nomeAluno');
+const classesSelect = document.getElementById('classesSelecionadas');
+const disciplinaSelect = document.getElementById('disciplina');
 const btnIniciar = document.getElementById('btnIniciar');
 const quizDiv = document.getElementById('quiz');
 const controls = document.getElementById('controls');
@@ -162,37 +151,71 @@ let pontos = 0;
 let tempo;
 let tempoRestante = 15;
 
-btnIniciar.addEventListener('click', () => {
-    const classe = classeSelect.value;
-    if(!classe){
-        alert("Selecione a classe.");
-        return;
-    }
-    iniciarQuizCompleto(classe);
+// Disciplinas por grupo
+const disciplinasPorGrupo = {
+    "1-2":["Língua Portuguesa","Matemática","Estudo do Meio","Educação Manual e Plástica","Educação Musical","Educação Física"],
+    "3-4":["Língua Portuguesa","Matemática","Estudo do Meio","Educação Manual e Plástica","Educação Musical","Educação Física"],
+    "5-6":["Língua Portuguesa","Matemática","Ciências da Natureza","História","Geografia","Educação Moral e Cívica","Educação Manual e Plástica","Educação Musical","Educação Física"]
+};
+
+// Atualiza disciplinas dinamicamente
+classesSelect.addEventListener('change', ()=>{
+    const selecionadas = Array.from(classesSelect.selectedOptions).map(o=>o.value);
+    const disciplinas = new Set();
+    selecionadas.forEach(g => disciplinasPorGrupo[g].forEach(d=>disciplinas.add(d)));
+    disciplinaSelect.innerHTML = '<option value="" disabled selected>Selecione a disciplina</option>';
+    disciplinas.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.toLowerCase().replace(/\s+/g,'');
+        opt.textContent = d;
+        disciplinaSelect.appendChild(opt);
+    });
 });
 
-function iniciarQuizCompleto(classe){
+btnIniciar.addEventListener('click', () => {
+    const nomeAluno = nomeInput.value.trim();
+    if(!nomeAluno){ alert("Digite seu nome"); return; }
+    localStorage.setItem('nomeAluno', nomeAluno);
+
+    const disciplinasSelecionadas = disciplinaSelect.value;
+    if(!disciplinasSelecionadas){ alert("Selecione a disciplina"); return; }
+
+    const classesEscolhidas = Array.from(classesSelect.selectedOptions).map(o=>o.value);
+    if(classesEscolhidas.length===0){ alert("Selecione pelo menos um grupo de classes"); return; }
+
+    iniciarQuizCompleto(classesEscolhidas, disciplinasSelecionadas);
+});
+
+function iniciarQuizCompleto(classesEscolhidas, disciplina){
     resultadoDiv.innerHTML = "";
     controls.style.display = "none";
     quizDiv.classList.add('show');
     perguntaAtual = 0;
     pontos = 0;
 
-    // Filtrar perguntas por classe e disciplina
-    perguntas = bancoPerguntas.filter(p => p.classe == classe && p.disciplina === "matematica");
+    // Filtra perguntas por classe e disciplina
+    perguntas = bancoPerguntas.filter(p => {
+        for(const c of classesEscolhidas){
+            const [inicio,fim] = c.split('-').map(Number);
+            if(Number(p.classe) >= inicio && Number(p.classe) <= fim && p.disciplina.toLowerCase() === disciplina) return true;
+        }
+        return false;
+    });
 
     if(perguntas.length === 0){
-        alert("Não há perguntas disponíveis para esta classe.");
+        alert("Não há perguntas disponíveis para esta seleção.");
         location.reload();
         return;
     }
+
+    localStorage.setItem('progresso', JSON.stringify({nome:nomeInput.value, classes:classesEscolhidas, disciplina:disciplina, acertos:0}));
 
     mostrarPergunta();
     iniciarTimer();
 }
 
 function mostrarPergunta(){
-    if(perguntaAtual >= perguntas.length || perguntaAtual >= 10){
+    if(perguntaAtual >= perguntas.length){
         finalizarQuiz(pontos);
         return;
     }
@@ -209,20 +232,28 @@ function mostrarPergunta(){
         opcoesDiv.appendChild(btn);
     });
 
-    progressoDiv.innerText = `Pergunta ${perguntaAtual + 1} de 10`;
+    progressoDiv.innerText = `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
 }
 
 function responder(index){
     pararTimer();
-    if(index === perguntas[perguntaAtual].resposta){
-        pontos++;
-        somCerto.play();
-    } else {
-        somErrado.play();
-    }
+    const correta = index === perguntas[perguntaAtual].resposta;
+    const botoes = document.querySelectorAll('.opcao');
+    botoes.forEach((btn, i) => {
+        btn.disabled = true;
+        if(i === perguntas[perguntaAtual].resposta) btn.classList.add('correto');
+        if(i === index && !correta) btn.classList.add('incorreto');
+    });
+
+    if(correta){ pontos++; somCerto.play(); } else { somErrado.play(); }
+
+    // Atualiza progresso
+    const progresso = JSON.parse(localStorage.getItem('progresso')) || {};
+    progresso.acertos = pontos;
+    localStorage.setItem('progresso', JSON.stringify(progresso));
+
     perguntaAtual++;
-    mostrarPergunta();
-    iniciarTimer();
+    setTimeout(() => { mostrarPergunta(); iniciarTimer(); }, 1000);
 }
 
 function iniciarTimer(){
@@ -242,9 +273,7 @@ function iniciarTimer(){
     }, 1000);
 }
 
-function pararTimer(){
-    clearInterval(tempo);
-}
+function pararTimer(){ clearInterval(tempo); }
 
 function finalizarQuiz(pontos){
     pararTimer();
@@ -257,7 +286,7 @@ function finalizarQuiz(pontos){
 
     resultadoDiv.innerHTML = `
         <h2>Resultado Final</h2>
-        <p>Pontuação: ${pontos}/10</p>
+        <p>Pontuação: ${pontos}/${perguntas.length}</p>
         <img src="${medalhaImg}" class="medalha" alt="Medalha">
         <button onclick="location.reload()">Jogar Novamente</button>
     `;
@@ -268,8 +297,8 @@ function finalizarQuiz(pontos){
 
 function salvarRanking(pontos){
     let ranking = JSON.parse(localStorage.getItem("rankingQuiz")) || [];
-    ranking.push(pontos);
-    ranking.sort((a,b)=>b-a);
+    ranking.push({nome:nomeInput.value, pontos});
+    ranking.sort((a,b)=>b.pontos-a.pontos);
     ranking = ranking.slice(0,5);
     localStorage.setItem("rankingQuiz", JSON.stringify(ranking));
 }
@@ -277,7 +306,7 @@ function salvarRanking(pontos){
 function mostrarRanking(){
     let ranking = JSON.parse(localStorage.getItem("rankingQuiz")) || [];
     let html = "<h3>🏆 Ranking Top 5</h3><ol>";
-    ranking.forEach(p => html += `<li>${p} pontos</li>`);
+    ranking.forEach(r => html += `<li>${r.nome}: ${r.pontos} pontos</li>`);
     html += "</ol>";
     rankingDiv.innerHTML = html;
 }
