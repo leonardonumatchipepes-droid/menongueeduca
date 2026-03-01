@@ -1,5 +1,5 @@
 // BancoPerguntasMusica.js
-// Perguntas de Edição Musical para Menongue Educa
+// Perguntas de Educação Musical para Menongue Educa
 
 const BancoPerguntasMusica = [
   // ------------------- FÁCEIS (20) -------------------
