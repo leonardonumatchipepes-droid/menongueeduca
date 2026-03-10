@@ -1,40 +1,40 @@
-// BancoPerguntasEducacaoPlastica.js
-// Perguntas de Educação Manual e Plástica para Menongue Educa
+// BancoPerguntasEducacaoFisica.js
+// Base de dados Educação Física - MENONGUE EDUCA
 
-const BancoPerguntasEducacaoPlastica = [
-  // ------------------- FÁCEIS (20) -------------------
-  { pergunta: "Qual é a cor do céu em um dia ensolarado?", opcoes: ["Azul", "Verde", "Amarelo", "Vermelho"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "1–2", nivel: "fácil" },
-  { pergunta: "Qual forma tem 4 lados iguais?", opcoes: ["Quadrado", "Triângulo", "Círculo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "1–2", nivel: "fácil" },
-  { pergunta: "Qual destes materiais usamos para desenhar?", opcoes: ["Lápis", "Colher", "Livro"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "1–2", nivel: "fácil" },
-  { pergunta: "Qual é a cor da banana madura?", opcoes: ["Amarela", "Verde", "Vermelha"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "1–2", nivel: "fácil" },
-  { pergunta: "Qual destes objetos é usado para pintar?", opcoes: ["Pincel", "Tesoura", "Borrachas"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "1–2", nivel: "fácil" },
-  { pergunta: "Qual é a cor da grama?", opcoes: ["Verde", "Azul", "Marrom"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "3–4", nivel: "fácil" },
-  { pergunta: "Qual forma é redonda?", opcoes: ["Círculo", "Quadrado", "Triângulo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "3–4", nivel: "fácil" },
-  { pergunta: "Para fazer colagens usamos:", opcoes: ["Cola", "Água", "Pincel"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "3–4", nivel: "fácil" },
-  { pergunta: "Qual cor resulta da mistura de azul e amarelo?", opcoes: ["Verde", "Roxo", "Laranja"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "3–4", nivel: "fácil" },
-  { pergunta: "Qual destes materiais é usado para recortar?", opcoes: ["Tesoura", "Cola", "Pincel"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "3–4", nivel: "fácil" },
-  { pergunta: "Qual é a cor da laranja?", opcoes: ["Laranja", "Amarela", "Vermelha"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual destas formas tem 3 lados?", opcoes: ["Triângulo", "Quadrado", "Círculo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual destas cores é primária?", opcoes: ["Vermelho", "Verde", "Roxo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "O que usamos para pintar aquarelas?", opcoes: ["Pincel", "Tesoura", "Cola"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Para desenhar precisamos de:", opcoes: ["Lápis", "Borracha", "Caderno"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual é a cor da folha verde?", opcoes: ["Verde", "Amarela", "Vermelha"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual é a forma de uma bola?", opcoes: ["Círculo", "Quadrado", "Triângulo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual destes materiais usamos para pintar em tela?", opcoes: ["Tinta", "Cola", "Lápis"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Qual é a cor do céu ao entardecer?", opcoes: ["Laranja", "Verde", "Azul"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
-  { pergunta: "Para colar papel usamos:", opcoes: ["Cola", "Tinta", "Tesoura"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "fácil" },
+window.educacaoFisica = [
 
-  // ------------------- DIFÍCEIS (10) -------------------
-  { pergunta: "Qual técnica de pintura é tradicionalmente usada por artistas angolanos com pigmentos naturais?", opcoes: ["Têmpera", "Aquarela", "Óleo"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "O que é a escultura 'N’gola', típica em Angola?", opcoes: ["Arte em madeira", "Pintura em tela", "Desenho a carvão"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual cor se forma ao misturar vermelho e azul?", opcoes: ["Roxo", "Verde", "Laranja"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual é o material usado para fazer máscaras tradicionais angolanas?", opcoes: ["Madeira", "Plástico", "Tecido"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual destas técnicas envolve impressão com carimbo?", opcoes: ["Estamparia", "Aquarela", "Colagem"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Quem é um famoso artista plástico angolano?", opcoes: ["Mário António", "Van Gogh", "Picasso"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual é o material tradicional usado em tapeçarias angolanas?", opcoes: ["Algodão", "Madeira", "Plástico"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "O que é colagem em artes plásticas?", opcoes: ["Juntar materiais diferentes em uma obra", "Desenhar com lápis", "Pintar com aquarela"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual é o nome do pigmento vermelho usado em pinturas tradicionais angolanas?", opcoes: ["Ocre", "Vermelho carmim", "Tinta látex"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" },
-  { pergunta: "Qual destes objetos é feito de cerâmica em Angola?", opcoes: ["Vasos decorativos", "Quadros", "Tecido estampado"], correta: 0, disciplina: "Educação Manual e Plástica", grupoClasse: "5–6", nivel: "difícil" }
+  // ------------------- FÁCEIS -------------------
+  { pergunta:"Qual movimento usamos para correr?", opcoes:["Andar rápido","Sentar","Pular corda"], correta:0, grupoClasse:1, nivel:"facil" },
+  { pergunta:"Qual destes esportes usa bola?", opcoes:["Futebol","Natação","Atletismo"], correta:0, grupoClasse:1, nivel:"facil" },
+  { pergunta:"O que devemos usar para proteger os pés ao correr?", opcoes:["Tênis","Chinelos","Sapato social"], correta:0, grupoClasse:1, nivel:"facil" },
+  { pergunta:"Qual destes movimentos é feito ao saltar?", opcoes:["Pular","Sentar","Deitar"], correta:0, grupoClasse:1, nivel:"facil" },
+  { pergunta:"Qual exercício ajuda a fortalecer os braços?", opcoes:["Flexão","Agachamento","Corrida"], correta:0, grupoClasse:1, nivel:"facil" },
+  { pergunta:"Qual destes esportes é coletivo?", opcoes:["Voleibol","Caminhada","Corrida"], correta:0, grupoClasse:3, nivel:"facil" },
+  { pergunta:"Qual movimento usamos para sentar e levantar rápido?", opcoes:["Agachamento","Flexão","Pulo"], correta:0, grupoClasse:3, nivel:"facil" },
+  { pergunta:"O que devemos fazer antes de correr?", opcoes:["Alongar","Dormir","Comer"], correta:0, grupoClasse:3, nivel:"facil" },
+  { pergunta:"Qual destes exercícios trabalha as pernas?", opcoes:["Agachamento","Flexão","Abdominal"], correta:0, grupoClasse:3, nivel:"facil" },
+  { pergunta:"Qual esporte usamos rede e bola?", opcoes:["Voleibol","Futebol","Natação"], correta:0, grupoClasse:3, nivel:"facil" },
+  { pergunta:"Qual movimento é usado para lançar uma bola?", opcoes:["Arremesso","Chute","Saltos"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual desses esportes é jogado com os pés?", opcoes:["Futebol","Basquete","Voleibol"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Para melhorar a respiração devemos fazer:", opcoes:["Corrida ou caminhada","Flexões","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual destes esportes usa raquete?", opcoes:["Tênis","Futebol","Corrida"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual exercício fortalece o abdômen?", opcoes:["Abdominal","Flexão","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual movimento é feito ao pular corda?", opcoes:["Saltos","Corrida","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual destes esportes é aquático?", opcoes:["Natação","Futebol","Basquete"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"O que devemos fazer após o exercício?", opcoes:["Alongar","Correr","Saltitar"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual destes esportes é jogado em quadra?", opcoes:["Basquete","Natação","Futebol"], correta:0, grupoClasse:5, nivel:"facil" },
+  { pergunta:"Qual movimento ajuda a fortalecer os ombros?", opcoes:["Flexão de braços","Agachamento","Abdominal"], correta:0, grupoClasse:5, nivel:"facil" },
+
+  // ------------------- DIFÍCEIS -------------------
+  { pergunta:"Qual atleta angolano é conhecido no basquete?", opcoes:["José Carlos Guimarães","Usain Bolt","Michael Jordan"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Quantos jogadores participam de um time de futebol?", opcoes:["11","10","9","12"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual é a distância oficial da corrida 100 metros rasos?", opcoes:["100 metros","50 metros","200 metros"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Em que cidade de Angola acontece a Maratona Internacional de Luanda?", opcoes:["Luanda","Benguela","Huambo","Menongue"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual é o principal objetivo do alongamento antes do exercício?", opcoes:["Evitar lesões","Correr mais rápido","Pular alto"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual esporte é praticado com bastão e disco?", opcoes:["Hóquei","Basquete","Futebol"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual destes esportes é tradicional em Angola?", opcoes:["Futebol","Críquete","Rugby"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual é a duração oficial de uma partida de basquete?", opcoes:["40 minutos","30 minutos","60 minutos"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual movimento melhora a coordenação motora?", opcoes:["Pular corda","Sentar","Deitar"], correta:0, grupoClasse:5, nivel:"dificil" },
+  { pergunta:"Qual destes esportes exige rede e bola?", opcoes:["Voleibol","Corrida","Natação"], correta:0, grupoClasse:5, nivel:"dificil" }
+
 ];
-
-export default BancoPerguntasEducacaoPlastica;
