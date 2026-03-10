@@ -6,52 +6,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Quiz Menongue Educa</title>
+<title>Quiz Game - Menongue Educa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
+
 font-family:'Fredoka',sans-serif;
 background:url("vunongue.png") center/cover no-repeat fixed;
 margin:0;
 color:white;
+
 }
 
 body::before{
+
 content:"";
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.55);
 backdrop-filter:blur(3px);
 z-index:-1;
+
 }
 
 .container{
-max-width:800px;
-margin:40px auto;
+
+max-width:900px;
+margin:auto;
 padding:30px;
-background:rgba(0,0,0,0.8);
-border-radius:20px;
 text-align:center;
-box-shadow:0 0 30px black;
+
 }
 
 h1{
+
 color:#FFD700;
+font-size:2.5rem;
+text-shadow:2px 2px 8px black;
+
 }
 
-input,select,button{
+.card{
 
-padding:12px;
+background:rgba(0,0,0,0.85);
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 30px rgba(0,0,0,0.8);
+
+}
+
+select,input,button{
+
+padding:12px 15px;
 margin:10px;
-border-radius:10px;
 border:none;
+border-radius:10px;
 font-size:16px;
+
+}
+
+input,select{
+
+width:230px;
 
 }
 
@@ -61,13 +87,14 @@ background:#ff7f00;
 color:white;
 font-weight:bold;
 cursor:pointer;
+transition:.3s;
 
 }
 
 button:hover{
 
-background:#ff5500;
 transform:scale(1.05);
+background:#ff5500;
 
 }
 
@@ -77,20 +104,37 @@ display:none;
 
 }
 
+#timer{
+
+font-size:20px;
+margin-bottom:10px;
+
+}
+
+#pergunta{
+
+font-size:22px;
+margin:20px 0;
+
+}
+
 .opcao{
 
 display:block;
 background:#3498db;
-padding:14px;
 margin:10px;
-border-radius:10px;
+padding:14px;
+border-radius:12px;
 cursor:pointer;
+font-size:18px;
+transition:.3s;
 
 }
 
 .opcao:hover{
 
 background:#1abc9c;
+transform:scale(1.03);
 
 }
 
@@ -111,7 +155,7 @@ background:#e74c3c !important;
 height:12px;
 background:#444;
 border-radius:20px;
-margin:20px 0;
+margin:15px 0;
 
 }
 
@@ -120,6 +164,18 @@ margin:20px 0;
 height:12px;
 background:#00ff95;
 width:0%;
+
+}
+
+.medalha{
+
+width:120px;
+
+}
+
+#ranking{
+
+margin-top:20px;
 
 }
 
@@ -133,11 +189,23 @@ width:0%;
 
 <h1>🎮 Quiz Menongue Educa</h1>
 
-<div id="inicio">
+<div class="card" id="controls">
 
-<input id="nome" placeholder="Nome do aluno">
+<input id="nomeAluno" placeholder="Nome do aluno">
 
 <br>
+
+<select id="classesSelecionadas" multiple>
+
+<option value="1-2">1ª e 2ª Classe</option>
+<option value="3-4">3ª e 4ª Classe</option>
+<option value="5-6">5ª e 6ª Classe</option>
+
+</select>
+
+<br>
+
+<select id="disciplina"></select>
 
 <select id="nivel">
 
@@ -148,13 +216,13 @@ width:0%;
 
 <br>
 
-<button onclick="iniciar()">🚀 Iniciar Quiz</button>
+<button id="btnIniciar">🚀 Iniciar Quiz</button>
 
 </div>
 
-<div id="quiz">
+<div class="card" id="quiz">
 
-<div id="timer">⏱ 15</div>
+<div id="timer"></div>
 
 <div id="progressBar">
 <div id="progress"></div>
@@ -172,44 +240,103 @@ width:0%;
 
 </div>
 
-<audio id="certo" src="som/certo.mp3"></audio>
-<audio id="errado" src="som/errado.mp3"></audio>
+<audio id="somCerto" src="som/certo.mp3"></audio>
+<audio id="somErrado" src="som/errado.mp3"></audio>
 
 <script>
 
-const bancoPerguntas=[
+const disciplinas={
 
-{pergunta:"2 + 2 = ?",opcoes:["3","4","5","6"],correta:1,nivel:"facil"},
-{pergunta:"5 + 3 = ?",opcoes:["6","7","8","9"],correta:2,nivel:"facil"},
-{pergunta:"10 - 6 = ?",opcoes:["3","4","5","6"],correta:1,nivel:"facil"},
-{pergunta:"6 x 3 = ?",opcoes:["12","15","18","20"],correta:2,nivel:"facil"},
-{pergunta:"8 + 7 = ?",opcoes:["13","14","15","16"],correta:2,nivel:"facil"},
+matematica:"dados/BancoPerguntaDeMatematica.js",
+portugues:"dados/BancoPerguntasPortugues.js",
+estudodomeio:"dados/BancoPerguntasEstudoDoMeio.js",
+manualplastica:"dados/BancoPerguntasEducacaoPlastica.js",
+educacaofisica:"dados/BancoPerguntasEducacaoFisica.js",
+historia:"dados/BancoPerguntasHistoria.js",
+ciencias:"dados/BancoPerguntasCienciasNatureza.js",
+emc:"dados/BancoPerguntasEMC.js",
+geografia:"dados/BancoPerguntasGeografia.js",
+musica:"dados/BancoPerguntasMusica.js"
 
-{pergunta:"12 ÷ 3 = ?",opcoes:["2","3","4","6"],correta:2,nivel:"dificil"},
-{pergunta:"9 x 6 = ?",opcoes:["48","54","56","60"],correta:1,nivel:"dificil"},
-{pergunta:"25 + 18 = ?",opcoes:["40","41","42","43"],correta:3,nivel:"dificil"}
+}
 
-];
+const disciplinaSelect=document.getElementById("disciplina")
 
-let perguntas=[];
-let perguntaAtual=0;
-let pontos=0;
-let tempo;
-let tempoRestante=15;
+for(let d in disciplinas){
 
-function iniciar(){
+let opt=document.createElement("option")
 
-const nivel=document.getElementById("nivel").value;
+opt.value=d
+opt.textContent=d.toUpperCase()
 
-perguntas=bancoPerguntas.filter(p=>p.nivel==nivel);
+disciplinaSelect.appendChild(opt)
 
-perguntas=perguntas.sort(()=>Math.random()-0.5);
+}
 
-document.getElementById("inicio").style.display="none";
-document.getElementById("quiz").style.display="block";
+let perguntas=[]
+let perguntaAtual=0
+let pontos=0
+let tempo
+let tempoRestante=15
 
-mostrarPergunta();
-iniciarTimer();
+async function carregarPerguntas(d){
+
+return new Promise((resolve,reject)=>{
+
+let script=document.createElement("script")
+
+script.src=disciplinas[d]
+
+script.onload=()=>{
+
+resolve(window[d] || [])
+
+}
+
+script.onerror=()=>reject("Erro ao carregar")
+
+document.body.appendChild(script)
+
+})
+
+}
+
+document.getElementById("btnIniciar").onclick=async()=>{
+
+let nome=document.getElementById("nomeAluno").value
+
+if(!nome){
+
+alert("Digite o nome")
+return
+
+}
+
+let disc=disciplinaSelect.value
+
+let nivel=document.getElementById("nivel").value
+
+let todas=await carregarPerguntas(disc)
+
+perguntas=todas.filter(p=>p.nivel===nivel)
+
+if(perguntas.length===0){
+
+alert("Sem perguntas para esta seleção")
+
+return
+
+}
+
+perguntas=perguntas.sort(()=>Math.random()-0.5)
+
+document.getElementById("controls").style.display="none"
+
+document.getElementById("quiz").style.display="block"
+
+mostrarPergunta()
+
+iniciarTimer()
 
 }
 
@@ -217,159 +344,163 @@ function mostrarPergunta(){
 
 if(perguntaAtual>=perguntas.length){
 
-finalizar();
-return;
+finalizar()
+
+return
 
 }
 
-const p=perguntas[perguntaAtual];
+let p=perguntas[perguntaAtual]
 
-document.getElementById("pergunta").innerText=p.pergunta;
+document.getElementById("pergunta").innerText=p.pergunta
 
-const opcoes=document.getElementById("opcoes");
+let opcoesDiv=document.getElementById("opcoes")
 
-opcoes.innerHTML="";
+opcoesDiv.innerHTML=""
 
 p.opcoes.forEach((op,i)=>{
 
-const btn=document.createElement("div");
+let btn=document.createElement("div")
 
-btn.className="opcao";
+btn.className="opcao"
 
-btn.innerText=op;
+btn.innerText=op
 
-btn.onclick=()=>responder(i);
+btn.onclick=()=>responder(i)
 
-opcoes.appendChild(btn);
+opcoesDiv.appendChild(btn)
 
-});
+})
 
-document.getElementById("progress").style.width=(perguntaAtual/perguntas.length*100)+"%";
+document.getElementById("progress").style.width=(perguntaAtual/perguntas.length*100)+"%"
 
 }
 
 function responder(i){
 
-clearInterval(tempo);
+clearInterval(tempo)
 
-const correta=perguntas[perguntaAtual].correta;
+let correta=perguntas[perguntaAtual].correta
 
-const botoes=document.querySelectorAll(".opcao");
+let botoes=document.querySelectorAll(".opcao")
 
 botoes.forEach((b,index)=>{
 
-if(index==correta)b.classList.add("correto");
+if(index===correta) b.classList.add("correto")
 
-if(index==i && i!=correta)b.classList.add("incorreto");
+if(index===i && i!==correta) b.classList.add("incorreto")
 
-});
+})
 
-if(i==correta){
+if(i===correta){
 
-pontos++;
+pontos++
 
-document.getElementById("certo").play();
+document.getElementById("somCerto").play()
 
 }else{
 
-document.getElementById("errado").play();
+document.getElementById("somErrado").play()
 
 }
 
 setTimeout(()=>{
 
-perguntaAtual++;
+perguntaAtual++
 
-mostrarPergunta();
-iniciarTimer();
+mostrarPergunta()
 
-},1000);
+iniciarTimer()
+
+},1000)
 
 }
 
 function iniciarTimer(){
 
-tempoRestante=15;
+tempoRestante=15
 
-document.getElementById("timer").innerText="⏱ "+tempoRestante;
+document.getElementById("timer").innerText="⏱ "+tempoRestante
 
 tempo=setInterval(()=>{
 
-tempoRestante--;
+tempoRestante--
 
-document.getElementById("timer").innerText="⏱ "+tempoRestante;
+document.getElementById("timer").innerText="⏱ "+tempoRestante
 
 if(tempoRestante<=0){
 
-clearInterval(tempo);
+clearInterval(tempo)
 
-perguntaAtual++;
+perguntaAtual++
 
-mostrarPergunta();
-iniciarTimer();
+mostrarPergunta()
+
+iniciarTimer()
 
 }
 
-},1000);
+},1000)
 
 }
 
 function finalizar(){
 
-document.getElementById("quiz").style.display="none";
+document.getElementById("quiz").style.display="none"
 
-let medalha="🥉";
+let medalha="imagens/medalhas/bronze.png"
 
-if(pontos>=6)medalha="🥈";
-if(pontos>=7)medalha="🥇";
+if(pontos>=7) medalha="imagens/medalhas/prata.png"
+
+if(pontos>=9) medalha="imagens/medalhas/ouro.png"
 
 document.getElementById("resultado").innerHTML=
 
-`<h2>Fim do Jogo</h2>
-<h1>${medalha}</h1>
-<p>Pontuação: ${pontos}/${perguntas.length}</p>
-<button onclick="location.reload()">Jogar novamente</button>`;
+`<h2>🏁 Fim do Jogo</h2>
+<img src="${medalha}" class="medalha">
+<p>Pontuação ${pontos}/${perguntas.length}</p>
+<button onclick="location.reload()">Jogar novamente</button>`
 
-salvarRanking();
+salvarRanking()
 
-mostrarRanking();
+mostrarRanking()
 
 }
 
 function salvarRanking(){
 
-let r=JSON.parse(localStorage.getItem("ranking"))||[];
+let ranking=JSON.parse(localStorage.getItem("ranking"))||[]
 
-r.push({
+ranking.push({
 
-nome:document.getElementById("nome").value,
+nome:document.getElementById("nomeAluno").value,
 pontos:pontos
 
-});
+})
 
-r.sort((a,b)=>b.pontos-a.pontos);
+ranking.sort((a,b)=>b.pontos-a.pontos)
 
-r=r.slice(0,5);
+ranking=ranking.slice(0,5)
 
-localStorage.setItem("ranking",JSON.stringify(r));
+localStorage.setItem("ranking",JSON.stringify(ranking))
 
 }
 
 function mostrarRanking(){
 
-let r=JSON.parse(localStorage.getItem("ranking"))||[];
+let ranking=JSON.parse(localStorage.getItem("ranking"))||[]
 
-let html="<h3>🏆 Ranking</h3><ol>";
+let html="<h3>🏆 Ranking</h3><ol>"
 
-r.forEach(x=>{
+ranking.forEach(r=>{
 
-html+=`<li>${x.nome} - ${x.pontos}</li>`;
+html+=`<li>${r.nome} - ${r.pontos}</li>`
 
-});
+})
 
-html+="</ol>";
+html+="</ol>"
 
-document.getElementById("ranking").innerHTML=html;
+document.getElementById("ranking").innerHTML=html
 
 }
 
@@ -377,8 +508,3 @@ document.getElementById("ranking").innerHTML=html;
 
 </body>
 </html>
-
-
-
-
-
