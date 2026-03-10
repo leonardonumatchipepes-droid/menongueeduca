@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-AO">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🎮 Quiz Menongue Educa</title>
+<title>Quiz Menongue Educa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
@@ -24,114 +26,105 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.65);
+background:rgba(0,0,0,0.6);
 backdrop-filter:blur(3px);
 z-index:-1;
 }
 
 .container{
-max-width:850px;
+max-width:800px;
 margin:40px auto;
 padding:30px;
+background:rgba(0,0,0,0.8);
 border-radius:20px;
-background:rgba(0,0,0,0.75);
-box-shadow:0 0 40px rgba(0,0,0,0.8);
 text-align:center;
+box-shadow:0 0 30px black;
 }
 
 h1{
-font-size:2.5rem;
 color:#FFD700;
-margin-bottom:20px;
 }
 
-select,input,button{
+input,select,button{
+
 padding:12px;
 margin:10px;
 border-radius:10px;
 border:none;
-font-size:1rem;
+font-size:16px;
+
 }
 
 button{
+
 background:#ff7f00;
 color:white;
 font-weight:bold;
 cursor:pointer;
-transition:.3s;
+
 }
 
 button:hover{
+
 background:#ff5500;
 transform:scale(1.05);
+
 }
 
 #quiz{
+
 display:none;
-}
 
-#timer{
-font-size:1.3rem;
-margin-bottom:10px;
-}
-
-#progressBar{
-height:12px;
-background:#444;
-border-radius:20px;
-margin-bottom:20px;
-overflow:hidden;
-}
-
-#progress{
-height:12px;
-width:0%;
-background:#00ff95;
-transition:.4s;
-}
-
-#pergunta{
-font-size:1.4rem;
-margin:20px 0;
 }
 
 .opcao{
+
 display:block;
-width:100%;
-padding:14px;
-margin:8px 0;
 background:#3498db;
+padding:14px;
+margin:10px;
 border-radius:10px;
 cursor:pointer;
-transition:.3s;
+
 }
 
 .opcao:hover{
+
 background:#1abc9c;
-transform:scale(1.03);
+
 }
 
 .correto{
+
 background:#2ecc71 !important;
+
 }
 
 .incorreto{
+
 background:#e74c3c !important;
+
 }
 
-.medalha{
-width:120px;
-margin:20px;
+#progressBar{
+
+height:12px;
+background:#444;
+border-radius:20px;
+margin:20px 0;
+
 }
 
-#ranking{
-margin-top:20px;
-padding:15px;
-background:rgba(0,0,0,0.5);
-border-radius:15px;
+#progress{
+
+height:12px;
+background:#00ff95;
+width:0%;
+
 }
 
 </style>
+
 </head>
 
 <body>
@@ -140,44 +133,22 @@ border-radius:15px;
 
 <h1>🎮 Quiz Menongue Educa</h1>
 
-<div id="controls">
+<div id="inicio">
 
-<input id="nomeAluno" placeholder="Nome do aluno">
-
-<br>
-
-<select id="classesSelecionadas" multiple>
-<option value="1-2">1ª e 2ª Classes</option>
-<option value="3-4">3ª e 4ª Classes</option>
-<option value="5-6">5ª e 6ª Classes</option>
-</select>
-
-<br>
-
-<select id="disciplina">
-<option value="">Disciplina</option>
-<option value="matematica">Matemática</option>
-<option value="portugues">Português</option>
-<option value="estudodomeio">Estudo do Meio</option>
-<option value="manualplastica">Educação Manual</option>
-<option value="educacaofisica">Educação Física</option>
-<option value="historia">História</option>
-<option value="ciencias">Ciências</option>
-<option value="geografia">Geografia</option>
-<option value="emc">Educação Moral</option>
-<option value="musica">Música</option>
-</select>
+<input id="nome" placeholder="Nome do aluno">
 
 <br>
 
 <select id="nivel">
+
 <option value="facil">Fácil</option>
 <option value="dificil">Difícil</option>
+
 </select>
 
 <br>
 
-<button id="btnIniciar">🚀 Iniciar Quiz</button>
+<button onclick="iniciar()">🚀 Iniciar Quiz</button>
 
 </div>
 
@@ -201,23 +172,24 @@ border-radius:15px;
 
 </div>
 
-<audio id="somCerto" src="som/certo.mp3"></audio>
-<audio id="somErrado" src="som/errado.mp3"></audio>
+<audio id="certo" src="som/certo.mp3"></audio>
+<audio id="errado" src="som/errado.mp3"></audio>
 
 <script>
 
-const arquivosDisciplinas={
-matematica:"dados/BancoPerguntaDeMatematica.js",
-portugues:"dados/BancoPerguntasPortugues.js",
-estudodomeio:"dados/BancoPerguntasEstudoDoMeio.js",
-manualplastica:"dados/BancoPerguntasEducacaoPlastica.js",
-educacaofisica:"dados/BancoPerguntasEducacaoFisica.js",
-historia:"dados/BancoPerguntasHistoria.js",
-ciencias:"dados/BancoPerguntasCienciasNatureza.js",
-emc:"dados/BancoPerguntasEMC.js",
-geografia:"dados/BancoPerguntasGeografia.js",
-musica:"dados/BancoPerguntasMusica.js"
-};
+const bancoPerguntas=[
+
+{pergunta:"2 + 2 = ?",opcoes:["3","4","5","6"],correta:1,nivel:"facil"},
+{pergunta:"5 + 3 = ?",opcoes:["6","7","8","9"],correta:2,nivel:"facil"},
+{pergunta:"10 - 6 = ?",opcoes:["3","4","5","6"],correta:1,nivel:"facil"},
+{pergunta:"6 x 3 = ?",opcoes:["12","15","18","20"],correta:2,nivel:"facil"},
+{pergunta:"8 + 7 = ?",opcoes:["13","14","15","16"],correta:2,nivel:"facil"},
+
+{pergunta:"12 ÷ 3 = ?",opcoes:["2","3","4","6"],correta:2,nivel:"dificil"},
+{pergunta:"9 x 6 = ?",opcoes:["48","54","56","60"],correta:1,nivel:"dificil"},
+{pergunta:"25 + 18 = ?",opcoes:["40","41","42","43"],correta:3,nivel:"dificil"}
+
+];
 
 let perguntas=[];
 let perguntaAtual=0;
@@ -225,71 +197,38 @@ let pontos=0;
 let tempo;
 let tempoRestante=15;
 
-const perguntaH3=document.getElementById("pergunta");
-const opcoesDiv=document.getElementById("opcoes");
-const timerDiv=document.getElementById("timer");
-const progress=document.getElementById("progress");
+function iniciar(){
 
-async function carregarPerguntas(disc){
+const nivel=document.getElementById("nivel").value;
 
-return new Promise((resolve,reject)=>{
+perguntas=bancoPerguntas.filter(p=>p.nivel==nivel);
 
-const script=document.createElement("script");
-script.src=arquivosDisciplinas[disc];
+perguntas=perguntas.sort(()=>Math.random()-0.5);
 
-script.onload=()=>{
-
-resolve(window[disc]||[]);
-
-};
-
-document.body.appendChild(script);
-
-});
-
-}
-
-document.getElementById("btnIniciar").onclick=async()=>{
-
-const disciplina=document.getElementById("disciplina").value;
-
-perguntas=await carregarPerguntas(disciplina);
-
-if(perguntas.length===0){
-
-alert("Sem perguntas.");
-
-return;
-
-}
-
-document.getElementById("controls").style.display="none";
-
+document.getElementById("inicio").style.display="none";
 document.getElementById("quiz").style.display="block";
-
-perguntaAtual=0;
-pontos=0;
 
 mostrarPergunta();
 iniciarTimer();
 
-};
+}
 
 function mostrarPergunta(){
 
 if(perguntaAtual>=perguntas.length){
 
 finalizar();
-
 return;
 
 }
 
 const p=perguntas[perguntaAtual];
 
-perguntaH3.innerText=p.pergunta;
+document.getElementById("pergunta").innerText=p.pergunta;
 
-opcoesDiv.innerHTML="";
+const opcoes=document.getElementById("opcoes");
+
+opcoes.innerHTML="";
 
 p.opcoes.forEach((op,i)=>{
 
@@ -301,11 +240,11 @@ btn.innerText=op;
 
 btn.onclick=()=>responder(i);
 
-opcoesDiv.appendChild(btn);
+opcoes.appendChild(btn);
 
 });
 
-progress.style.width=((perguntaAtual/perguntas.length)*100)+"%";
+document.getElementById("progress").style.width=(perguntaAtual/perguntas.length*100)+"%";
 
 }
 
@@ -319,21 +258,21 @@ const botoes=document.querySelectorAll(".opcao");
 
 botoes.forEach((b,index)=>{
 
-if(index===correta) b.classList.add("correto");
+if(index==correta)b.classList.add("correto");
 
-if(index===i && i!==correta) b.classList.add("incorreto");
+if(index==i && i!=correta)b.classList.add("incorreto");
 
 });
 
-if(i===correta){
+if(i==correta){
 
 pontos++;
 
-document.getElementById("somCerto").play();
+document.getElementById("certo").play();
 
 }else{
 
-document.getElementById("somErrado").play();
+document.getElementById("errado").play();
 
 }
 
@@ -342,10 +281,9 @@ setTimeout(()=>{
 perguntaAtual++;
 
 mostrarPergunta();
-
 iniciarTimer();
 
-},1200);
+},1000);
 
 }
 
@@ -353,13 +291,13 @@ function iniciarTimer(){
 
 tempoRestante=15;
 
-timerDiv.innerText="⏱ "+tempoRestante;
+document.getElementById("timer").innerText="⏱ "+tempoRestante;
 
 tempo=setInterval(()=>{
 
 tempoRestante--;
 
-timerDiv.innerText="⏱ "+tempoRestante;
+document.getElementById("timer").innerText="⏱ "+tempoRestante;
 
 if(tempoRestante<=0){
 
@@ -368,7 +306,6 @@ clearInterval(tempo);
 perguntaAtual++;
 
 mostrarPergunta();
-
 iniciarTimer();
 
 }
@@ -383,20 +320,15 @@ document.getElementById("quiz").style.display="none";
 
 let medalha="🥉";
 
-if(pontos>7) medalha="🥇";
-else if(pontos>4) medalha="🥈";
+if(pontos>=6)medalha="🥈";
+if(pontos>=7)medalha="🥇";
 
-document.getElementById("resultado").innerHTML=`
+document.getElementById("resultado").innerHTML=
 
-<h2>Fim do Jogo</h2>
-
-<h3>${medalha}</h3>
-
+`<h2>Fim do Jogo</h2>
+<h1>${medalha}</h1>
 <p>Pontuação: ${pontos}/${perguntas.length}</p>
-
-<button onclick="location.reload()">Jogar novamente</button>
-
-`;
+<button onclick="location.reload()">Jogar novamente</button>`;
 
 salvarRanking();
 
@@ -406,12 +338,11 @@ mostrarRanking();
 
 function salvarRanking(){
 
-let r=JSON.parse(localStorage.getItem("rankingQuiz"))||[];
+let r=JSON.parse(localStorage.getItem("ranking"))||[];
 
 r.push({
 
-nome:document.getElementById("nomeAluno").value,
-
+nome:document.getElementById("nome").value,
 pontos:pontos
 
 });
@@ -420,13 +351,13 @@ r.sort((a,b)=>b.pontos-a.pontos);
 
 r=r.slice(0,5);
 
-localStorage.setItem("rankingQuiz",JSON.stringify(r));
+localStorage.setItem("ranking",JSON.stringify(r));
 
 }
 
 function mostrarRanking(){
 
-let r=JSON.parse(localStorage.getItem("rankingQuiz"))||[];
+let r=JSON.parse(localStorage.getItem("ranking"))||[];
 
 let html="<h3>🏆 Ranking</h3><ol>";
 
@@ -446,6 +377,8 @@ document.getElementById("ranking").innerHTML=html;
 
 </body>
 </html>
+
+
 
 
 
