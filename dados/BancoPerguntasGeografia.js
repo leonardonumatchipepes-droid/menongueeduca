@@ -1,40 +1,123 @@
 // BancoPerguntasGeografia.js
-// Base de Geografia - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Geografia
 
-window.geografia = [
+window.BancoPerguntasGeografia = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"Qual é a capital de Angola?", opcoes:["Luanda","Benguela","Huambo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes rios é angolano?", opcoes:["Kwanza","Nilo","Mississippi"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas províncias está em Angola?", opcoes:["Huíla","Maputo","Beira"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual oceano banha Angola?", opcoes:["Atlântico","Índico","Pacífico"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas cidades fica perto do mar?", opcoes:["Benguela","Huambo","Malanje"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é um mapa?", opcoes:["Representação da Terra","Uma planta de casa","Um tipo de livro"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes climas predomina em Luanda?", opcoes:["Tropical semiárido","Polar","Desértico"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é uma província?", opcoes:["Divisão administrativa do país","Um rio","Uma montanha"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes rios atravessa a província do Bié?", opcoes:["Cunene","Danúbio","Amazonas"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes recursos naturais é encontrado em Angola?", opcoes:["Petróleo","Prata","Ouro do Alasca"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas cidades é do interior de Angola?", opcoes:["Huambo","Luanda","Benguela"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é relevo?", opcoes:["Formas da superfície da Terra","Clima da região","Número de rios"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas províncias é do sul de Angola?", opcoes:["Namibe","Uíge","Zaire"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual é o maior rio de Angola?", opcoes:["Kwanza","Cunene","Zambeze"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é latitude?", opcoes:["Distância em graus ao norte ou sul do Equador","Altura de montanhas","Comprimento de rios"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é longitude?", opcoes:["Distância em graus a leste ou oeste do meridiano de Greenwich","Temperatura média","Tipo de solo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas regiões tem clima mais seco em Angola?", opcoes:["Namibe","Luanda","Huambo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é um continente?", opcoes:["Grande massa de terra","Cidade grande","Rio importante"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destas cidades fica no norte de Angola?", opcoes:["Uíge","Lubango","Namibe"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é uma fronteira?", opcoes:["Limite entre países","Centro da cidade","Rio"], correta:0, grupoClasse:5, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"Qual é a função do rio Cuanza em Angola?", opcoes:["Fonte de energia e transporte","Servir como fronteira internacional","Para banho apenas"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destes biomas predomina no Cuando Cubango?", opcoes:["Savana","Tundra","Floresta temperada"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que caracteriza o clima do Namibe?", opcoes:["Semiárido e desértico","Polar","Tropical úmido"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destas cidades é cortada pelo rio Kwanza?", opcoes:["Cacuaco","Lubango","Benguela"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que é um recurso natural renovável?", opcoes:["Água e florestas","Petróleo","Minérios"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual a importância do solo fértil em Angola?", opcoes:["Produzir alimentos e vegetação","Servir apenas como construção","Não tem importância"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que é urbanização?", opcoes:["Crescimento das cidades","Cultivo de plantas","Formação de rios"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destas províncias tem litoral em Angola?", opcoes:["Benguela","Bié","Cuando Cubango"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que é latitude zero?", opcoes:["Equador","Meridiano de Greenwich","Trópico de Capricórnio"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é a importância dos rios para a população de Angola?", opcoes:["Água, transporte e energia","Somente para pesca","Não têm importância"], correta:0, grupoClasse:5, nivel:"dificil" }
+{
+pergunta:"O que é um mapa?",
+opcoes:["Um desenho que mostra lugares","Um tipo de brinquedo","Uma comida","Um animal"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um continente?",
+opcoes:["África","Rio","Casa","Sol"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O que usamos para saber a direção?",
+opcoes:["Bússola","Caderno","Cadeira","Relógio"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é uma cidade?",
+opcoes:["Um lugar grande onde as pessoas moram","Um rio","Uma montanha","Um animal"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"Qual é o maior oceano do mundo?",
+opcoes:["Oceano Pacífico","Oceano Atlântico","Oceano Índico","Oceano Antártico"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é um rio?",
+opcoes:["Água que corre pela terra","Um tipo de árvore","Uma estrada","Uma montanha"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a capital de Angola?",
+opcoes:["Luanda","Benguela","Huambo","Lubango"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é relevo?",
+opcoes:["As formas da superfície da Terra","O clima","Os animais","Os rios"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"O que é latitude?",
+opcoes:["Distância ao norte ou sul do Equador","Distância da Lua","Altura de uma montanha","Profundidade de um rio"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é longitude?",
+opcoes:["Distância a leste ou oeste do meridiano de Greenwich","Altura de uma árvore","Clima de um lugar","Profundidade do mar"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é clima?",
+opcoes:["O tempo médio de uma região","Um tipo de planta","Um tipo de pedra","Um animal"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a função das cartas topográficas?",
+opcoes:["Mostrar detalhes do relevo e construções de um lugar","Ensinar história","Mostrar os planetas","Medir a temperatura"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Por que os rios são importantes para as cidades?",
+opcoes:["Para fornecer água, transporte e energia","Para construir estradas","Para plantar árvores","Para brincar"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
+
