@@ -1,56 +1,64 @@
-// BancoPerguntasCienciasNatureza.js
-// MENONGUE EDUCA - Banco de Perguntas de Ciências da Natureza
+// BancoPerguntasEMC.js
+// MENONGUE EDUCA - Banco de Perguntas de Estudo do Meio e Cidadania
 
-window.BancoPerguntasCienciasNatureza = [
+window.BancoPerguntasEMC = [
 
 /* =========================
 1ª e 2ª CLASSE
 ========================= */
 
 {
-pergunta:"Qual destes animais dá leite?",
-opcoes:["Cavalo","Vaca","Galinha","Peixe"],
+pergunta:"O que devemos fazer antes de atravessar a rua?",
+opcoes:["Correr rápido","Olhar para os dois lados","Fechar os olhos","Gritar"],
 correta:1,
 grupoClasse:"1-2",
 nivel:"facil"
 },
 
 {
-pergunta:"O que as plantas precisam para crescer?",
-opcoes:["Sol, água e terra","Chocolate","Areia e vento","Bolas de futebol"],
-correta:0,
-grupoClasse:"1-2",
-nivel:"facil"
-},
-
-{
-pergunta:"Qual destes objetos voa no céu?",
-opcoes:["Carro","Pássaro","Peixe","Cachorro"],
+pergunta:"Qual destes é um alimento saudável?",
+opcoes:["Bala","Fruta","Refrigerante","Chiclete"],
 correta:1,
 grupoClasse:"1-2",
 nivel:"facil"
 },
 
 {
-pergunta:"O que usamos para ver melhor à noite?",
-opcoes:["Luz","Sombra","Água","Areia"],
-correta:0,
+pergunta:"De onde vem a água que bebemos?",
+opcoes:["Do supermercado","Do rio ou poço","Do vento","Da areia"],
+correta:1,
 grupoClasse:"1-2",
 nivel:"facil"
 },
 
 {
-pergunta:"Qual destes é um animal doméstico?",
-opcoes:["Leão","Gato","Elefante","Cavalo selvagem"],
+pergunta:"Quem ajuda quando estamos doentes?",
+opcoes:["Professor","Médico","Amigo","Vendedor"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O sol nasce de que lado?",
+opcoes:["Norte","Sul","Este","Oeste"],
+correta:2,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes objetos usamos para escrever?",
+opcoes:["Garfo","Lápis","Bola","Sapato"],
 correta:1,
 grupoClasse:"1-2",
 nivel:"dificil"
 },
 
 {
-pergunta:"Qual é a função das folhas das plantas?",
-opcoes:["Produzir alimento","Fazer barulho","Guardar água","Servir de casa para pássaros"],
-correta:0,
+pergunta:"Qual é a função da escola?",
+opcoes:["Nos divertir","Aprender","Dormir","Comer"],
+correta:1,
 grupoClasse:"1-2",
 nivel:"dificil"
 },
@@ -60,49 +68,57 @@ nivel:"dificil"
 ========================= */
 
 {
-pergunta:"O que é um habitat?",
-opcoes:["Casa de uma pessoa","Lugar onde os animais vivem","Escola","Rua"],
+pergunta:"O que é reciclar?",
+opcoes:["Jogar lixo na rua","Transformar lixo em novos produtos","Queimar lixo","Enterrar lixo"],
 correta:1,
 grupoClasse:"3-4",
 nivel:"facil"
 },
 
 {
-pergunta:"Qual destes animais é vertebrado?",
-opcoes:["Cobra","Peixe","Formiga","Caracol"],
+pergunta:"Qual destes animais vive na água?",
+opcoes:["Cachorro","Gato","Peixe","Cavalo"],
+correta:2,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes meios de transporte é terrestre?",
+opcoes:["Avião","Barco","Carro","Navio"],
+correta:2,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que devemos fazer para não adoecer?",
+opcoes:["Lavar as mãos","Brincar na lama","Dormir pouco","Comer muito doce"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a principal função das árvores?",
+opcoes:["Dar sombra e ar puro","Servir de casa","Fazer barulho","Comer frutas"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"O que é cidadania?",
+opcoes:["Respeitar regras e direitos","Falar alto","Brincar sozinho","Não estudar"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes hábitos protege o meio ambiente?",
+opcoes:["Desperdiçar água","Plantar árvores","Queimar lixo","Poluir rios"],
 correta:1,
-grupoClasse:"3-4",
-nivel:"facil"
-},
-
-{
-pergunta:"O que é a fotossíntese?",
-opcoes:["Processo de plantas fazerem alimento","Comer folhas","Andar na água","Crescer sem sol"],
-correta:0,
-grupoClasse:"3-4",
-nivel:"facil"
-},
-
-{
-pergunta:"Qual destes é um mineral?",
-opcoes:["Areia","Água","Madeira","Ar"],
-correta:0,
-grupoClasse:"3-4",
-nivel:"dificil"
-},
-
-{
-pergunta:"O que é um herbívoro?",
-opcoes:["Come plantas","Come carne","Come tudo","Não come nada"],
-correta:0,
-grupoClasse:"3-4",
-nivel:"dificil"
-},
-
-{
-pergunta:"Qual destes é um recurso natural renovável?",
-opcoes:["Água","Petróleo","Plástico","Carro"],
-correta:0,
 grupoClasse:"3-4",
 nivel:"dificil"
 },
@@ -112,60 +128,59 @@ nivel:"dificil"
 ========================= */
 
 {
-pergunta:"Qual é a camada da Terra onde vivemos?",
-opcoes:["Manto","Crosta","Núcleo","Litosfera"],
+pergunta:"Qual é o papel da polícia na sociedade?",
+opcoes:["Ensinar na escola","Proteger e garantir a lei","Vender produtos","Organizar festas"],
 correta:1,
 grupoClasse:"5-6",
 nivel:"facil"
 },
 
 {
-pergunta:"O que é um ecossistema?",
-opcoes:["Conjunto de seres vivos e ambiente","Uma fábrica","Uma escola","Uma cidade"],
+pergunta:"O que é poluição?",
+opcoes:["Limpeza da cidade","Sujaça do ar, água ou solo","Plantar árvores","Reciclar"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um recurso natural?",
+opcoes:["Água","Plástico","Carro","Computador"],
 correta:0,
 grupoClasse:"5-6",
 nivel:"facil"
 },
 
 {
-pergunta:"Qual destes é um exemplo de poluição do ar?",
-opcoes:["Fumaça de fábrica","Chuva","Vento","Sol"],
-correta:0,
+pergunta:"Por que devemos economizar água?",
+opcoes:["Para não gastar dinheiro","Para não faltar água para todos","Para brincar mais","Para cozinhar menos"],
+correta:1,
 grupoClasse:"5-6",
 nivel:"facil"
 },
 
 {
-pergunta:"Qual é a função das raízes nas plantas?",
-opcoes:["Absorver água e nutrientes","Produzir sementes","Dar frutos","Fazer sombra"],
-correta:0,
-grupoClasse:"5-6",
-nivel:"facil"
-},
-
-{
-pergunta:"O que é biodiversidade?",
-opcoes:["Variedade de espécies de seres vivos","Só plantas","Só animais","Só pessoas"],
+pergunta:"O que significa democracia?",
+opcoes:["Pessoas decidem nas eleições","Só um manda","Ninguém decide","Só o governo escolhe"],
 correta:0,
 grupoClasse:"5-6",
 nivel:"dificil"
 },
 
 {
-pergunta:"Por que devemos conservar os recursos naturais?",
-opcoes:["Para garantir vida e equilíbrio ambiental","Para gastar dinheiro","Para fazer guerras","Para viajar"],
-correta:0,
-grupoClasse:"5-6",
-nivel:"dificil"
-},
-
-{
-pergunta:"Qual destes animais é invertebrado?",
-opcoes:["Leão","Cobra","Formiga","Cavalo"],
+pergunta:"Qual destas ações ajuda a proteger os rios?",
+opcoes:["Jogar lixo no rio","Construir fábricas poluentes","Reciclar e não poluir","Queimar lixo na beira do rio"],
 correta:2,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"O que é ética?",
+opcoes:["Comportamento correto e justo","Enganar pessoas","Falar alto","Ignorar regras"],
+correta:0,
 grupoClasse:"5-6",
 nivel:"dificil"
 }
 
 ];
-
