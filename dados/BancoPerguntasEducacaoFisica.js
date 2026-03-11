@@ -1,40 +1,123 @@
 // BancoPerguntasEducacaoFisica.js
-// Base de dados Educação Física - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Educação Física
 
-window.educacaoFisica = [
+window.BancoPerguntasEducacaoFisica = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"Qual movimento usamos para correr?", opcoes:["Andar rápido","Sentar","Pular corda"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual destes esportes usa bola?", opcoes:["Futebol","Natação","Atletismo"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"O que devemos usar para proteger os pés ao correr?", opcoes:["Tênis","Chinelos","Sapato social"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual destes movimentos é feito ao saltar?", opcoes:["Pular","Sentar","Deitar"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual exercício ajuda a fortalecer os braços?", opcoes:["Flexão","Agachamento","Corrida"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual destes esportes é coletivo?", opcoes:["Voleibol","Caminhada","Corrida"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual movimento usamos para sentar e levantar rápido?", opcoes:["Agachamento","Flexão","Pulo"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"O que devemos fazer antes de correr?", opcoes:["Alongar","Dormir","Comer"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual destes exercícios trabalha as pernas?", opcoes:["Agachamento","Flexão","Abdominal"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual esporte usamos rede e bola?", opcoes:["Voleibol","Futebol","Natação"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual movimento é usado para lançar uma bola?", opcoes:["Arremesso","Chute","Saltos"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual desses esportes é jogado com os pés?", opcoes:["Futebol","Basquete","Voleibol"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Para melhorar a respiração devemos fazer:", opcoes:["Corrida ou caminhada","Flexões","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes esportes usa raquete?", opcoes:["Tênis","Futebol","Corrida"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual exercício fortalece o abdômen?", opcoes:["Abdominal","Flexão","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual movimento é feito ao pular corda?", opcoes:["Saltos","Corrida","Agachamento"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes esportes é aquático?", opcoes:["Natação","Futebol","Basquete"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que devemos fazer após o exercício?", opcoes:["Alongar","Correr","Saltitar"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes esportes é jogado em quadra?", opcoes:["Basquete","Natação","Futebol"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual movimento ajuda a fortalecer os ombros?", opcoes:["Flexão de braços","Agachamento","Abdominal"], correta:0, grupoClasse:5, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"Qual atleta angolano é conhecido no basquete?", opcoes:["José Carlos Guimarães","Usain Bolt","Michael Jordan"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Quantos jogadores participam de um time de futebol?", opcoes:["11","10","9","12"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é a distância oficial da corrida 100 metros rasos?", opcoes:["100 metros","50 metros","200 metros"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Em que cidade de Angola acontece a Maratona Internacional de Luanda?", opcoes:["Luanda","Benguela","Huambo","Menongue"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é o principal objetivo do alongamento antes do exercício?", opcoes:["Evitar lesões","Correr mais rápido","Pular alto"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual esporte é praticado com bastão e disco?", opcoes:["Hóquei","Basquete","Futebol"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destes esportes é tradicional em Angola?", opcoes:["Futebol","Críquete","Rugby"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é a duração oficial de uma partida de basquete?", opcoes:["40 minutos","30 minutos","60 minutos"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual movimento melhora a coordenação motora?", opcoes:["Pular corda","Sentar","Deitar"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destes esportes exige rede e bola?", opcoes:["Voleibol","Corrida","Natação"], correta:0, grupoClasse:5, nivel:"dificil" }
+{
+pergunta:"Qual é o principal objetivo de brincar e correr?",
+opcoes:["Aprender matemática","Manter o corpo saudável","Dormir","Ler livros"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes objetos usamos para jogar futebol?",
+opcoes:["Bola","Livro","Colher","Chapéu"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O que devemos fazer antes de correr ou jogar?",
+opcoes:["Alongamento","Comer doces","Dormir","Assistir TV"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes exercícios fortalece os braços?",
+opcoes:["Flexões","Corrida","Pular corda","Sentar"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"Qual destes esportes é coletivo?",
+opcoes:["Voleibol","Natação","Corrida","Caminhada"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é importante para prevenir lesões durante os exercícios?",
+opcoes:["Alongamento","Comer sorvete","Brincar no sofá","Dormir pouco"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Quantos minutos é recomendado fazer atividade física por dia?",
+opcoes:["30 minutos","5 minutos","1 hora de descanso","Dormir 10 horas"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes esportes exige correr e lançar a bola?",
+opcoes:["Handebol","Natação","Tênis de mesa","Xadrez"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"O que significa resistência física?",
+opcoes:["Capacidade de manter esforço físico por mais tempo","Capacidade de ler rápido","Capacidade de dormir bem","Capacidade de falar alto"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um benefício da atividade física regular?",
+opcoes:["Corpo mais saudável","Dormir menos","Crescer menos","Ficar doente"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é aquecimento antes do exercício?",
+opcoes:["Preparar o corpo para a atividade","Comer antes de dormir","Brincar no sofá","Assistir TV"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes esportes trabalha principalmente a força muscular?",
+opcoes:["Musculação","Corrida leve","Caminhada","Alongamento"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes hábitos ajuda a ter um bom desempenho físico?",
+opcoes:["Dormir bem, alimentar-se corretamente e praticar exercícios","Dormir pouco e comer doces","Ficar sentado o dia todo","Assistir TV sem parar"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
+
