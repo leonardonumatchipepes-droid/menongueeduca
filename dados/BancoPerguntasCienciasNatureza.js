@@ -1,30 +1,170 @@
 // BancoPerguntasCienciasNatureza.js
-// Base de dados Ciências da Natureza - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Ciências da Natureza
 
-window.ciencias = [
+window.BancoPerguntasCienciasNatureza = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"Qual destes animais é um mamífero?", opcoes:["Leão","Crocodilo","Peixe"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que as plantas produzem para respirarmos?", opcoes:["Oxigênio","Dióxido de carbono","Nitrogênio"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes é um estado da água?", opcoes:["Líquido","Metal","Areia"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que precisamos para a fotossíntese?", opcoes:["Luz, água e CO₂","Terra, vento e fogo","Areia, luz e calor"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes animais voa?", opcoes:["Pássaro","Cavalo","Crocodilo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual parte da planta absorve água do solo?", opcoes:["Raiz","Folha","Flor"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes elementos faz parte do ar?", opcoes:["Oxigênio","Ouro","Água"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que ajuda a prevenir doenças?", opcoes:["Higiene pessoal","Dormir pouco","Não beber água"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes animais vive na água?", opcoes:["Peixe","Cavalo","Leão"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes órgãos faz parte do sistema respiratório?", opcoes:["Pulmão","Coração","Fígado"], correta:0, grupoClasse:5, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"Qual é o principal rio que atravessa Luanda?", opcoes:["Bengo","Kwanza","Cuito"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual destes biomas é típico do Cuando Cubango?", opcoes:["Savana","Deserto","Tundra"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual é a função das raízes nas plantas?", opcoes:["Absorver água e nutrientes","Produzir folhas","Fotossíntese"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"O que é biodiversidade?", opcoes:["Variedade de seres vivos em um ecossistema","Quantidade de água no rio","Número de árvores plantadas"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual destes animais é típico do rio Kwanza?", opcoes:["Hipopótamo","Pinguim","Urso"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual é a importância das florestas em Angola?", opcoes:["Produzem oxigênio e protegem o solo","Servem apenas para caça","Não têm importância"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual destes fenômenos naturais pode ocorrer em Angola?", opcoes:["Chuva intensa e seca","Tornado polar","Furacão no Ártico"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"O que é o ciclo da água?", opcoes:["Evaporação, condensação e precipitação","Somente chuva","Fusão do gelo"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual é o papel dos decompositores no ecossistema?", opcoes:["Transformar matéria morta em nutrientes","Produzir energia do sol","Transportar água"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual destes minerais é importante para a saúde humana?", opcoes:["Ferro","Ouro","Diamante"], correta:0, grupoClasse:6, nivel:"dificil" }
+{
+pergunta:"Qual destes animais dá leite?",
+opcoes:["Cavalo","Vaca","Galinha","Peixe"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O que as plantas precisam para crescer?",
+opcoes:["Sol, água e terra","Chocolate","Areia e vento","Bolas de futebol"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes objetos voa no céu?",
+opcoes:["Carro","Pássaro","Peixe","Cachorro"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O que usamos para ver melhor à noite?",
+opcoes:["Luz","Sombra","Água","Areia"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um animal doméstico?",
+opcoes:["Leão","Gato","Elefante","Cavalo selvagem"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual é a função das folhas das plantas?",
+opcoes:["Produzir alimento","Fazer barulho","Guardar água","Servir de casa para pássaros"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"O que é um habitat?",
+opcoes:["Casa de uma pessoa","Lugar onde os animais vivem","Escola","Rua"],
+correta:1,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes animais é vertebrado?",
+opcoes:["Cobra","Peixe","Formiga","Caracol"],
+correta:1,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é a fotossíntese?",
+opcoes:["Processo de plantas fazerem alimento","Comer folhas","Andar na água","Crescer sem sol"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um mineral?",
+opcoes:["Areia","Água","Madeira","Ar"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"O que é um herbívoro?",
+opcoes:["Come plantas","Come carne","Come tudo","Não come nada"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes é um recurso natural renovável?",
+opcoes:["Água","Petróleo","Plástico","Carro"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"Qual é a camada da Terra onde vivemos?",
+opcoes:["Manto","Crosta","Núcleo","Litosfera"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é um ecossistema?",
+opcoes:["Conjunto de seres vivos e ambiente","Uma fábrica","Uma escola","Uma cidade"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um exemplo de poluição do ar?",
+opcoes:["Fumaça de fábrica","Chuva","Vento","Sol"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a função das raízes nas plantas?",
+opcoes:["Absorver água e nutrientes","Produzir sementes","Dar frutos","Fazer sombra"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é biodiversidade?",
+opcoes:["Variedade de espécies de seres vivos","Só plantas","Só animais","Só pessoas"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Por que devemos conservar os recursos naturais?",
+opcoes:["Para garantir vida e equilíbrio ambiental","Para gastar dinheiro","Para fazer guerras","Para viajar"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes animais é invertebrado?",
+opcoes:["Leão","Cobra","Formiga","Cavalo"],
+correta:2,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
