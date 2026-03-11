@@ -3,19 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corrida Menongue - Subway Surf Matemática</title>
+<title>Corrida Menongue - Quiz Educativo</title>
 <style>
-body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#000;}
+body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#0d47a1; color:white;}
 header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
 header img {height:40px;}
 #gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
-#btnMenu, #btnIniciar {position:absolute; top:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
-#btnMenu {right:15px;}
-#btnIniciar {right:150px;}
-#btnMenu:hover, #btnIniciar:hover {background:#1565c0;}
-footer {margin-top:10px; font-size:13px; color:#fff; text-align:center;}
-
-/* Pergunta central */
+#btnMenu, #btnIniciar {position:absolute; padding:10px 20px; background:#FFD700; color:#0d47a1; border:none; border-radius:12px; cursor:pointer; font-weight:bold; font-size:18px; z-index:10;}
+#btnMenu {top:15px; right:15px;}
+#btnIniciar {top:50%; left:50%; transform:translate(-50%,-50%);}
+#btnMenu:hover, #btnIniciar:hover {background:#FFC107;}
+#telaInicial {
+  position:absolute; top:0; left:0; width:100%; height:100%; 
+  display:flex; flex-direction:column; align-items:center; justify-content:center; 
+  background:url('imagens/fundo_inspirador.jpg') no-repeat center center/cover;
+  z-index:20; text-align:center;
+}
+#telaInicial h1 {font-size:40px; margin-bottom:20px; text-shadow:2px 2px 6px black;}
+.medalhas {display:flex; gap:20px; margin-bottom:30px;}
+.medalhas img {width:80px; transition:transform 0.3s;}
+.medalhas img:hover {transform:scale(1.2);}
 #perguntaCentral{
   position:absolute;
   top:50px;
@@ -23,7 +30,7 @@ footer {margin-top:10px; font-size:13px; color:#fff; text-align:center;}
   transform:translateX(-50%);
   background:rgba(0,0,0,0.7);
   color:#FFD700;
-  font-size:32px;
+  font-size:28px;
   font-weight:bold;
   padding:15px 30px;
   border-radius:20px;
@@ -31,113 +38,103 @@ footer {margin-top:10px; font-size:13px; color:#fff; text-align:center;}
   text-shadow:2px 2px 5px black;
   z-index:5;
 }
+footer {margin-top:10px; font-size:13px; color:#fff; text-align:center;}
 </style>
 </head>
 <body>
 
 <header>
     <img src="imagens/logo.png" alt="Logo Menongue">
-    Corrida Menongue - Subway Surf Matemática
+    Corrida Menongue - Quiz Educativo
 </header>
 
-<button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
-<button id="btnIniciar" onclick="iniciarJogo()">▶ Iniciar Corrida</button>
-
-<div id="perguntaCentral">Pergunta aqui</div>
+<!-- Tela inicial motivadora -->
+<div id="telaInicial">
+  <h1>Você consegue correr por Menongue e ainda acertar perguntas?</h1>
+  <div class="medalhas">
+    <img src="imagens/medalha_bronze.png" alt="Bronze">
+    <img src="imagens/medalha_prata.png" alt="Prata">
+    <img src="imagens/medalha_ouro.png" alt="Ouro">
+  </div>
+  <button id="btnIniciar" onclick="começarCorrida()">▶ Iniciar Corrida</button>
+</div>
 
 <canvas id="gameCanvas" width="800" height="500"></canvas>
+<div id="perguntaCentral">Pergunta aqui</div>
 
 <footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
 
 <script src="dados/BancoPerguntasMatematica.js"></script>
-
 <script>
-// ===== CONFIGURAÇÃO =====
+// CONFIGURAÇÃO
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
+// Fundo da corrida
 const fundoImg = new Image();
-fundoImg.src = "imagens/vunongue.png";
+fundoImg.src = "imagens/fundo_educativo.jpg"; 
 let fundoY = 0;
 
+// Avatar jogador
 const jogadorSprite = new Image();
 jogadorSprite.src = "imagens/jogador.png";
 
+// Sons
 const somAcerto = new Audio("sons/acerto.mp3");
 const somErro = new Audio("sons/erro.mp3");
 const somPulo = new Audio("sons/pulo.mp3");
 const somCorrida = new Audio("sons/corrida.mp3");
 somCorrida.loop = true; somCorrida.volume = 0.2;
 
+// Jogador
 const faixasX = [150, 350, 550];
 let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, vidas:3, estado:"corrida", frame:0, frameCount:0, yOffset:0};
 
+// Perguntas
 let perguntas = window.BancoPerguntasMatematica;
-let perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false;
+let perguntaAtual, baloes=[], pontos=0, velocidadeBaloes=2, jogoAtivo=false;
+let particulas=[], tempoRestante=60, timerInterval;
 
-const spriteWidth=70, spriteHeight=70, animFrames={corrida:6, pulo:4, deslize:3};
-let particulas=[];
-let tempoRestante = 60;
-let timerInterval;
+// FUNÇÕES
+function começarCorrida(){
+  document.getElementById("telaInicial").style.display="none";
+  iniciarJogo();
+}
 
-// ===== FUNÇÕES =====
 function iniciarJogo(){
-  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; moedas=[]; obstaculos=[]; jogador.yOffset=0;
-  gerarPergunta(); gerarObstaculosEMoedas();
+  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; jogador.yOffset=0;
+  gerarPergunta();
   document.addEventListener("keydown", moverJogador);
   document.addEventListener("touchstart", touchControle);
   somCorrida.play();
-  document.getElementById("btnIniciar").style.display="none";
-  iniciarTimer();
   requestAnimationFrame(loop);
-}
-
-function iniciarTimer(){
-  document.getElementById("perguntaCentral").innerText = perguntaAtual.pergunta;
-  timerInterval = setInterval(()=>{
-    tempoRestante--;
-    if(tempoRestante <=0){
-      clearInterval(timerInterval);
-      finalizarCorrida();
-    }
-  },1000);
 }
 
 function gerarPergunta(){
   perguntaAtual = perguntas[Math.floor(Math.random()*perguntas.length)];
-  baloes = [];
-
+  baloes=[];
   let indicesFaixas = [0,1,2].sort(()=>Math.random()-0.5);
-
   for(let i=0;i<3;i++){
     baloes.push({
-      x: faixasX[indicesFaixas[i]],
-      y: -100 - Math.random()*100,
-      largura: 140,
-      altura: 60,
-      texto: perguntaAtual.opcoes[i],
-      correta: i === perguntaAtual.correta,
-      offsetY: Math.random()*5
+      x:faixasX[indicesFaixas[i]],
+      y:-100 - Math.random()*100,
+      largura:140,
+      altura:60,
+      texto:perguntaAtual.opcoes[i],
+      correta:i===perguntaAtual.correta,
+      offsetY:Math.random()*5
     });
   }
   document.getElementById("perguntaCentral").innerText = perguntaAtual.pergunta;
-}
-
-function gerarObstaculosEMoedas(){
-  for(let i=0;i<3;i++){
-    moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40});
-    obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60});
-  }
 }
 
 function moverJogador(e){
   if(!jogoAtivo) return;
   if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
   if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
-  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
-  if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
+  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; somPulo.play(); }
 }
 
 function touchControle(e){
@@ -146,61 +143,61 @@ function touchControle(e){
   else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
 }
 
-function desenharJogador(){
-  let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
-  if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
-  else if(jogador.estado==="deslize") jogador.yOffset = 20;
-  else jogador.yOffset = 0;
+function desenharJogador(){ ctx.drawImage(jogadorSprite,jogador.x,jogador.y+jogador.yOffset,jogador.largura,jogador.altura); }
 
-  ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
-
-  jogador.frameCount++;
-  if(jogador.frameCount%8===0){
-    jogador.frame++;
-    if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
-    if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
-    if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
-  }
-}
+function criarParticula(x,y){ particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1}); }
 
 function loop(){
   if(!jogoAtivo) return;
-  fundoY += 5; if(fundoY >= canvas.height) fundoY = 0;
+
+  // Fundo
+  fundoY+=velocidadeBaloes; if(fundoY>=canvas.height) fundoY=0;
   ctx.drawImage(fundoImg,0,fundoY,width,height);
   ctx.drawImage(fundoImg,0,fundoY-height,width,height);
 
+  // Pontos e vidas
   ctx.fillStyle="white"; ctx.font="18px Arial";
   ctx.fillText(`Pontos: ${pontos}`,20,30);
   ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
-  ctx.fillText(`Tempo: ${tempoRestante}s`,300,30);
+
+  // Aumenta velocidade gradualmente
+  if(velocidadeBaloes<8) velocidadeBaloes += 0.001;
 
   desenharJogador();
 
+  // Balões
   baloes.forEach((b,i)=>{
-    b.y += velocidadeBaloes;
-    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+    b.y+=velocidadeBaloes;
+    b.offsetY=Math.sin(Date.now()/200+b.x)*5;
     ctx.fillStyle="rgba(255,165,0,0.9)";
     ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
     ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto,b.x+15,b.y+b.offsetY+35);
 
-    if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
-       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
-      if(b.correta){ pontos++; somAcerto.play(); }
+    if(jogador.x<b.x+b.largura && jogador.x+jogador.largura>b.x &&
+       jogador.y+jogador.yOffset<b.y+b.offsetY+b.altura && jogador.y+jogador.altura>b.y+b.offsetY){
+      if(b.correta){ pontos++; somAcerto.play(); criarParticula(jogador.x+jogador.largura/2,jogador.y); }
       else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0){ finalizarCorrida(); return; } }
       gerarPergunta();
     }
     if(b.y>height){ gerarPergunta(); }
   });
 
+  particulas.forEach((p,i)=>{
+    ctx.fillStyle=`rgba(255,255,0,${p.alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    p.y+=p.vy; p.alpha-=0.03;
+    if(p.alpha<=0) particulas.splice(i,1);
+  });
+
   requestAnimationFrame(loop);
 }
 
 function finalizarCorrida(){
-  jogoAtivo=false; somCorrida.pause(); clearInterval(timerInterval);
+  jogoAtivo=false; somCorrida.pause();
   let medalha="imagens/medalha_bronze.png";
   if(pontos>=10) medalha="imagens/medalha_prata.png";
   if(pontos>=15) medalha="imagens/medalha_ouro.png";
-
   setTimeout(()=>{
     document.body.innerHTML += `<div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;background:rgba(0,0,0,0.8);padding:30px;border-radius:20px;color:white;">
       <h2>🏆 Parabéns!</h2>
@@ -216,3 +213,4 @@ function voltarMenu(){ location.href="index.html"; }
 
 </body>
 </html>
+
