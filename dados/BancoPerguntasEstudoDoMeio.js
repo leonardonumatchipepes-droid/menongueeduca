@@ -1,42 +1,123 @@
 // BancoPerguntasEstudoDoMeio.js
-// Base de Estudo do Meio - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Estudo do Meio
 
-window.estudodomeio = [
+window.BancoPerguntasEstudoDoMeio = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"Qual destes é um animal?", opcoes:["Leão","Pedra","Mesa"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual destes é um fruto?", opcoes:["Maçã","Carro","Sapato"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"O sol nasce de qual direção?", opcoes:["Leste","Oeste","Norte","Sul"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual destes é um vegetal?", opcoes:["Tomate","Cachorro","Carro"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Onde vivem os peixes?", opcoes:["Água","Terra","Ar"], correta:0, grupoClasse:1, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  { pergunta:"Qual é o estado da água que usamos para beber?", opcoes:["Líquido","Sólido","Gasoso"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual destes animais voa?", opcoes:["Pássaro","Cavalo","Elefante"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual é a cor da grama?", opcoes:["Verde","Amarela","Azul"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual destes é um meio de transporte?", opcoes:["Carro","Árvore","Casa"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual destes animais vive na água?", opcoes:["Peixe","Gato","Cavalo"], correta:0, grupoClasse:3, nivel:"facil" },
+{
+pergunta:"O Sol é importante porque:",
+opcoes:["Dá luz e calor à Terra","É feito de gelo","Fica debaixo da água","Não serve para nada"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
 
-  { pergunta:"Qual destes objetos é usado para escrever?", opcoes:["Lápis","Bola","Sapato"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que usamos para medir o tempo?", opcoes:["Relógio","Caderno","Computador"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes animais é herbívoro?", opcoes:["Vaca","Leão","Tigre"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes é um rio de Angola?", opcoes:["Kwanza","Nilo","Amazonas"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual é a capital de Angola?", opcoes:["Luanda","Benguela","Huambo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes é um continente?", opcoes:["África","Brasil","Luanda"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que as plantas produzem que usamos para respirar?", opcoes:["Oxigênio","Água","Terra"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes animais é típico da savana angolana?", opcoes:["Leão","Urso","Pinguim"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes transportes é usado no rio?", opcoes:["Barco","Carro","Avião"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que usamos para regar as plantas?", opcoes:["Água","Areia","Fogo"], correta:0, grupoClasse:5, nivel:"facil" },
+{
+pergunta:"O que devemos fazer para manter a nossa escola limpa?",
+opcoes:["Jogar o lixo no lixo","Jogar o lixo no chão","Queimar papéis","Deixar tudo sujo"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"O rio Cuito passa por qual província angolana?", opcoes:["Cuando Cubango","Benguela","Huíla","Bié"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é a principal atividade econômica em Menongue?", opcoes:["Agricultura","Pesca","Mineração","Comércio"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que é típico da flora do Huambo?", opcoes:["Eucalipto","Cacto","Mangue"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destes animais é encontrado na savana de Angola?", opcoes:["Elefante","Urso","Canguru"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual cidade angolana é conhecida pelo seu porto?", opcoes:["Lobito","Huambo","Malanje","Menongue"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que é o Kalandula?", opcoes:["Cascata","Montanha","Rio","Cidade"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é o principal rio que passa perto de Luanda?", opcoes:["Bengo","Kwanza","Cuito","Cubango"], correta:1, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"O que se planta muito em Benguela?", opcoes:["Milho","Café","Algodão","Cacau"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual destes animais é típico do Cuando Cubango?", opcoes:["Hipopótamo","Pinguim","Canguru"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual província é conhecida como 'terra do planalto'?", opcoes:["Huambo","Benguela","Namibe","Luanda"], correta:0, grupoClasse:5, nivel:"dificil" }
+{
+pergunta:"Qual destes animais vive na água?",
+opcoes:["Peixe","Cachorro","Galinha","Elefante"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Para cuidar das plantas devemos:",
+opcoes:["Regar e dar sol","Ignorar","Pisá-las","Colocar sal nelas"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"O que é reciclagem?",
+opcoes:["Transformar materiais usados em novos produtos","Comprar coisas novas","Queimar lixo","Guardar lixo em casa"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes rios é famoso em Angola?",
+opcoes:["Kwanza","Nilo","Amazonas","Mississippi"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é um habitat?",
+opcoes:["O lugar onde os animais vivem","Um brinquedo","Uma comida","Um tipo de roupa"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Como podemos economizar água em casa?",
+opcoes:["Fechando a torneira ao escovar os dentes","Deixando a torneira aberta","Jogando água no chão","Não tomando banho"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"O que é a biodiversidade?",
+opcoes:["A variedade de seres vivos em um lugar","Somente os animais","Somente as plantas","A quantidade de água do rio"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a função das árvores para o meio ambiente?",
+opcoes:["Produzir oxigênio e proteger o solo","Não têm função","Só servem para sombra","Servem para decorar casas"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é poluição?",
+opcoes:["A presença de lixo ou substâncias nocivas na natureza","Plantar árvores","Cuidar dos animais","Construir escolas"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que podemos fazer para proteger os rios e lagos?",
+opcoes:["Não jogar lixo neles e cuidar da vegetação","Construir fábricas dentro deles","Usar água sem pensar","Pescar tudo sem parar"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Por que devemos preservar os recursos naturais?",
+opcoes:["Para garantir vida saudável para todos","Porque não é importante","Para acabar com as plantas","Para poluir mais"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
+
