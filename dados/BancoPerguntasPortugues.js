@@ -1,43 +1,225 @@
 // BancoPerguntasPortugues.js
-// Base de Língua Portuguesa - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Português
 
-window.portugues = [
+window.BancoPerguntasPortugues = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"Qual é a primeira letra da palavra 'Amor'?", opcoes:["A","M","O","R"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Quantas sílabas tem a palavra 'Casa'?", opcoes:["1","2","3","4"], correta:1, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual palavra está escrita corretamente?", opcoes:["Caza","Casa","Kasa"], correta:1, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Escolha o pronome correto: ___ gosta de sorvete.", opcoes:["Ele","Eles","Elas"], correta:0, grupoClasse:1, nivel:"facil" },
-  { pergunta:"Qual é o plural de 'Pássaro'?", opcoes:["Pássaros","Pássara","Pássari"], correta:0, grupoClasse:1, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  { pergunta:"Complete: O menino ___ no quintal.", opcoes:["brinca","brinco","brincar"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual palavra tem o som inicial igual a 'Gato'?", opcoes:["Gelo","Copo","Sapo","Pato"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual é o antônimo de 'grande'?", opcoes:["pequeno","alto","longo","forte"], correta:0, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Qual frase está correta?", opcoes:["Eu vai à escola","Eu vou à escola","Eu vou na escola"], correta:1, grupoClasse:3, nivel:"facil" },
-  { pergunta:"Complete: O sol ___ no céu.", opcoes:["brilha","brilham","brilhar"], correta:0, grupoClasse:3, nivel:"facil" },
+{
+pergunta:"Qual é a primeira letra da palavra 'Amor'?",
+opcoes:["A","M","O","R"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
 
-  { pergunta:"Qual é o plural de 'Flor'?", opcoes:["Flores","Floris","Floras"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual palavra está correta?", opcoes:["Amiga","Amigae","Amigá"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Escolha o pronome correto: ___ gostam de brincar.", opcoes:["Eles","Ele","Ela"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual é o antônimo de 'feliz'?", opcoes:["triste","alegre","contente"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Complete: A menina ___ no parque.", opcoes:["corre","corri","correr"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual frase está correta?", opcoes:["Nós vamos à praia","Nos vai à praia","Nos vamos na praia"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual é o plural de 'Lápis'?", opcoes:["Lápis","Lápises","Lápisi"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Escolha a palavra que rima com 'Céu'", opcoes:["Mel","Papel","Chão","Rua"], correta:1, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Complete: Os meninos ___ felizes.", opcoes:["estão","está","estar"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual é a forma correta de escrever a capital de Angola?", opcoes:["Luanda","Luandra","Luandá"], correta:0, grupoClasse:5, nivel:"facil" },
+{
+pergunta:"Quantas sílabas tem a palavra 'Casa'?",
+opcoes:["1","2","3","4"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"Leia: 'Joana foi à feira de Menongue e comprou frutas'. Qual é o sujeito da frase?", opcoes:["Joana","feira","frutas"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Escolha a forma correta: 'Ele ___ estudando para o teste.'", opcoes:["está","estão","estive"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é o plural de 'cidadão'?", opcoes:["cidadãos","cidadães","cidadões"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Complete: 'O rio Cuanza é ___ Angola.'", opcoes:["de","do","da"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual palavra é sinônimo de 'alegria'?", opcoes:["tristeza","contentamento","raiva"], correta:1, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Leia: 'O navio chegou ao porto do Lobito'. Qual é o objeto da frase?", opcoes:["navio","porto","Lobito"], correta:1, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é a forma correta de escrever a cidade?", opcoes:["Huambo","Huámbo"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Complete: 'As crianças ___ no recreio.'", opcoes:["brincam","brinca","brinco"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Qual é o antônimo de 'cheio'?", opcoes:["vazio","lotado","repleto"], correta:0, grupoClasse:5, nivel:"dificil" },
-  { pergunta:"Leia: 'A professora explicou a lição de português em Menongue'. Qual é o complemento indireto?", opcoes:["a lição","de português","em Menongue"], correta:2, grupoClasse:5, nivel:"dificil" }
+{
+pergunta:"Qual palavra está escrita corretamente?",
+opcoes:["Caza","Casa","Kaza","Kasa"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas palavras é um animal?",
+opcoes:["Mesa","Cão","Casa","Livro"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual letra começa a palavra 'Bola'?",
+opcoes:["B","D","P","L"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas palavras é uma fruta?",
+opcoes:["Banana","Mesa","Caderno","Sapato"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual palavra tem 3 sílabas?",
+opcoes:["Sol","Caderno","Pé","Mar"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Complete: O gato ___ leite.",
+opcoes:["bebe","beber","bebeu","bebes"],
+correta:0,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"Qual é o plural de 'casa'?",
+opcoes:["casas","casaes","casis","cazas"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas palavras é um verbo?",
+opcoes:["Correr","Mesa","Livro","Casa"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é o feminino de 'menino'?",
+opcoes:["menina","meninos","menine","meninae"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas palavras é um objeto?",
+opcoes:["Caderno","Cão","Professor","Aluno"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual frase está correta?",
+opcoes:[
+"Eu fomos à escola",
+"Eu fui à escola",
+"Eu foi à escola",
+"Eu ir à escola"
+],
+correta:1,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é o antônimo de 'alto'?",
+opcoes:["baixo","grande","largo","forte"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual palavra significa o mesmo que 'feliz'?",
+opcoes:["triste","alegre","zangado","doente"],
+correta:1,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Complete: As crianças ___ no recreio.",
+opcoes:["brincam","brinca","brincar","brinco"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"Qual é o plural de 'flor'?",
+opcoes:["flores","floris","flora","floras"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas palavras é um adjetivo?",
+opcoes:["bonito","correr","mesa","livro"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destas frases está correta?",
+opcoes:[
+"Nós fomos ao mercado",
+"Nós foi ao mercado",
+"Nós ir ao mercado",
+"Nós vai ao mercado"
+],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é o sinônimo de 'rápido'?",
+opcoes:["lento","veloz","pesado","fraco"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual palavra é um substantivo?",
+opcoes:["casa","andar","correr","sorrir"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é o plural de 'cidadão'?",
+opcoes:["cidadãos","cidadões","cidadães","cidadãoses"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual é o contrário de 'verdade'?",
+opcoes:["mentira","certeza","prova","razão"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual frase está gramaticalmente correta?",
+opcoes:[
+"Eles vai para escola",
+"Eles vão para a escola",
+"Eles ir para escola",
+"Eles indo escola"
+],
+correta:1,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
-
