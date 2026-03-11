@@ -1,30 +1,187 @@
 // BancoPerguntasEMC.js
-// Base de dados Educação Moral e Cívica - MENONGUE EDUCA
+// MENONGUE EDUCA - Banco de Perguntas de Estudo do Meio e Cidadania
 
-window.emc = [
+window.BancoPerguntasEMC = [
 
-  // ------------------- FÁCEIS -------------------
-  { pergunta:"O que significa respeitar os outros?", opcoes:["Tratar bem as pessoas","Fazer o que quiser","Ignorar regras"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes comportamentos é correto na escola?", opcoes:["Ajudar colegas","Brigar","Roubar material"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é honestidade?", opcoes:["Dizer a verdade e agir corretamente","Mentir para se proteger","Pegar coisas dos outros"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual valor promove a amizade?", opcoes:["Solidariedade","Egoísmo","Desrespeito"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que devemos fazer com o lixo?", opcoes:["Colocar no local correto","Jogar no chão","Queimar tudo"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é cidadania?", opcoes:["Participar da vida da comunidade","Ignorar regras","Apenas estudar"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes comportamentos é sinal de respeito?", opcoes:["Ouvir quando alguém fala","Interromper sempre","Ignorar os outros"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"O que é cooperação?", opcoes:["Trabalhar junto para alcançar um objetivo","Competir sempre sozinho","Fazer apenas o que quer"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Por que é importante obedecer regras?", opcoes:["Para manter a ordem e segurança","Para causar confusão","Para ignorar os outros"], correta:0, grupoClasse:5, nivel:"facil" },
-  { pergunta:"Qual destes valores evita brigas?", opcoes:["Tolerância","Impaciência","Raiva"], correta:0, grupoClasse:5, nivel:"facil" },
+/* =========================
+1ª e 2ª CLASSE
+========================= */
 
-  // ------------------- DIFÍCEIS -------------------
-  { pergunta:"Se João encontra um caderno perdido na escola, o que deve fazer?", opcoes:["Entregar ao professor","Guardar para si","Jogar fora"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual destas ações ajuda a proteger o meio ambiente em Luanda?", opcoes:["Não jogar lixo nos rios","Usar plástico sem reciclar","Desmatar áreas verdes"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Se um colega é intimidado, o que você deve fazer?", opcoes:["Denunciar e apoiar o colega","Ignorar","Participar da intimidação"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"O que é cidadania em Angola?", opcoes:["Conhecer e cumprir direitos e deveres","Fazer apenas o que quer","Ignorar regras"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Como você demonstra ética no uso da internet?", opcoes:["Não espalhando mentiras e respeitando os outros","Compartilhando informações falsas","Ignorando os demais"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Se ver alguém cortando árvores ilegalmente, o que deve fazer?", opcoes:["Informar às autoridades","Ajudar a cortar","Não fazer nada"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Qual ação ajuda a resolver conflitos na comunidade?", opcoes:["Diálogo e respeito mútuo","Briga","Ignorar os problemas"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Como podemos mostrar solidariedade em Menongue?", opcoes:["Ajudando pessoas carentes","Ignorando necessidades","Tomando vantagem"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"Se alguém encontra um objeto valioso na rua, o que é correto fazer?", opcoes:["Entregar a uma autoridade ou dono","Ficar com ele","Destruir"], correta:0, grupoClasse:6, nivel:"dificil" },
-  { pergunta:"O que significa respeitar a diversidade cultural em Angola?", opcoes:["Valorizar diferentes tradições e línguas","Ignorar culturas diferentes","Forçar todos a pensar igual"], correta:0, grupoClasse:6, nivel:"dificil" }
+{
+pergunta:"O que devemos fazer antes de atravessar a rua?",
+opcoes:["Correr rápido","Olhar para os dois lados","Fechar os olhos","Gritar"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um alimento saudável?",
+opcoes:["Bala","Fruta","Refrigerante","Chiclete"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"De onde vem a água que bebemos?",
+opcoes:["Do supermercado","Do rio ou poço","Do vento","Da areia"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"Quem ajuda quando estamos doentes?",
+opcoes:["Professor","Médico","Amigo","Vendedor"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"facil"
+},
+
+{
+pergunta:"O sol nasce de que lado?",
+opcoes:["Norte","Sul","Este","Oeste"],
+correta:2,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes objetos usamos para escrever?",
+opcoes:["Garfo","Lápis","Bola","Sapato"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual é a função da escola?",
+opcoes:["Nos divertir","Aprender","Dormir","Comer"],
+correta:1,
+grupoClasse:"1-2",
+nivel:"dificil"
+},
+
+/* =========================
+3ª e 4ª CLASSE
+========================= */
+
+{
+pergunta:"O que é reciclar?",
+opcoes:["Jogar lixo na rua","Transformar lixo em novos produtos","Queimar lixo","Enterrar lixo"],
+correta:1,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes animais vive na água?",
+opcoes:["Cachorro","Gato","Peixe","Cavalo"],
+correta:2,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes meios de transporte é terrestre?",
+opcoes:["Avião","Barco","Carro","Navio"],
+correta:2,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"O que devemos fazer para não adoecer?",
+opcoes:["Lavar as mãos","Brincar na lama","Dormir pouco","Comer muito doce"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual é a principal função das árvores?",
+opcoes:["Dar sombra e ar puro","Servir de casa","Fazer barulho","Comer frutas"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"O que é cidadania?",
+opcoes:["Respeitar regras e direitos","Falar alto","Brincar sozinho","Não estudar"],
+correta:0,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destes hábitos protege o meio ambiente?",
+opcoes:["Desperdiçar água","Plantar árvores","Queimar lixo","Poluir rios"],
+correta:1,
+grupoClasse:"3-4",
+nivel:"dificil"
+},
+
+/* =========================
+5ª e 6ª CLASSE
+========================= */
+
+{
+pergunta:"Qual é o papel da polícia na sociedade?",
+opcoes:["Ensinar na escola","Proteger e garantir a lei","Vender produtos","Organizar festas"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que é poluição?",
+opcoes:["Limpeza da cidade","Sujaça do ar, água ou solo","Plantar árvores","Reciclar"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Qual destes é um recurso natural?",
+opcoes:["Água","Plástico","Carro","Computador"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"Por que devemos economizar água?",
+opcoes:["Para não gastar dinheiro","Para não faltar água para todos","Para brincar mais","Para cozinhar menos"],
+correta:1,
+grupoClasse:"5-6",
+nivel:"facil"
+},
+
+{
+pergunta:"O que significa democracia?",
+opcoes:["Pessoas decidem nas eleições","Só um manda","Ninguém decide","Só o governo escolhe"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"Qual destas ações ajuda a proteger os rios?",
+opcoes:["Jogar lixo no rio","Construir fábricas poluentes","Reciclar e não poluir","Queimar lixo na beira do rio"],
+correta:2,
+grupoClasse:"5-6",
+nivel:"dificil"
+},
+
+{
+pergunta:"O que é ética?",
+opcoes:["Comportamento correto e justo","Enganar pessoas","Falar alto","Ignorar regras"],
+correta:0,
+grupoClasse:"5-6",
+nivel:"dificil"
+}
 
 ];
+
