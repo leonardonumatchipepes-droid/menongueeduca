@@ -1,29 +1,261 @@
-baloes.forEach((b,i)=>{
-  b.y += velocidadeBaloes;
-  b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corrida Menongue - Subway Surf Matemática</title>
+<style>
+body {margin:0; font-family:Poppins,sans-serif; overflow:hidden; background:#f4f8fb;}
+header {background:#0d47a1; color:white; padding:10px; display:flex; align-items:center; gap:10px;}
+header img {height:40px;}
+#gameCanvas {display:block; margin:auto; border-radius:12px; background:#333;}
+#btnMenu, #btnIniciar {position:absolute; top:15px; padding:8px 12px; background:#0d47a1; color:white; border:none; border-radius:8px; cursor:pointer; z-index:10;}
+#btnMenu {right:15px;}
+#btnIniciar {right:150px;}
+#btnMenu:hover, #btnIniciar:hover {background:#1565c0;}
+footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
+</style>
+</head>
+<body>
 
-  // desenha balão
-  ctx.fillStyle = "orange";
-  ctx.fillRect(b.x, b.y + b.offsetY, b.largura, b.altura);
-  ctx.fillStyle = "black";
-  ctx.font = "18px Arial";
-  ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
+<header>
+    <img src="imagens/logo.png" alt="Logo Menongue">
+    Corrida Menongue - Subway Surf Matemática
+</header>
 
-  // colisão com jogador
-  if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
-     jogador.y + jogador.yOffset < b.y + b.offsetY + b.altura && jogador.y + jogador.altura > b.y + b.offsetY){
-    
-    if(b.correta){
-      pontos++;
-      somAcerto.play();
-    } else {
-      jogador.vidas--;
-      somErro.play();
-      if(jogador.vidas <= 0) { finalizarCorrida(); return; }
+<button id="btnMenu" onclick="voltarMenu()">⬅ Voltar ao Menu Inicial</button>
+<button id="btnIniciar" onclick="iniciarJogo()">▶ Iniciar Corrida</button>
+
+<canvas id="gameCanvas" width="800" height="500"></canvas>
+
+<footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
+
+<script src="dados/BancoPerguntasMatematica.js"></script>
+
+<script>
+// ===== CONFIGURAÇÃO =====
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+let width = canvas.width;
+let height = canvas.height;
+
+// Fundo da corrida
+const fundoImg = new Image();
+fundoImg.src = "imagens/vunongue.png";
+let fundoY = 0;
+
+// Avatar com spritesheet
+const jogadorSprite = new Image();
+jogadorSprite.src = "imagens/jogador.png";
+
+// Sons
+const somAcerto = new Audio("sons/acerto.mp3");
+const somErro = new Audio("sons/erro.mp3");
+const somPulo = new Audio("sons/pulo.mp3");
+const somCorrida = new Audio("sons/corrida.mp3");
+somCorrida.loop = true; somCorrida.volume = 0.2;
+
+// Jogador
+const faixasX = [150, 350, 550];
+let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, vidas:3, estado:"corrida", frame:0, frameCount:0, yOffset:0};
+
+// Perguntas / balões / moedas / obstáculos
+let perguntas = window.BancoPerguntasMatematica;
+let perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false, perguntaCor="black";
+
+// Spritesheet config
+const spriteWidth=70, spriteHeight=70, animFrames={corrida:6, pulo:4, deslize:3};
+
+// Partículas
+let particulas=[];
+
+// ===== FUNÇÕES =====
+function iniciarJogo(){
+  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; moedas=[]; obstaculos=[]; jogador.yOffset=0;
+  gerarPergunta(); gerarObstaculosEMoedas();
+  document.addEventListener("keydown", moverJogador);
+  document.addEventListener("touchstart", touchControle);
+  somCorrida.play();
+  document.getElementById("btnIniciar").style.display="none";
+  iniciarTimer();
+  requestAnimationFrame(loop);
+}
+
+// Timer de 1 minuto
+let tempoRestante = 60;
+let timerInterval;
+function iniciarTimer(){
+  timerInterval = setInterval(()=>{
+    tempoRestante--;
+    if(tempoRestante <=0){
+      clearInterval(timerInterval);
+      finalizarCorrida();
     }
-    gerarPergunta(); // gera próxima pergunta assim que pegar qualquer balão
-  }
+  },1000);
+}
 
-  // se balão sair da tela, gera nova pergunta
-  if(b.y > height) gerarPergunta();
-});
+// Perguntas aleatórias
+function gerarPergunta(){
+  perguntaAtual = perguntas[Math.floor(Math.random()*perguntas.length)];
+  baloes = [];
+
+  // Aleatoriza posições
+  let indicesFaixas = [0,1,2].sort(()=>Math.random()-0.5);
+
+  for(let i=0;i<3;i++){
+    baloes.push({
+      x: faixasX[indicesFaixas[i]],
+      y: -100 - Math.random()*100,
+      largura: 120,
+      altura: 60,
+      texto: perguntaAtual.opcoes[i],
+      correta: i === perguntaAtual.correta,
+      offsetY: Math.random()*5
+    });
+  }
+}
+
+// Obstáculos e moedas
+function gerarObstaculosEMoedas(){
+  for(let i=0;i<3;i++){
+    moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
+    obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
+  }
+}
+
+// Controle teclado
+function moverJogador(e){
+  if(!jogoAtivo) return;
+  if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
+  if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
+  if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
+}
+
+// Controle mobile
+function touchControle(e){
+  let touchX = e.touches[0].clientX;
+  if(touchX < window.innerWidth/2 && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
+  else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+}
+
+// Desenhar jogador
+function desenharJogador(){
+  let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
+  if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
+  else if(jogador.estado==="deslize") jogador.yOffset = 20;
+  else jogador.yOffset = 0;
+
+  ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
+
+  jogador.frameCount++;
+  if(jogador.frameCount%8===0){
+    jogador.frame++;
+    if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
+    if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
+    if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
+  }
+}
+
+// Loop principal
+function loop(){
+  if(!jogoAtivo) return;
+
+  // Fundo
+  fundoY += 5; if(fundoY >= canvas.height) fundoY = 0;
+  ctx.drawImage(fundoImg,0,fundoY,width,height);
+  ctx.drawImage(fundoImg,0,fundoY-height,width,height);
+
+  // Pergunta
+  perguntaCor = perguntaCor==="black"?"white":"black";
+  ctx.fillStyle = perguntaCor;
+  ctx.font="28px Arial";
+  ctx.fillText(perguntaAtual.pergunta, 20, 50);
+
+  // Pontos e vidas
+  ctx.fillStyle="white";
+  ctx.font="18px Arial";
+  ctx.fillText(`Pontos: ${pontos}`,20,30);
+  ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
+  ctx.fillText(`Tempo: ${tempoRestante}s`,300,30);
+
+  // Jogador
+  desenharJogador();
+
+  // Balões / perguntas
+  baloes.forEach((b,i)=>{
+    b.y += velocidadeBaloes;
+    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+    ctx.fillStyle="orange";
+    ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
+    ctx.fillStyle="black";
+    ctx.font="18px Arial";
+    ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
+
+    if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
+       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
+      if(b.correta){ pontos++; somAcerto.play(); }
+      else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0){ finalizarCorrida(); return; } }
+      gerarPergunta();
+    }
+    if(b.y > height){ gerarPergunta(); }
+  });
+
+  // Moedas
+  moedas.forEach((m,i)=>{
+    m.y += 4;
+    ctx.fillStyle="gold"; ctx.beginPath(); ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2); ctx.fill();
+    if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
+       jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
+      pontos += 2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
+    }
+    if(m.y > height) m.y=-Math.random()*800;
+  });
+
+  // Obstáculos
+  obstaculos.forEach((o,i)=>{
+    o.y += 6;
+    ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
+    if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
+       jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
+      jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
+      if(jogador.vidas<=0) finalizarCorrida();
+    }
+    if(o.y>height) o.y=-Math.random()*1200;
+  });
+
+  // Partículas
+  particulas.forEach((p,i)=>{
+    ctx.fillStyle = `rgba(255,255,0,${p.alpha})`;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    p.y += p.vy; p.alpha -= 0.03; if(p.alpha<=0) particulas.splice(i,1);
+  });
+
+  requestAnimationFrame(loop);
+}
+
+function criarParticula(x,y){ particulas.push({x,y,r:3,vy:Math.random()*2+1, alpha:1}); }
+
+// Finaliza corrida e mostra medalha
+function finalizarCorrida(){
+  jogoAtivo=false; somCorrida.pause(); clearInterval(timerInterval);
+  let medalha="imagens/medalha_bronze.png";
+  if(pontos>=10) medalha="imagens/medalha_prata.png";
+  if(pontos>=15) medalha="imagens/medalha_ouro.png";
+
+  setTimeout(()=>{
+    alert(`🏁 Fim da corrida! Pontuação: ${pontos}`);
+    document.body.innerHTML += `<div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;background:rgba(0,0,0,0.8);padding:30px;border-radius:20px;color:white;">
+      <h2>🏆 Parabéns!</h2>
+      <img src="${medalha}" style="width:150px;">
+      <p>Pontos: ${pontos}</p>
+      <button onclick="location.reload()">Jogar Novamente</button>
+    </div>`;
+  },100);
+}
+
+function voltarMenu(){ location.href="index.html"; }
+</script>
+
+</body>
+</html>
