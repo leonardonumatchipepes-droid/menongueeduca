@@ -1,407 +1,270 @@
 <!DOCTYPE html>
 <html lang="pt-AO">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Quiz Game - Menongue Educa</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
-
-*{box-sizing:border-box;}
-
-body{
-font-family:'Fredoka',sans-serif;
-background:url("vunongue.png") center/cover no-repeat fixed;
-margin:0;
-color:white;
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+    font-family: 'Fredoka', sans-serif;
+    background: url("vunongue.png") center/cover no-repeat fixed;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-backdrop-filter:blur(3px);
-z-index:-1;
+body::before {
+    content: "";
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+    z-index:-1;
 }
-
-.container{
-max-width:900px;
-margin:auto;
-padding:30px;
-text-align:center;
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 30px;
+    text-align: center;
 }
-
-h1{
-color:#FFD700;
-font-size:2.5rem;
-text-shadow:2px 2px 8px black;
+h1 {
+    color: #FFD700;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 8px black;
+    margin-bottom: 20px;
 }
-
-.card{
-background:rgba(0,0,0,0.85);
-padding:25px;
-border-radius:20px;
-box-shadow:0 0 30px rgba(0,0,0,0.8);
+.card {
+    background: rgba(0,0,0,0.85);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    margin-bottom: 20px;
 }
-
-select,input,button{
-padding:12px 15px;
-margin:10px;
-border:none;
-border-radius:10px;
-font-size:16px;
+select, input, button {
+    padding: 12px 15px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
 }
-
-input,select{
-width:230px;
+input, select {
+    width: 230px;
 }
-
-button{
-background:#ff7f00;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
+button {
+    background: #ff7f00;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
 }
-
-button:hover{
-transform:scale(1.05);
-background:#ff5500;
+button:hover {
+    transform: scale(1.05);
+    background: #ff5500;
 }
-
-#quiz{display:none;}
-
-#timer{
-font-size:20px;
-margin-bottom:10px;
+#quiz { display: none; }
+#timer { font-size: 20px; margin-bottom: 10px; }
+#pergunta { font-size: 22px; margin: 20px 0; }
+.opcao {
+    display: block;
+    background: #3498db;
+    margin: 10px 0;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: .3s;
 }
-
-#pergunta{
-font-size:22px;
-margin:20px 0;
+.opcao:hover {
+    background: #1abc9c;
+    transform: scale(1.03);
 }
-
-.opcao{
-display:block;
-background:#3498db;
-margin:10px;
-padding:14px;
-border-radius:12px;
-cursor:pointer;
-font-size:18px;
-transition:.3s;
+.correto { background: #2ecc71 !important; }
+.incorreto { background: #e74c3c !important; }
+#progressBar {
+    height: 12px;
+    background: #444;
+    border-radius: 20px;
+    margin: 15px 0;
 }
-
-.opcao:hover{
-background:#1abc9c;
-transform:scale(1.03);
+#progress {
+    height: 12px;
+    background: #00ff95;
+    width: 0%;
+    border-radius: 20px;
 }
-
-.correto{background:#2ecc71 !important;}
-.incorreto{background:#e74c3c !important;}
-
-#progressBar{
-height:12px;
-background:#444;
-border-radius:20px;
-margin:15px 0;
+.medalha { width: 120px; margin: 15px 0; }
+@media(max-width:600px){
+    h1 { font-size:2rem; }
+    input, select { width: 100%; }
 }
-
-#progress{
-height:12px;
-background:#00ff95;
-width:0%;
-}
-
-.medalha{
-width:120px;
-}
-
 </style>
-
 </head>
 
 <body>
-
 <div class="container">
 
 <h1>🎮 Quiz Menongue Educa</h1>
 
 <div class="card" id="controls">
-
-<input id="nomeAluno" placeholder="Nome do aluno">
-
-<br>
-
-<select id="classe">
-
-<option value="1-2">1ª e 2ª Classe</option>
-<option value="3-4">3ª e 4ª Classe</option>
-<option value="5-6">5ª e 6ª Classe</option>
-
-</select>
-
-<br>
-
-<select id="disciplina">
-
-<option value="matematica">Matemática</option>
-<option value="portugues">Português</option>
-<option value="estudodomeio">Estudo do Meio</option>
-<option value="manualplastica">Educação Manual e Plástica</option>
-<option value="educacaofisica">Educação Física</option>
-<option value="historia">História</option>
-<option value="ciencias">Ciências da Natureza</option>
-<option value="emc">Educação Moral e Cívica</option>
-<option value="geografia">Geografia</option>
-<option value="musica">Educação Musical</option>
-
-</select>
-
-<br>
-
-<button id="btnIniciar">🚀 Iniciar Quiz</button>
-
+    <input id="nomeAluno" placeholder="Nome do aluno">
+    <br>
+    <select id="classe">
+        <option value="1-2">1ª e 2ª Classe</option>
+        <option value="3-4">3ª e 4ª Classe</option>
+        <option value="5-6">5ª e 6ª Classe</option>
+    </select>
+    <br>
+    <select id="disciplina">
+        <option value="matematica">Matemática</option>
+        <option value="portugues">Português</option>
+        <option value="estudodomeio">Estudo do Meio</option>
+        <option value="manualplastica">Educação Manual e Plástica</option>
+        <option value="educacaofisica">Educação Física</option>
+        <option value="historia">História</option>
+        <option value="ciencias">Ciências da Natureza</option>
+        <option value="emc">Educação Moral e Cívica</option>
+        <option value="geografia">Geografia</option>
+        <option value="musica">Educação Musical</option>
+    </select>
+    <br>
+    <button id="btnIniciar">🚀 Iniciar Quiz</button>
 </div>
 
 <div class="card" id="quiz">
-
-<div id="timer"></div>
-
-<div id="progressBar">
-<div id="progress"></div>
-</div>
-
-<h2 id="pergunta"></h2>
-
-<div id="opcoes"></div>
-
+    <div id="timer"></div>
+    <div id="progressBar"><div id="progress"></div></div>
+    <h2 id="pergunta"></h2>
+    <div id="opcoes"></div>
 </div>
 
 <div id="resultado"></div>
-
-</div>
 
 <audio id="somCerto" src="som/certo.mp3"></audio>
 <audio id="somErrado" src="som/errado.mp3"></audio>
 
 <script>
-
 const caminhos={
+    matematica:"dados/BancoPerguntasMatematica.js",
+    portugues:"dados/BancoPerguntasPortugues.js",
+    estudodomeio:"dados/BancoPerguntasEstudoDoMeio.js",
+    manualplastica:"dados/BancoPerguntasEducacaoManualPlastica.js",
+    educacaofisica:"dados/BancoPerguntasEducacaoFisica.js",
+    historia:"dados/BancoPerguntasHistoria.js",
+    ciencias:"dados/BancoPerguntasCienciasNatureza.js",
+    emc:"dados/BancoPerguntasEMC.js",
+    geografia:"dados/BancoPerguntasGeografia.js",
+    musica:"dados/BancoPerguntasMusica.js"
+};
 
-matematica:"dados/BancoPerguntasMatematica.js",
-portugues:"dados/BancoPerguntasPortugues.js",
-estudodomeio:"dados/BancoPerguntasEstudoDoMeio.js",
-manualplastica:"dados/BancoPerguntasEducacaoPlastica.js",
-educacaofisica:"dados/BancoPerguntasEducacaoFisica.js",
-historia:"dados/BancoPerguntasHistoria.js",
-ciencias:"dados/BancoPerguntasCienciasNatureza.js",
-emc:"dados/BancoPerguntasEMC.js",
-geografia:"dados/BancoPerguntasGeografia.js",
-musica:"dados/BancoPerguntasMusica.js"
-
-}
-
-let perguntas=[]
-let perguntaAtual=0
-let pontos=0
-let tempo
-let tempoRestante=15
+let perguntas=[], perguntaAtual=0, pontos=0, tempo, tempoRestante=15;
 
 async function carregarPerguntas(d){
-
-return new Promise((resolve,reject)=>{
-
-let script=document.createElement("script")
-
-script.src=caminhos[d]
-
-script.onload=()=>{
-
-let mapa={
-matematica:window.BancoPerguntasMatematica,
-portugues:window.BancoPerguntasPortugues,
-estudodomeio:window.BancoPerguntasEstudoDoMeio,
-manualplastica:window.BancoPerguntasEducacaoPlastica,
-educacaofisica:window.BancoPerguntasEducacaoFisica,
-historia:window.BancoPerguntasHistoria,
-ciencias:window.BancoPerguntasCienciasNatureza,
-emc:window.BancoPerguntasEMC,
-geografia:window.BancoPerguntasGeografia,
-musica:window.BancoPerguntasMusica
-}
-
-resolve(mapa[d] || [])
-
-}
-
-script.onerror=()=>reject("Erro ao carregar")
-
-document.body.appendChild(script)
-
-})
-
+    return new Promise((resolve,reject)=>{
+        let script=document.createElement("script");
+        script.src=caminhos[d];
+        script.onload=()=> {
+            let mapa={
+                matematica:window.BancoPerguntasMatematica,
+                portugues:window.BancoPerguntasPortugues,
+                estudodomeio:window.BancoPerguntasEstudoDoMeio,
+                manualplastica:window.BancoPerguntasEducacaoManualPlastica,
+                educacaofisica:window.BancoPerguntasEducacaoFisica,
+                historia:window.BancoPerguntasHistoria,
+                ciencias:window.BancoPerguntasCienciasNatureza,
+                emc:window.BancoPerguntasEMC,
+                geografia:window.BancoPerguntasGeografia,
+                musica:window.BancoPerguntasMusica
+            };
+            resolve(mapa[d] || []);
+        };
+        script.onerror=()=>reject("Erro ao carregar");
+        document.body.appendChild(script);
+    });
 }
 
 document.getElementById("btnIniciar").onclick=async()=>{
-
-let nome=document.getElementById("nomeAluno").value
-let classe=document.getElementById("classe").value
-let disc=document.getElementById("disciplina").value
-
-if(!nome){
-alert("Digite o nome do aluno")
-return
-}
-
-localStorage.setItem("nomeAluno",nome)
-
-let todas=await carregarPerguntas(disc)
-
-let faceis=todas.filter(p=>p.nivel==="facil" && p.grupoClasse===classe)
-let dificeis=todas.filter(p=>p.nivel==="dificil" && p.grupoClasse===classe)
-
-faceis=faceis.sort(()=>Math.random()-0.5).slice(0,5)
-dificeis=dificeis.sort(()=>Math.random()-0.5).slice(0,3)
-
-perguntas=[...faceis,...dificeis]
-
-if(perguntas.length===0){
-alert("Sem perguntas para esta seleção")
-return
-}
-
-document.getElementById("controls").style.display="none"
-document.getElementById("quiz").style.display="block"
-
-mostrarPergunta()
-iniciarTimer()
-
+    let nome=document.getElementById("nomeAluno").value;
+    let classe=document.getElementById("classe").value;
+    let disc=document.getElementById("disciplina").value;
+    if(!nome){ alert("Digite o nome do aluno"); return; }
+    localStorage.setItem("nomeAluno",nome);
+    let todas=await carregarPerguntas(disc);
+    let faceis=todas.filter(p=>p.nivel==="facil" && p.grupoClasse===classe);
+    let dificeis=todas.filter(p=>p.nivel==="dificil" && p.grupoClasse===classe);
+    faceis=faceis.sort(()=>Math.random()-0.5).slice(0,5);
+    dificeis=dificeis.sort(()=>Math.random()-0.5).slice(0,3);
+    perguntas=[...faceis,...dificeis];
+    if(perguntas.length===0){ alert("Sem perguntas para esta seleção"); return; }
+    document.getElementById("controls").style.display="none";
+    document.getElementById("quiz").style.display="block";
+    mostrarPergunta();
+    iniciarTimer();
 }
 
 function mostrarPergunta(){
-
-if(perguntaAtual>=perguntas.length){
-finalizar()
-return
-}
-
-let p=perguntas[perguntaAtual]
-
-document.getElementById("pergunta").innerText=p.pergunta
-
-let opcoesDiv=document.getElementById("opcoes")
-opcoesDiv.innerHTML=""
-
-p.opcoes.forEach((op,i)=>{
-
-let btn=document.createElement("div")
-
-btn.className="opcao"
-btn.innerText=op
-
-btn.onclick=()=>responder(i)
-
-opcoesDiv.appendChild(btn)
-
-})
-
-document.getElementById("progress").style.width=(perguntaAtual/perguntas.length*100)+"%"
-
+    if(perguntaAtual>=perguntas.length){ finalizar(); return; }
+    let p=perguntas[perguntaAtual];
+    document.getElementById("pergunta").innerText=p.pergunta;
+    let opcoesDiv=document.getElementById("opcoes");
+    opcoesDiv.innerHTML="";
+    p.opcoes.forEach((op,i)=>{
+        let btn=document.createElement("div");
+        btn.className="opcao";
+        btn.innerText=op;
+        btn.onclick=()=>responder(i);
+        opcoesDiv.appendChild(btn);
+    });
+    document.getElementById("progress").style.width=(perguntaAtual/perguntas.length*100)+"%";
 }
 
 function responder(i){
-
-clearInterval(tempo)
-
-let correta=perguntas[perguntaAtual].correta
-
-let botoes=document.querySelectorAll(".opcao")
-
-botoes.forEach((b,index)=>{
-
-if(index===correta) b.classList.add("correto")
-
-if(index===i && i!==correta) b.classList.add("incorreto")
-
-})
-
-if(i===correta){
-
-pontos++
-document.getElementById("somCerto").play()
-
-}else{
-
-document.getElementById("somErrado").play()
-
-}
-
-setTimeout(()=>{
-
-perguntaAtual++
-mostrarPergunta()
-iniciarTimer()
-
-},1200)
-
+    clearInterval(tempo);
+    let correta=perguntas[perguntaAtual].correta;
+    let botoes=document.querySelectorAll(".opcao");
+    botoes.forEach((b,index)=>{
+        if(index===correta) b.classList.add("correto");
+        if(index===i && i!==correta) b.classList.add("incorreto");
+    });
+    if(i===correta){ pontos++; document.getElementById("somCerto").play(); }
+    else{ document.getElementById("somErrado").play(); }
+    setTimeout(()=>{
+        perguntaAtual++;
+        mostrarPergunta();
+        iniciarTimer();
+    },1200);
 }
 
 function iniciarTimer(){
-
-tempoRestante=15
-
-document.getElementById("timer").innerText="⏱ "+tempoRestante
-
-tempo=setInterval(()=>{
-
-tempoRestante--
-
-document.getElementById("timer").innerText="⏱ "+tempoRestante
-
-if(tempoRestante<=0){
-
-clearInterval(tempo)
-perguntaAtual++
-mostrarPergunta()
-iniciarTimer()
-
-}
-
-},1000)
-
+    tempoRestante=15;
+    document.getElementById("timer").innerText="⏱ "+tempoRestante;
+    tempo=setInterval(()=>{
+        tempoRestante--;
+        document.getElementById("timer").innerText="⏱ "+tempoRestante;
+        if(tempoRestante<=0){
+            clearInterval(tempo);
+            perguntaAtual++;
+            mostrarPergunta();
+            iniciarTimer();
+        }
+    },1000);
 }
 
 function finalizar(){
-
-document.getElementById("quiz").style.display="none"
-
-let medalha="imagens/medalha_bronze.png"
-
-if(pontos>=5) medalha="imagens/medalha_prata.png"
-if(pontos>=7) medalha="imagens/medalha_ouro.png"
-
-document.getElementById("resultado").innerHTML=
-
-`<h2>🏁 Fim do Quiz</h2>
-<img src="${medalha}" class="medalha">
-<p>Pontuação ${pontos}/${perguntas.length}</p>
-<button onclick="location.reload()">Jogar novamente</button>`
-
+    document.getElementById("quiz").style.display="none";
+    let medalha="imagens/medalha_bronze.png";
+    if(pontos>=5) medalha="imagens/medalha_prata.png";
+    if(pontos>=7) medalha="imagens/medalha_ouro.png";
+    document.getElementById("resultado").innerHTML=
+    `<h2>🏁 Fim do Quiz</h2>
+     <img src="${medalha}" class="medalha">
+     <p>Pontuação ${pontos}/${perguntas.length}</p>
+     <button onclick="location.reload()">Jogar novamente</button>`;
 }
-
 </script>
-
 </body>
 </html>
-
 
