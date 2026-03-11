@@ -30,21 +30,19 @@ footer {margin-top:10px; font-size:13px; color:#555; text-align:center;}
 
 <footer>Administração Municipal de Menongue | Direção Municipal da Educação</footer>
 
-<script src="bancoPerguntas.js"></script>
-
 <script>
-// ===== CONFIGURAÇÃO =====
+// ==================== CONFIGURAÇÃO ====================
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-// Fundo 3D da estrada Menongue (link direto Google Drive)
+// Fundo da corrida
 const fundoImg = new Image();
 fundoImg.src = "https://drive.google.com/uc?export=download&id=1XmOvJvCNpxgszBNVFM2nnQP1Cnc3BieZ";
 let fundoY = 0;
 
-// Avatar africano com spritesheet
+// Jogador africano
 const jogadorSprite = new Image();
 jogadorSprite.src = "imagens/jogador.png"; // spritesheet correndo
 
@@ -59,76 +57,110 @@ somCorrida.loop = true; somCorrida.volume = 0.2;
 const faixasX = [150, 350, 550];
 let jogador = {x:faixasX[1], y:380, largura:70, altura:70, faixa:1, vidas:3, estado:"corrida", frame:0, frameCount:0, yOffset:0};
 
-// Perguntas / balões / moedas / obstáculos
-let perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false, perguntaCor="black";
+// Perguntas e balões
+let perguntas=[], perguntaAtual, baloes=[], moedas=[], obstaculos=[], pontos=0, velocidadeBaloes=5, jogoAtivo=false, perguntaCor="black";
+
+// Timer de 1 minuto
+let tempoTotal = 60, tempoInterval;
 
 // Spritesheet config
 const spriteWidth=70, spriteHeight=70, animFrames={corrida:6, pulo:4, deslize:3};
-
-// Partículas
 let particulas=[];
 
-// ===== FUNÇÕES =====
-function iniciarJogo(){
-  if(typeof bancoPerguntas === "undefined"){ alert("bancoPerguntas.js não carregado!"); return; }
-  pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; moedas=[]; obstaculos=[]; jogador.yOffset=0;
-  gerarPergunta(); gerarObstaculosEMoedas();
-  document.addEventListener("keydown", moverJogador);
-  document.addEventListener("touchstart", touchControle);
-  somCorrida.play();
-  document.getElementById("btnIniciar").style.display="none";
-  requestAnimationFrame(loop);
+// ==================== FUNÇÕES ====================
+async function iniciarJogo(){
+    // Carregar banco de perguntas
+    if(typeof BancoPerguntasMatematica === "undefined"){
+        await carregarBanco();
+    }
+    perguntas = BancoPerguntasMatematica.filter(p=>p.nivel==="facil" || p.nivel==="dificil");
+    pontos=0; jogador.vidas=3; jogoAtivo=true; baloes=[]; moedas=[]; obstaculos=[]; jogador.yOffset=0;
+    gerarPergunta(); gerarObstaculosEMoedas();
+    document.addEventListener("keydown", moverJogador);
+    document.addEventListener("touchstart", touchControle);
+    somCorrida.play();
+    document.getElementById("btnIniciar").style.display="none";
+
+    // Inicia timer de 1 minuto
+    tempoTotal = 60;
+    tempoInterval = setInterval(()=>{
+        tempoTotal--;
+        if(tempoTotal <=0){
+            finalizarCorrida();
+        }
+    },1000);
+
+    requestAnimationFrame(loop);
+}
+
+// Carregar banco de perguntas
+async function carregarBanco(){
+    return new Promise((resolve,reject)=>{
+        let script = document.createElement("script");
+        script.src = "dados/BancoPerguntasMatematica.js";
+        script.onload = ()=> resolve();
+        script.onerror = ()=> reject("Erro ao carregar banco de perguntas");
+        document.body.appendChild(script);
+    });
 }
 
 // Perguntas
 function gerarPergunta(){
-  perguntaAtual = bancoPerguntas[Math.floor(Math.random()*bancoPerguntas.length)];
-  baloes=[];
-  for(let i=0;i<3;i++){
-    baloes.push({x:faixasX[i], y:-100, largura:120, altura:60, texto:perguntaAtual.opcoes[i], correta:i===perguntaAtual.resposta, offsetY:Math.random()*5});
-  }
+    perguntaAtual = perguntas[Math.floor(Math.random()*perguntas.length)];
+    baloes=[];
+    for(let i=0;i<3;i++){
+        baloes.push({
+            x:faixasX[i],
+            y:-100,
+            largura:120,
+            altura:60,
+            texto:perguntaAtual.opcoes[i],
+            correta:i===perguntaAtual.correta,
+            offsetY:Math.random()*5
+        });
+    }
 }
 
 // Obstáculos e moedas
 function gerarObstaculosEMoedas(){
-  for(let i=0;i<3;i++){
-    moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
-    obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
-  }
+    for(let i=0;i<3;i++){
+        moedas.push({x:faixasX[i], y:-Math.random()*800, largura:40, altura:40, tipo:"moeda"});
+        obstaculos.push({x:faixasX[i], y:-Math.random()*1200, largura:60, altura:60, tipo:"obstaculo"});
+    }
 }
 
 // Controle teclado
 function moverJogador(e){
-  if(!jogoAtivo) return;
-  if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
-  if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
-  if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
-  if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
+    if(!jogoAtivo) return;
+    if(e.key==="ArrowLeft" && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
+    if(e.key==="ArrowRight" && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+    if(e.key==="ArrowUp" && jogador.estado==="corrida"){ jogador.estado="pulo"; jogador.frame=0; jogador.frameCount=0; somPulo.play(); }
+    if(e.key==="ArrowDown" && jogador.estado==="corrida"){ jogador.estado="deslize"; jogador.frame=0; jogador.frameCount=0; }
 }
 
 // Controle mobile
 function touchControle(e){
-  let touchX = e.touches[0].clientX;
-  if(touchX < window.innerWidth/2 && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
-  else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
+    let touchX = e.touches[0].clientX;
+    if(touchX < window.innerWidth/2 && jogador.faixa>0){ jogador.faixa--; jogador.x=faixasX[jogador.faixa]; }
+    else if(touchX >= window.innerWidth/2 && jogador.faixa<2){ jogador.faixa++; jogador.x=faixasX[jogador.faixa]; }
 }
 
 // Desenhar jogador
 function desenharJogador(){
-  let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
-  if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
-  else if(jogador.estado==="deslize") jogador.yOffset = 20;
-  else jogador.yOffset = 0;
+    let linha = jogador.estado==="corrida"?0:jogador.estado==="pulo"?1:2;
+    if(jogador.estado==="pulo") jogador.yOffset = -Math.sin((jogador.frameCount/animFrames.pulo)*Math.PI)*100;
+    else if(jogador.estado==="deslize") jogador.yOffset = 20;
+    else jogador.yOffset = 0;
 
-  ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
+    ctx.drawImage(jogadorSprite, spriteWidth*jogador.frame, spriteHeight*linha, spriteWidth, spriteHeight, jogador.x, jogador.y+jogador.yOffset, jogador.largura, jogador.altura);
 
-  jogador.frameCount++;
-  if(jogador.frameCount%8===0){
-    jogador.frame++;
-    if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
-    if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
-    if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
-  }
+    jogador.frameCount++;
+    if(jogador.frameCount%8===0){
+        jogador.frame++;
+        if(jogador.estado==="corrida" && jogador.frame>=animFrames.corrida) jogador.frame=0;
+        if(jogador.estado==="pulo" && jogador.frame>=animFrames.pulo) jogador.estado="corrida";
+        if(jogador.estado==="deslize" && jogador.frame>=animFrames.deslize) jogador.estado="corrida";
+    }
 }
 
 // Partículas
@@ -136,86 +168,101 @@ function criarParticula(x,y){ particulas.push({x,y,r:3,vy:Math.random()*2+1, alp
 
 // Loop principal
 function loop(){
-  if(!jogoAtivo) return;
+    if(!jogoAtivo) return;
 
-  // Fundo infinito 3D
-  fundoY+=5; if(fundoY>=canvas.height) fundoY=0;
-  ctx.drawImage(fundoImg,0,fundoY,width,height);
-  ctx.drawImage(fundoImg,0,fundoY-height,width,height);
+    // Fundo
+    fundoY+=5; if(fundoY>=canvas.height) fundoY=0;
+    ctx.drawImage(fundoImg,0,fundoY,width,height);
+    ctx.drawImage(fundoImg,0,fundoY-height,width,height);
 
-  // Pergunta
-  perguntaCor = perguntaCor==="black"?"white":"black";
-  ctx.fillStyle=perguntaCor;
-  ctx.font="28px Arial";
-  ctx.fillText(perguntaAtual.pergunta, 20, 50);
+    // Pergunta
+    perguntaCor = perguntaCor==="black"?"white":"black";
+    ctx.fillStyle=perguntaCor;
+    ctx.font="28px Arial";
+    ctx.fillText(perguntaAtual.pergunta, 20, 50);
 
-  // Pontos e vidas
-  ctx.fillStyle="white";
-  ctx.font="18px Arial";
-  ctx.fillText(`Pontos: ${pontos}`,20,30);
-  ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
+    // Pontos e vidas
+    ctx.fillStyle="white";
+    ctx.font="18px Arial";
+    ctx.fillText(`Pontos: ${pontos}`,20,30);
+    ctx.fillText(`Vidas: ${jogador.vidas}`,150,30);
 
-  // Jogador
-  desenharJogador();
+    // Jogador
+    desenharJogador();
 
-  // Balões / perguntas
-  baloes.forEach((b,i)=>{
-    b.y+=velocidadeBaloes;
-    b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
-    ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
-    ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
-    if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
-       jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
-      if(b.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
-      else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0) gameOver(); else gerarPergunta(); }
-    }
-    if(b.y>height){ gerarPergunta(); }
-  });
+    // Balões / perguntas
+    baloes.forEach((b,i)=>{
+        b.y+=velocidadeBaloes;
+        b.offsetY = Math.sin(Date.now()/200 + b.x)*5;
+        ctx.fillStyle="orange"; ctx.fillRect(b.x,b.y+b.offsetY,b.largura,b.altura);
+        ctx.fillStyle="black"; ctx.font="18px Arial"; ctx.fillText(b.texto, b.x+20, b.y+b.offsetY+35);
+        if(jogador.x < b.x + b.largura && jogador.x + jogador.largura > b.x &&
+           jogador.y+jogador.yOffset < b.y+b.offsetY + b.altura && jogador.y+jogador.altura > b.y+b.offsetY){
+            if(b.correta){ pontos++; somAcerto.play(); gerarPergunta(); }
+            else{ jogador.vidas--; somErro.play(); if(jogador.vidas<=0) finalizarCorrida(); else gerarPergunta(); }
+        }
+        if(b.y>height){ gerarPergunta(); }
+    });
 
-  // Moedas
-  moedas.forEach(m=>{
-    m.y+=4;
-    ctx.fillStyle="gold"; ctx.beginPath();
-    ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2); ctx.fill();
-    if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
-       jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
-      pontos+=2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
-    }
-    if(m.y>height) m.y=-Math.random()*800;
-  });
+    // Moedas
+    moedas.forEach(m=>{
+        m.y+=4;
+        ctx.fillStyle="gold"; ctx.beginPath();
+        ctx.arc(m.x+20,m.y+20,15,0,Math.PI*2); ctx.fill();
+        if(jogador.x < m.x + m.largura && jogador.x + jogador.largura > m.x &&
+           jogador.y+jogador.yOffset < m.y + m.altura && jogador.y+jogador.altura > m.y){
+            pontos+=2; criarParticula(jogador.x+jogador.largura/2,jogador.y); m.y=-Math.random()*800; somAcerto.play();
+        }
+        if(m.y>height) m.y=-Math.random()*800;
+    });
 
-  // Obstáculos
-  obstaculos.forEach(o=>{
-    o.y+=6;
-    ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
-    if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
-       jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
-      jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
-      if(jogador.vidas<=0) gameOver();
-    }
-    if(o.y>height) o.y=-Math.random()*1200;
-  });
+    // Obstáculos
+    obstaculos.forEach(o=>{
+        o.y+=6;
+        ctx.fillStyle="red"; ctx.fillRect(o.x,o.y,o.largura,o.altura);
+        if(jogador.x < o.x + o.largura && jogador.x + jogador.largura > o.x &&
+           jogador.y+jogador.yOffset < o.y + o.altura && jogador.y+jogador.altura > o.y){
+            jogador.vidas--; criarParticula(jogador.x+jogador.largura/2,jogador.y+jogador.altura/2); somErro.play(); o.y=-Math.random()*1200;
+            if(jogador.vidas<=0) finalizarCorrida();
+        }
+        if(o.y>height) o.y=-Math.random()*1200;
+    });
 
-  // Partículas
-  particulas.forEach((p,i)=>{
-    ctx.fillStyle = `rgba(255,255,0,${p.alpha})`;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    p.y+=p.vy; p.alpha-=0.03; if(p.alpha<=0) particulas.splice(i,1);
-  });
+    // Partículas
+    particulas.forEach((p,i)=>{
+        ctx.fillStyle = `rgba(255,255,0,${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+        p.y+=p.vy; p.alpha-=0.03; if(p.alpha<=0) particulas.splice(i,1);
+    });
 
-  requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
 }
 
-function gameOver(){
-  jogoAtivo=false;
-  somCorrida.pause();
-  alert(`💀 Fim do jogo! Pontuação: ${pontos}`);
-  location.reload();
+// ==================== FINALIZAÇÃO ====================
+function finalizarCorrida(){
+    jogoAtivo=false;
+    clearInterval(tempoInterval);
+    somCorrida.pause();
+    // Medalhas
+    let medalha="imagens/medalha_bronze.png";
+    if(pontos>=20) medalha="imagens/medalha_prata.png";
+    if(pontos>=35) medalha="imagens/medalha_ouro.png";
+
+    // Mostrar resultado
+    ctx.clearRect(0,0,width,height);
+    ctx.fillStyle="white"; ctx.font="28px Arial"; ctx.fillText("🏁 Fim da Corrida!", width/2-100, height/2-50);
+    let img = new Image(); img.src=medalha;
+    img.onload=()=>{ ctx.drawImage(img,width/2-60,height/2-20,120,120); };
+    ctx.fillText(`Pontuação: ${pontos}`, width/2-80, height/2+120);
+
+    setTimeout(()=>{ location.reload(); },8000);
 }
 
 function voltarMenu(){ location.href="index.html"; }
 </script>
+
+<script src="dados/BancoPerguntasMatematica.js"></script>
 
 </body>
 </html>
