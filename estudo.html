@@ -3,117 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menongue Educa - Biblioteca Digital</title>
+
+<title>Biblioteca Digital - Menongue Educa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
-body, html {
+*{
 margin:0;
 padding:0;
-height:100%;
+box-sizing:border-box;
 font-family:'Inter',sans-serif;
-background:#121212;
-color:#fff;
 }
 
-.d-flex.h-100{height:100vh;overflow:hidden}
+body{
+background:#0f0f0f;
+color:#fff;
+height:100vh;
+overflow:hidden;
+}
+
+.container{
+display:flex;
+height:100vh;
+}
 
 /* SIDEBAR */
 
 .sidebar{
-width:300px;
-max-width:80%;
-background:url('imagens/vunongue.png') center/cover no-repeat;
+
+width:260px;
+background:url("imagens/vunongue.png") center/cover no-repeat;
 padding:20px;
 display:flex;
 flex-direction:column;
-overflow-y:auto;
-height:100vh;
+gap:10px;
+
 }
 
 .sidebar h2{
 text-align:center;
-margin-bottom:20px;
-font-weight:700;
+margin-bottom:15px;
 }
 
-/* PESQUISA */
+.classe{
 
-.search-bar{margin-bottom:20px}
-
-.search-bar input{
-width:100%;
+background:rgba(0,0,0,0.65);
 padding:12px;
-border-radius:10px;
-border:none;
-background:rgba(0,0,0,0.6);
-color:#fff;
-}
-
-/* LIVROS */
-
-.livro-card{
-background:rgba(0,0,0,0.6);
-padding:15px;
-margin-bottom:10px;
-border-radius:10px;
+border-radius:8px;
 cursor:pointer;
-font-weight:600;
-display:flex;
-align-items:center;
-gap:10px;
 transition:.3s;
+font-weight:600;
+
 }
 
-.livro-card::before{content:"📚"}
-
-.livro-card:hover{
-transform:scale(1.03);
-box-shadow:0 10px 20px rgba(0,255,255,.4);
+.classe:hover{
+background:#00bcd4;
+transform:scale(1.05);
 }
 
-/* AREA PRINCIPAL */
+/* AREA LIVROS */
 
 .main{
+
 flex:1;
 display:flex;
 flex-direction:column;
-background:#121212;
+background:#111;
+overflow:hidden;
+
 }
 
-/* TOPO */
+.grid{
 
-.topbar{
-background:#000;
-padding:10px;
-display:none;
-justify-content:flex-end;
-gap:10px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:20px;
+padding:25px;
+overflow-y:auto;
+
 }
 
-.btn-download{
-background:#28a745;
-color:#fff;
+.book{
+
+background:#1f1f1f;
+padding:25px;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+font-weight:600;
+
 }
 
-.btn-voltar{
-background:#dc3545;
-color:#fff;
+.book:hover{
+
+transform:translateY(-6px);
+box-shadow:0 10px 20px rgba(0,255,255,0.5);
+
 }
 
-/* PDF */
+/* VISUALIZADOR PDF */
 
 .viewer{
-flex:1;
-display:none;
-}
 
-.viewer iframe{
+position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
+background:#000;
+display:none;
+flex-direction:column;
+
+}
+
+.topbar{
+
+background:#111;
+padding:10px;
+display:flex;
+justify-content:flex-end;
+gap:10px;
+
+}
+
+.topbar button{
+
+padding:10px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+
+}
+
+.voltar{
+background:#e53935;
+color:white;
+}
+
+.download{
+background:#4caf50;
+color:white;
+}
+
+iframe{
+flex:1;
+width:100%;
 border:none;
 }
 
@@ -122,120 +160,173 @@ border:none;
 
 <body>
 
-<div class="d-flex h-100">
+<div class="container">
 
 <!-- SIDEBAR -->
 
 <div class="sidebar">
 
-<h2>Biblioteca Digital</h2>
+<h2>Classes</h2>
 
-<div class="search-bar">
-<input type="text" id="searchInput" onkeyup="filtrarLivros()" placeholder="🔍 Pesquisar livro...">
-</div>
+<div class="classe" onclick="mostrarClasse(1)">1ª Classe</div>
+<div class="classe" onclick="mostrarClasse(2)">2ª Classe</div>
+<div class="classe" onclick="mostrarClasse(3)">3ª Classe</div>
+<div class="classe" onclick="mostrarClasse(4)">4ª Classe</div>
+<div class="classe" onclick="mostrarClasse(5)">5ª Classe</div>
+<div class="classe" onclick="mostrarClasse(6)">6ª Classe</div>
 
-<!-- 1ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_1.pdf')">Matemática 1ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_1.pdf')">Língua Portuguesa 1ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/edm_1.pdf')">Estudo do Meio 1ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/ef_1.pdf')">Educação Física 1ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emp_1.pdf')">Educação Manual e Plástica 1ª Classe</div>
-
-<!-- 2ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_2.pdf')">Matemática 2ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_2.pdf')">Língua Portuguesa 2ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/edm_2.pdf')">Estudo do Meio 2ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/ef_2.pdf')">Educação Física 2ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emp_2.pdf')">Educação Manual e Plástica 2ª Classe</div>
-
-<!-- 3ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_3.pdf')">Matemática 3ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_3.pdf')">Língua Portuguesa 3ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/edm_3.pdf')">Estudo do Meio 3ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/ef_3.pdf')">Educação Física 3ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emp_3.pdf')">Educação Manual e Plástica 3ª Classe</div>
-
-<!-- 4ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_4.pdf')">Matemática 4ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_4.pdf')">Língua Portuguesa 4ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pdfs/edm_4.pdf')">Estudo do Meio 4ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/ef_4.pdf')">Educação Física 4ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emp_4.pdf')">Educação Manual e Plástica 4ª Classe</div>
-
-<!-- 5ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_5.pdf')">Matemática 5ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_5.pdf')">Língua Portuguesa 5ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/cn_5.pdf')">Ciências da Natureza 5ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/geo_5.pdf')">Geografia 5ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/hist_5.pdf')">História 5ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emc_5.pdf')">Educação Moral e Cívica 5ª Classe</div>
-
-<!-- 6ª CLASSE -->
-
-<div class="livro-card" onclick="abrirLivro('pfds/mat_6.pdf')">Matemática 6ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/lp_6.pdf')">Língua Portuguesa 6ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/cn_6.pdf')">Ciências da Natureza 6ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/geo_6.pdf')">Geografia 6ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/hist_6.pdf')">História 6ª Classe</div>
-<div class="livro-card" onclick="abrirLivro('pfds/emc_6.pdf')">Educação Moral e Cívica 6ª Classe</div>
-
-<div class="livro-card" onclick="abrirLivro('pfds/calendario_escolar.pdf')">📅 Calendário Escolar</div>
+<div class="classe" onclick="abrirLivro('pdfs/calendario_escolar.pdf')">📅 Calendário Escolar</div>
 
 </div>
 
-<!-- AREA PRINCIPAL -->
+
+<!-- AREA LIVROS -->
 
 <div class="main">
 
-<div class="topbar" id="pdfTopbar">
-<a id="downloadBtn" href="#" download><button class="btn btn-download">Baixar PDF</button></a>
-<button class="btn btn-voltar" onclick="voltarBiblioteca()">Voltar</button>
-</div>
+<div class="grid" id="gridLivros">
 
-<div class="viewer" id="pdfViewerContainer">
-<iframe id="pdfViewer"></iframe>
+<h2>Selecione uma classe</h2>
+
 </div>
 
 </div>
+
 </div>
+
+
+<!-- VISUALIZADOR PDF -->
+
+<div class="viewer" id="viewer">
+
+<div class="topbar">
+
+<a id="downloadLink" download>
+<button class="download">Baixar</button>
+</a>
+
+<button class="voltar" onclick="fecharLivro()">Voltar</button>
+
+</div>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
 
 <script>
 
-function filtrarLivros(){
-let filtro=document.getElementById("searchInput").value.toLowerCase()
-let livros=document.getElementsByClassName("livro-card")
+/* BASE DE LIVROS */
 
-for(let livro of livros){
-livro.style.display=livro.textContent.toLowerCase().includes(filtro)?"flex":"none"
+const livros = {
+
+1:[
+{nome:"Matemática",file:"mat_1.pdf"},
+{nome:"Língua Portuguesa",file:"lp_1.pdf"},
+{nome:"Estudo do Meio",file:"edm_1.pdf"},
+{nome:"Educação Física",file:"ef_1.pdf"},
+{nome:"Educação Manual",file:"emp_1.pdf"}
+],
+
+2:[
+{nome:"Matemática",file:"mat_2.pdf"},
+{nome:"Língua Portuguesa",file:"lp_2.pdf"},
+{nome:"Estudo do Meio",file:"edm_2.pdf"},
+{nome:"Educação Física",file:"ef_2.pdf"},
+{nome:"Educação Manual",file:"emp_2.pdf"}
+],
+
+3:[
+{nome:"Matemática",file:"mat_3.pdf"},
+{nome:"Língua Portuguesa",file:"lp_3.pdf"},
+{nome:"Estudo do Meio",file:"edm_3.pdf"},
+{nome:"Educação Física",file:"ef_3.pdf"},
+{nome:"Educação Manual",file:"emp_3.pdf"}
+],
+
+4:[
+{nome:"Matemática",file:"mat_4.pdf"},
+{nome:"Língua Portuguesa",file:"lp_4.pdf"},
+{nome:"Estudo do Meio",file:"edm_4.pdf"},
+{nome:"Educação Física",file:"ef_4.pdf"},
+{nome:"Educação Manual",file:"emp_4.pdf"}
+],
+
+5:[
+{nome:"Matemática",file:"mat_5.pdf"},
+{nome:"Língua Portuguesa",file:"lp_5.pdf"},
+{nome:"Ciências",file:"cn_5.pdf"},
+{nome:"Geografia",file:"geo_5.pdf"},
+{nome:"História",file:"hist_5.pdf"},
+{nome:"Educação Moral",file:"emc_5.pdf"}
+],
+
+6:[
+{nome:"Matemática",file:"mat_6.pdf"},
+{nome:"Língua Portuguesa",file:"lp_6.pdf"},
+{nome:"Ciências",file:"cn_6.pdf"},
+{nome:"Geografia",file:"geo_6.pdf"},
+{nome:"História",file:"hist_6.pdf"},
+{nome:"Educação Moral",file:"emc_6.pdf"}
+]
+
 }
+
+
+/* MOSTRAR LIVROS */
+
+function mostrarClasse(classe){
+
+let grid=document.getElementById("gridLivros")
+
+grid.innerHTML=""
+
+livros[classe].forEach(livro=>{
+
+grid.innerHTML+=`
+
+<div class="book" onclick="abrirLivro('pdfs/${livro.file}')">
+
+📚<br><br>
+${livro.nome}
+
+</div>
+
+`
+
+})
+
 }
+
+
+/* ABRIR LIVRO */
 
 function abrirLivro(caminho){
 
-document.querySelector('.sidebar').style.display='none'
-document.getElementById('pdfViewerContainer').style.display='block'
-document.getElementById('pdfTopbar').style.display='flex'
+document.getElementById("viewer").style.display="flex"
 
-document.getElementById('pdfViewer').src=caminho
-document.getElementById('downloadBtn').href=caminho
+document.getElementById("pdfFrame").src=caminho
 
-if(/iPhone|iPad|Android/i.test(navigator.userAgent)){
-window.open(caminho,'_blank')
+document.getElementById("downloadLink").href=caminho
+
+/* MOBILE abre nativo */
+
+if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
+
+window.open(caminho,"_blank")
+
 }
 
 }
 
-function voltarBiblioteca(){
 
-document.querySelector('.sidebar').style.display='flex'
-document.getElementById('pdfViewerContainer').style.display='none'
-document.getElementById('pdfTopbar').style.display='none'
-document.getElementById('pdfViewer').src=''
+/* FECHAR */
+
+function fecharLivro(){
+
+document.getElementById("viewer").style.display="none"
+
+document.getElementById("pdfFrame").src=""
 
 }
 
@@ -243,5 +334,3 @@ document.getElementById('pdfViewer').src=''
 
 </body>
 </html>
-
-
