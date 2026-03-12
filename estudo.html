@@ -3,90 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Biblioteca Digital - Menongue Educa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-background:#0f0f0f;
-color:#fff;
-height:100vh;
-overflow:hidden;
-}
-
-.container{
-display:flex;
-height:100vh;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:#0f0f0f;color:#fff;height:100vh;overflow:hidden;}
+.container{display:flex;height:100vh;}
 
 /* SIDEBAR */
-
 .sidebar{
-
 width:260px;
 background:url("imagens/vunongue.png") center/cover no-repeat;
 padding:20px;
 display:flex;
 flex-direction:column;
 gap:10px;
-
 }
-
-.sidebar h2{
-text-align:center;
-margin-bottom:15px;
-}
-
+.sidebar h2{text-align:center;margin-bottom:15px;}
 .classe{
-
 background:rgba(0,0,0,0.65);
 padding:12px;
 border-radius:8px;
 cursor:pointer;
 transition:.3s;
 font-weight:600;
-
 }
-
-.classe:hover{
-background:#00bcd4;
-transform:scale(1.05);
-}
+.classe:hover{background:#00bcd4;transform:scale(1.05);}
 
 /* AREA LIVROS */
-
 .main{
-
 flex:1;
 display:flex;
 flex-direction:column;
 background:#111;
 overflow:hidden;
-
 }
-
 .grid{
-
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
 gap:20px;
 padding:25px;
 overflow-y:auto;
-
 }
-
 .book{
-
 background:#1f1f1f;
 padding:25px;
 border-radius:10px;
@@ -94,20 +55,11 @@ text-align:center;
 cursor:pointer;
 transition:.3s;
 font-weight:600;
-
 }
-
-.book:hover{
-
-transform:translateY(-6px);
-box-shadow:0 10px 20px rgba(0,255,255,0.5);
-
-}
+.book:hover{transform:translateY(-6px);box-shadow:0 10px 20px rgba(0,255,255,0.5);}
 
 /* VISUALIZADOR PDF */
-
 .viewer{
-
 position:fixed;
 top:0;
 left:0;
@@ -116,45 +68,24 @@ height:100%;
 background:#000;
 display:none;
 flex-direction:column;
-
 }
-
 .topbar{
-
 background:#111;
 padding:10px;
 display:flex;
 justify-content:flex-end;
 gap:10px;
-
 }
-
 .topbar button{
-
 padding:10px 15px;
 border:none;
 border-radius:6px;
 cursor:pointer;
 font-weight:600;
-
 }
-
-.voltar{
-background:#e53935;
-color:white;
-}
-
-.download{
-background:#4caf50;
-color:white;
-}
-
-iframe{
-flex:1;
-width:100%;
-border:none;
-}
-
+.voltar{background:#e53935;color:white;}
+.download{background:#4caf50;color:white;}
+iframe{flex:1;width:100%;border:none;}
 </style>
 </head>
 
@@ -163,63 +94,40 @@ border:none;
 <div class="container">
 
 <!-- SIDEBAR -->
-
 <div class="sidebar">
-
 <h2>Classes</h2>
-
 <div class="classe" onclick="mostrarClasse(1)">1ª Classe</div>
 <div class="classe" onclick="mostrarClasse(2)">2ª Classe</div>
 <div class="classe" onclick="mostrarClasse(3)">3ª Classe</div>
 <div class="classe" onclick="mostrarClasse(4)">4ª Classe</div>
 <div class="classe" onclick="mostrarClasse(5)">5ª Classe</div>
 <div class="classe" onclick="mostrarClasse(6)">6ª Classe</div>
-
-<div class="classe" onclick="abrirLivro('pdfs/calendario_escolar.pdf')">📅 Calendário Escolar</div>
-
+<div class="classe" onclick="abrirLivro('pfds/calendario_escolar.pdf')">📅 Calendário Escolar</div>
 </div>
-
 
 <!-- AREA LIVROS -->
-
 <div class="main">
-
 <div class="grid" id="gridLivros">
-
 <h2>Selecione uma classe</h2>
-
+</div>
 </div>
 
 </div>
-
-</div>
-
 
 <!-- VISUALIZADOR PDF -->
-
 <div class="viewer" id="viewer">
-
 <div class="topbar">
-
 <a id="downloadLink" download>
 <button class="download">Baixar</button>
 </a>
-
 <button class="voltar" onclick="fecharLivro()">Voltar</button>
-
 </div>
-
 <iframe id="pdfFrame"></iframe>
-
 </div>
-
 
 <script>
-
 /* BASE DE LIVROS */
-
 const livros = {
-
 1:[
 {nome:"Matemática",file:"mat_1.pdf"},
 {nome:"Língua Portuguesa",file:"lp_1.pdf"},
@@ -227,7 +135,6 @@ const livros = {
 {nome:"Educação Física",file:"ef_1.pdf"},
 {nome:"Educação Manual",file:"emp_1.pdf"}
 ],
-
 2:[
 {nome:"Matemática",file:"mat_2.pdf"},
 {nome:"Língua Portuguesa",file:"lp_2.pdf"},
@@ -235,7 +142,6 @@ const livros = {
 {nome:"Educação Física",file:"ef_2.pdf"},
 {nome:"Educação Manual",file:"emp_2.pdf"}
 ],
-
 3:[
 {nome:"Matemática",file:"mat_3.pdf"},
 {nome:"Língua Portuguesa",file:"lp_3.pdf"},
@@ -243,7 +149,6 @@ const livros = {
 {nome:"Educação Física",file:"ef_3.pdf"},
 {nome:"Educação Manual",file:"emp_3.pdf"}
 ],
-
 4:[
 {nome:"Matemática",file:"mat_4.pdf"},
 {nome:"Língua Portuguesa",file:"lp_4.pdf"},
@@ -251,7 +156,6 @@ const livros = {
 {nome:"Educação Física",file:"ef_4.pdf"},
 {nome:"Educação Manual",file:"emp_4.pdf"}
 ],
-
 5:[
 {nome:"Matemática",file:"mat_5.pdf"},
 {nome:"Língua Portuguesa",file:"lp_5.pdf"},
@@ -260,7 +164,6 @@ const livros = {
 {nome:"História",file:"hist_5.pdf"},
 {nome:"Educação Moral",file:"emc_5.pdf"}
 ],
-
 6:[
 {nome:"Matemática",file:"mat_6.pdf"},
 {nome:"Língua Portuguesa",file:"lp_6.pdf"},
@@ -269,67 +172,36 @@ const livros = {
 {nome:"História",file:"hist_6.pdf"},
 {nome:"Educação Moral",file:"emc_6.pdf"}
 ]
-
 }
-
 
 /* MOSTRAR LIVROS */
-
 function mostrarClasse(classe){
-
 let grid=document.getElementById("gridLivros")
-
 grid.innerHTML=""
-
 livros[classe].forEach(livro=>{
-
 grid.innerHTML+=`
-
-<div class="book" onclick="abrirLivro('pdfs/${livro.file}')">
-
-📚<br><br>
-${livro.nome}
-
+<div class="book" onclick="abrirLivro('pfds/${livro.file}')">
+📚<br><br>${livro.nome}
 </div>
-
 `
-
 })
-
 }
-
 
 /* ABRIR LIVRO */
-
 function abrirLivro(caminho){
-
 document.getElementById("viewer").style.display="flex"
-
 document.getElementById("pdfFrame").src=caminho
-
 document.getElementById("downloadLink").href=caminho
-
-/* MOBILE abre nativo */
-
 if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
-
 window.open(caminho,"_blank")
-
 }
-
 }
-
 
 /* FECHAR */
-
 function fecharLivro(){
-
 document.getElementById("viewer").style.display="none"
-
 document.getElementById("pdfFrame").src=""
-
 }
-
 </script>
 
 </body>
