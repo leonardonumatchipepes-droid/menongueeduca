@@ -1,188 +1,255 @@
 <!DOCTYPE html>
-<html lang="pt-AO">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menongue Educa - Biblioteca Digital</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Biblioteca Digital</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 <style>
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Inter', sans-serif;
-    background: #121212;
-    color: #fff;
-}
 
-.d-flex.h-100 { height: 100vh; overflow: hidden; }
+body{
+margin:0;
+font-family:Arial;
+background:#0f0f0f;
+color:white;
+overflow-x:hidden;
+}
 
 /* SIDEBAR */
-.sidebar {
-    width: 300px;
-    max-width: 80%;
-    background: url('imagens/vunongue.png') no-repeat center center;
-    background-size: cover;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    height: 100vh;
-    backdrop-filter: blur(4px);
+
+.sidebar{
+width:250px;
+height:100vh;
+background:
+linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),
+url("imagens/vunongue.png");
+background-size:cover;
+position:fixed;
+padding:20px;
 }
 
-.sidebar h2 {
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+.sidebar h3{
+text-align:center;
+margin-bottom:20px;
 }
 
-/* Barra de pesquisa */
-.search-bar { margin-bottom: 20px; }
-.search-bar input {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 12px;
-    border: none;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    outline: none;
-}
-.search-bar input::placeholder { color: rgba(255,255,255,0.7); }
-.search-bar input:focus { background: rgba(0,0,0,0.7); }
-
-/* CARDS DE LIVROS */
-.livro-card {
-    background: rgba(0,0,0,0.6);
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.livro-card::before { content: "📚"; font-size: 1.3rem; }
-.livro-card:hover { transform: translateX(5px) scale(1.03); box-shadow: 0 12px 20px rgba(0, 255, 255, 0.4); }
-
-.livro-card.calendar {
-    background: rgba(255,255,0,0.4);
-    color: #000;
-    font-weight: 700;
-}
-.livro-card.calendar:hover { background: rgba(255,255,0,0.6); }
-
-/* AREA PRINCIPAL */
-.main { flex: 1; display: flex; flex-direction: column; background: rgba(18,18,18,0.95); }
-
-/* TOPO */
-.topbar {
-    background: rgba(0,0,0,0.7);
-    padding: 12px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    z-index: 10;
-    display: none; /* só aparece quando PDF aberto */
+.sidebar button{
+width:100%;
+margin-bottom:10px;
 }
 
-.btn-download { background: #28a745; color: #fff; font-weight: 600; transition: all 0.3s; }
-.btn-download:hover { filter: brightness(1.1); }
+/* AREA DIREITA */
 
-.btn-voltar { background: #dc3545; color: #fff; font-weight: 600; transition: all 0.3s; }
-.btn-voltar:hover { filter: brightness(1.1); }
-
-/* VISUALIZADOR PDF FULLSCREEN */
-.viewer {
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.95);
-    display: none;
+.main{
+margin-left:250px;
+padding:25px;
 }
-.viewer iframe { width: 100%; height: 100%; border: none; }
 
-@media(max-width: 768px) {
-    .sidebar { width: 250px; }
+/* BIBLIOTECA HORIZONTAL */
+
+.livros{
+display:flex;
+gap:15px;
+overflow-x:auto;
+padding-bottom:10px;
 }
+
+.livro{
+min-width:200px;
+background:#1b1b1b;
+padding:20px;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+text-align:center;
+}
+
+.livro:hover{
+background:#2a2a2a;
+transform:translateY(-5px);
+}
+
+/* VISUALIZADOR PDF */
+
+.viewer{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:none;
+flex-direction:column;
+z-index:999;
+}
+
+.viewer-header{
+background:#111;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.viewer iframe{
+flex:1;
+width:100%;
+border:none;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:768px){
+
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+
+.main{
+margin-left:0;
+}
+
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="d-flex h-100">
+<!-- SIDEBAR CLASSES -->
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>Biblioteca Digital</h2>
-        <div class="search-bar">
-            <input type="text" id="searchInput" onkeyup="filtrarLivros()" placeholder="🔍 Pesquisar livro...">
-        </div>
+<div class="sidebar">
 
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_1_classe.pdf')">Matemática 1ª Classe</div>
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_2_classe.pdf')">Matemática 2ª Classe</div>
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_3_classe.pdf')">Matemática 3ª Classe</div>
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_4_classe.pdf')">Matemática 4ª Classe</div>
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_5_classe.pdf')">Matemática 5ª Classe</div>
-        <div class="livro-card" onclick="abrirLivro('pdfs/matematica_6_classe.pdf')">Matemática 6ª Classe</div>
-        <div class="livro-card calendar" onclick="abrirLivro('pdfs/calendario_escolar.pdf')">📅 Calendário Escolar 2025/2026</div>
-    </div>
+<h3>Biblioteca Digital</h3>
 
-    <!-- AREA PRINCIPAL -->
-    <div class="main d-flex flex-column">
-        <div class="topbar" id="pdfTopbar">
-            <a id="downloadBtn" href="#" download><button class="btn btn-download">Baixar PDF</button></a>
-            <button class="btn btn-voltar" onclick="voltarBiblioteca()">Voltar</button>
-        </div>
-        <div class="viewer" id="pdfViewerContainer">
-            <iframe id="pdfViewer"></iframe>
-        </div>
-    </div>
+<button class="btn btn-outline-light" onclick="abrirClasse(1)">1ª Classe</button>
+<button class="btn btn-outline-light" onclick="abrirClasse(2)">2ª Classe</button>
+<button class="btn btn-outline-light" onclick="abrirClasse(3)">3ª Classe</button>
+<button class="btn btn-outline-light" onclick="abrirClasse(4)">4ª Classe</button>
+<button class="btn btn-outline-light" onclick="abrirClasse(5)">5ª Classe</button>
+<button class="btn btn-outline-light" onclick="abrirClasse(6)">6ª Classe</button>
+
+</div>
+
+<!-- BIBLIOTECA -->
+
+<div class="main">
+
+<h3 id="tituloClasse">Escolha uma classe</h3>
+
+<div class="livros" id="livros"></div>
+
+</div>
+
+<!-- VISUALIZADOR PDF -->
+
+<div class="viewer" id="viewer">
+
+<div class="viewer-header">
+
+<button class="btn btn-light" onclick="fecharLivro()">Voltar</button>
+
+<a id="downloadBtn" class="btn btn-success" download>Baixar PDF</a>
+
+</div>
+
+<iframe id="pdfFrame"></iframe>
+
 </div>
 
 <script>
-function filtrarLivros() {
-    const filtro = document.getElementById("searchInput").value.toLowerCase();
-    const livros = document.getElementsByClassName("livro-card");
-    for (let livro of livros) {
-        livro.style.display = livro.textContent.toLowerCase().includes(filtro) ? "flex" : "none";
-    }
+
+/* DISCIPLINAS */
+
+const disciplinas = [
+
+{nome:"Matemática", codigo:"mat"},
+{nome:"Língua Portuguesa", codigo:"lp"},
+{nome:"Estudo do Meio", codigo:"edm"},
+{nome:"Educação Física", codigo:"ef"},
+{nome:"Educação Manual e Plástica", codigo:"emp"},
+{nome:"Educação Moral e Cívica", codigo:"emc"},
+{nome:"Ciências da Natureza", codigo:"cn"},
+{nome:"Geografia", codigo:"geo"},
+{nome:"História", codigo:"hist"}
+
+];
+
+/* ABRIR CLASSE */
+
+function abrirClasse(classe){
+
+document.getElementById("tituloClasse").innerText = classe + "ª Classe";
+
+const livros = document.getElementById("livros");
+
+livros.innerHTML="";
+
+disciplinas.forEach(disciplina=>{
+
+let arquivo = disciplina.codigo + "_" + classe + ".pdf";
+
+let card = document.createElement("div");
+
+card.className="livro";
+
+card.innerHTML=`
+
+<h5>${disciplina.nome}</h5>
+
+<small>${arquivo}</small>
+
+`;
+
+card.onclick=()=>abrirLivro(arquivo);
+
+livros.appendChild(card);
+
+});
+
 }
 
-function abrirLivro(caminho) {
-    // Esconde sidebar e mostra PDF
-    document.querySelector('.sidebar').style.display = 'none';
-    document.getElementById('pdfViewerContainer').style.display = 'block';
-    document.getElementById('pdfTopbar').style.display = 'flex';
-    const iframe = document.getElementById('pdfViewer');
-    iframe.src = caminho;
+/* ABRIR LIVRO */
 
-    // Atualiza botão de download
-    document.getElementById('downloadBtn').href = caminho;
+function abrirLivro(arquivo){
 
-    // Mobile: abre nativo
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        window.open(caminho, '_blank');
-    }
+let caminho="pdfs/"+arquivo;
+
+/* MOBILE */
+
+if(/Android|iPhone|iPad/i.test(navigator.userAgent)){
+
+window.open(caminho,"_blank");
+
+return;
+
 }
 
-function voltarBiblioteca() {
-    document.querySelector('.sidebar').style.display = 'flex';
-    document.getElementById('pdfViewerContainer').style.display = 'none';
-    document.getElementById('pdfViewer').src = '';
-    document.getElementById('pdfTopbar').style.display = 'none';
+document.getElementById("pdfFrame").src=caminho;
+
+document.getElementById("downloadBtn").href=caminho;
+
+document.getElementById("viewer").style.display="flex";
+
 }
+
+/* FECHAR LIVRO */
+
+function fecharLivro(){
+
+document.getElementById("viewer").style.display="none";
+
+document.getElementById("pdfFrame").src="";
+
+}
+
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
