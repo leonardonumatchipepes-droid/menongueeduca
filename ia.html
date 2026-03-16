@@ -4,176 +4,198 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VUNONGUE IA - Tutor Inteligente</title>
+<title>VUNONGUE IA - Tutor Educativo Completo</title>
 
 <style>
-
+/* ========== GERAL ========== */
 body{
-font-family: Arial, sans-serif;
-background:url('imagens/vunogue.png') no-repeat center center fixed;
-background-size:cover;
-margin:0;
+    font-family: Arial, sans-serif;
+    background:url('imagens/vunogue.png') no-repeat center center fixed;
+    background-size:cover;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    height:100vh;
 }
 
 header{
-background:#0b3d91;
-color:white;
-padding:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:15px;
+    background:#0b3d91;
+    color:white;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
 }
 
 header img{
-width:40px;
+    width:40px;
 }
 
 h1{
-font-size:22px;
-margin:0;
+    font-size:22px;
+    margin:0;
 }
 
-.layout{
-display:flex;
-height:85vh;
+/* ========== LAYOUT PRINCIPAL ========== */
+.main{
+    display:flex;
+    flex:1;
+    overflow:hidden;
 }
 
+/* ========== SIDEBAR ========== */
 .sidebar{
-width:220px;
-background:#0b3d91;
-color:white;
-padding:15px;
+    width:220px;
+    background:#0b3d91;
+    color:white;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
 }
 
 .sidebar h3{
-margin-top:0;
-font-size:16px;
+    margin-top:0;
+    font-size:16px;
+    text-align:center;
 }
 
 .sidebar ul{
-list-style:none;
-padding:0;
+    list-style:none;
+    padding:0;
+    flex:1;
 }
 
 .sidebar li{
-padding:8px 0;
-border-bottom:1px solid rgba(255,255,255,0.2);
-font-size:14px;
+    padding:8px 0;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    font-size:14px;
 }
 
 .sidebar button{
-margin-top:15px;
-width:100%;
-padding:10px;
-background:#f59e0b;
-border:none;
-cursor:pointer;
-font-weight:bold;
+    margin-top:15px;
+    width:100%;
+    padding:10px;
+    background:#f59e0b;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
 }
 
+/* ========== CHAT ========== */
 .chat-container{
-flex:1;
-background:white;
-display:flex;
-flex-direction:column;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    background:white;
+    border-radius:10px;
+    margin:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    overflow:hidden;
 }
 
 .messages{
-flex:1;
-padding:20px;
-overflow-y:auto;
+    flex:1;
+    padding:20px;
+    overflow-y:auto;
 }
 
 .message{
-margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .user{
-text-align:right;
+    text-align:right;
 }
 
 .bot{
-text-align:left;
+    text-align:left;
 }
 
 .bubble{
-display:inline-block;
-padding:12px;
-border-radius:10px;
-max-width:70%;
+    display:inline-block;
+    padding:12px;
+    border-radius:10px;
+    max-width:70%;
 }
 
 .user .bubble{
-background:#0b3d91;
-color:white;
+    background:#0b3d91;
+    color:white;
 }
 
 .bot .bubble{
-background:#e9e9e9;
+    background:#e9e9e9;
 }
 
 .input-area{
-display:flex;
-border-top:1px solid #ddd;
+    display:flex;
+    border-top:1px solid #ddd;
 }
 
 input{
-flex:1;
-padding:15px;
-border:none;
-font-size:16px;
+    flex:1;
+    padding:15px;
+    border:none;
+    font-size:16px;
 }
 
 button{
-background:#f59e0b;
-border:none;
-padding:15px;
-cursor:pointer;
-font-weight:bold;
+    background:#f59e0b;
+    border:none;
+    padding:15px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 button:hover{
-background:#d97706;
+    background:#d97706;
 }
 
+/* ========== SUGESTÕES RÁPIDAS ========== */
 .sugestoes{
-background:#f3f3f3;
-padding:8px;
-font-size:13px;
+    background:#f3f3f3;
+    padding:8px;
+    font-size:13px;
 }
 
 .sugestoes span{
-margin-right:10px;
-cursor:pointer;
-color:#0b3d91;
+    margin-right:10px;
+    cursor:pointer;
+    color:#0b3d91;
 }
 
+/* ========== FOOTER ========== */
 .footer{
-text-align:center;
-font-size:12px;
-padding:6px;
-background:#0b3d91;
-color:white;
+    text-align:center;
+    font-size:12px;
+    padding:6px;
+    background:#0b3d91;
+    color:white;
 }
 
+/* ========== RESPONSIVO ========== */
+@media (max-width: 768px){
+    .main{flex-direction:column;}
+    .sidebar{width:100%; flex-direction:row; overflow-x:auto;}
+    .sidebar ul{display:flex; gap:10px;}
+    .sidebar li{border:none;}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<img src="imagens/insignia.png">
+<img src="imagens/insignia.png" alt="Insígnia Angola">
 <h1>VUNONGUE IA • Tutor Educativo</h1>
-<img src="imagens/logo01.png">
+<img src="imagens/logo01.png" alt="Logo Menongue Educa">
 </header>
 
-<div class="layout">
+<div class="main">
 
 <div class="sidebar">
-
 <h3>Disciplinas</h3>
-
 <ul>
 <li>📘 Matemática</li>
 <li>📗 Português</li>
@@ -182,9 +204,7 @@ color:white;
 <li>🔬 Ciências</li>
 <li>🏛 Cultura Nganguela</li>
 </ul>
-
 <button onclick="window.location.href='index.html'">⬅ Voltar</button>
-
 </div>
 
 <div class="chat-container">
@@ -193,33 +213,28 @@ color:white;
 
 <div class="message bot">
 <div class="bubble">
-
-Olá 👋
-
-Sou a <b>IA VUNONGUE</b>.
-
-Posso ajudar em:
-
-📚 Matemática  
-📚 Português  
-📚 Ciências  
-📚 História de Angola  
-📚 Geografia  
-📚 Cultura Nganguela  
-
-Peça explicações, exercícios ou testes.
-
+Olá 👋<br><br>
+Sou a <b>IA VUNONGUE</b>.<br><br>
+Posso ajudá-lo em várias disciplinas:<br>
+📚 Matemática<br>
+📚 Português<br>
+📚 Ciências<br>
+📚 História de Angola<br>
+📚 Geografia<br>
+📚 Cultura Nganguela<br><br>
+Sugiro começar com uma pergunta ou escolha uma das sugestões abaixo.
 </div>
 </div>
 
 </div>
 
 <div class="sugestoes">
-Sugestões:
+Sugestões rápidas:
 <span onclick="perguntar('Explique a tabuada do 7')">Tabuada</span>
-<span onclick="perguntar('O que é um verbo')">Verbo</span>
-<span onclick="perguntar('Quem são os Nganguela')">Nganguela</span>
+<span onclick="perguntar('O que é um verbo?')">Verbo</span>
+<span onclick="perguntar('Quem são os Nganguela?')">Nganguela</span>
 <span onclick="perguntar('Províncias de Angola')">Angola</span>
+<span onclick="perguntar('Fotossíntese')">Ciências</span>
 </div>
 
 <div class="input-area">
@@ -228,7 +243,6 @@ Sugestões:
 </div>
 
 </div>
-
 </div>
 
 <div class="footer">
@@ -236,179 +250,93 @@ Menongue Educa • Assistente Educativo Inteligente
 </div>
 
 <script>
+let pontos = 0; // pontuação do aluno
+let estado = null; // controle de fluxo de exercícios
 
 function perguntar(text){
-document.getElementById("input").value=text
-send()
+    document.getElementById("input").value=text;
+    send();
 }
 
 function addMessage(text,type){
-
-const messages=document.getElementById("messages")
-
-const msg=document.createElement("div")
-msg.className="message "+type
-
-const bubble=document.createElement("div")
-bubble.className="bubble"
-bubble.innerHTML=text
-
-msg.appendChild(bubble)
-messages.appendChild(msg)
-
-messages.scrollTop=messages.scrollHeight
+    const messages=document.getElementById("messages")
+    const msg=document.createElement("div")
+    msg.className="message "+type
+    const bubble=document.createElement("div")
+    bubble.className="bubble"
+    bubble.innerHTML=text
+    msg.appendChild(bubble)
+    messages.appendChild(msg)
+    messages.scrollTop=messages.scrollHeight
 }
 
 function send(){
-
-let input=document.getElementById("input")
-let text=input.value.trim()
-
-if(text==="") return
-
-addMessage(text,"user")
-
-input.value=""
-
-setTimeout(()=>{
-
-let response=responder(text.toLowerCase())
-addMessage(response,"bot")
-
-},500)
-
+    let input=document.getElementById("input")
+    let text=input.value.trim()
+    if(text==="") return
+    addMessage(text,"user")
+    input.value=""
+    setTimeout(()=>{
+        let response=responder(text.toLowerCase())
+        addMessage(response,"bot")
+    },500)
 }
 
 function responder(q){
-
-if(q.includes("tabuada")){
-
-return `
-
-Tabuada do 7
-
-7 × 1 = 7  
-7 × 2 = 14  
-7 × 3 = 21  
-7 × 4 = 28  
-7 × 5 = 35  
-
-A tabuada ajuda a aprender multiplicação rapidamente.
-`
+    // ---------- Matemática ----------
+    if(q.includes("tabuada") || q.includes("multiplicar")){
+        estado="tabuada"
+        return `Tabuada do 7:<br>7 × 1 = 7<br>7 × 2 = 14<br>7 × 3 = 21<br>7 × 4 = 28<br>7 × 5 = 35<br><br>Qual tabuada deseja praticar?`
+    }
+    if(q.includes("adição") || q.includes("somar")){
+        return `A adição é somar números.<br>Exemplo: 3 + 4 = 7`
+    }
+    if(q.includes("subtração") || q.includes("menos")){
+        return `Subtração é retirar números.<br>Exemplo: 10 - 4 = 6`
+    }
+    if(q.includes("multiplicação") || q.includes("x")){
+        return `Multiplicação é somar o mesmo número várias vezes.<br>Exemplo: 4 × 3 = 12`
+    }
+    if(q.includes("divisão") || q.includes("÷")){
+        return `Divisão é repartir em partes iguais.<br>Exemplo: 12 ÷ 4 = 3`
+    }
+    // ---------- Português ----------
+    if(q.includes("verbo") || q.includes("substantivo")){
+        return `Um verbo indica ação. Ex: correr, comer, estudar.<br>Um substantivo indica objeto ou pessoa. Ex: casa, livro, aluno.`
+    }
+    if(q.includes("frase") || q.includes("sintaxe")){
+        return `Uma frase completa possui sujeito, verbo e predicado.<br>Ex: O aluno estuda matemática.`
+    }
+    // ---------- Ciências ----------
+    if(q.includes("fotossintese") || q.includes("plantas")){
+        return `Fotossíntese: processo em que plantas produzem alimento usando luz solar, água e clorofila.`
+    }
+    // ---------- História / Geografia ----------
+    if(q.includes("angola") || q.includes("província")){
+        return `Angola tem 18 províncias, capital Luanda. Algumas: Luanda, Huíla, Benguela, Huambo, Cuando Cubango, Moxico.`
+    }
+    if(q.includes("nganguela")){
+        return `Os Nganguela vivem no sudeste de Angola, principalmente Cuando Cubango e Moxico.<br>Língua, agricultura e cultura tradicional forte.`
+    }
+    // ---------- Exercícios automáticos ----------
+    if(q.includes("teste") || q.includes("exercício")){
+        let a=Math.floor(Math.random()*10)+1
+        let b=Math.floor(Math.random()*10)+1
+        estado="resposta_exercicio"
+        return `Resolva:<br>${a} + ${b} = ?`
+    }
+    if(estado==="resposta_exercicio"){
+        estado=null
+        pontos++
+        return `Muito bem! ✅<br>Pontuação atual: ${pontos}`
+    }
+    // ---------- Pesquisa web ----------
+    if(q.includes("pesquisar") || q.includes("internet")){
+        return `Clique para pesquisar:<br><a href="https://www.google.com/search?q=${encodeURIComponent(q)}" target="_blank">Pesquisar na Internet</a>`
+    }
+    // ---------- Resposta padrão ----------
+    return `Posso ajudar em:<br>📚 Matemática<br>📚 Português<br>📚 Ciências<br>📚 História<br>📚 Geografia<br>📚 Cultura Nganguela<br><br>Exemplos de perguntas:<br>"Explique a tabuada do 7"<br>"O que é um verbo?"<br>"Quem são os Nganguela?"<br>"Fotossíntese"`
 }
-
-if(q.includes("verbo")){
-
-return `
-
-Verbo é a palavra que indica ação.
-
-Exemplos:
-
-Correr  
-Comer  
-Estudar  
-
-Frase:
-
-O aluno estuda matemática.
-`
-}
-
-if(q.includes("províncias") || q.includes("angola")){
-
-return `
-
-Angola possui 18 províncias.
-
-Algumas delas:
-
-Luanda  
-Huíla  
-Benguela  
-Huambo  
-Cuando Cubango  
-Moxico  
-
-Capital: Luanda
-`
-}
-
-if(q.includes("nganguela")){
-
-return `
-
-Os Nganguela são povos do sudeste de Angola.
-
-Localização:
-
-Cuando Cubango  
-Moxico  
-
-Características:
-
-• Línguas bantu  
-• Agricultura  
-• Cultura tradicional forte
-`
-}
-
-if(q.includes("fotossintese") || q.includes("ciência")){
-
-return `
-
-Fotossíntese é o processo em que as plantas produzem alimento usando luz do sol.
-
-Elementos usados:
-
-☀️ Luz solar  
-💧 Água  
-🌿 Clorofila
-`
-}
-
-if(q.includes("exercício") || q.includes("teste")){
-
-return `
-
-Teste rápido de Matemática
-
-1️⃣ 6 + 9 = ?  
-2️⃣ 8 × 3 = ?  
-3️⃣ 20 ÷ 5 = ?
-
-Escreva as respostas.
-`
-}
-
-if(q.includes("pesquisar")){
-
-return `
-
-Clique para pesquisar na internet:
-
-https://www.google.com/search?q=`+q
-}
-
-return `
-
-Posso ajudar em:
-
-📚 Matemática  
-📚 Português  
-📚 Ciências  
-📚 História  
-📚 Geografia  
-
-Exemplo de perguntas:
-
-"Explique a tabuada do 7"  
-"O que é um verbo?"  
-"Quem são os Nganguela?"
-`
-
-}
-
 </script>
 
 </body>
