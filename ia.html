@@ -3,99 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VUNONGUE IA • Tutor Completo Avançado</title>
+<title>VUNONGUE IA • Tutor Completo Final</title>
 
-<!-- Chart.js para gráficos -->
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.142/pdf.min.js"></script>
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background:url('imagens/vunogue.png') no-repeat center center fixed;
-    background-size:cover;
-    margin:0;
-    display:flex;
-    flex-direction:column;
-    height:100vh;
-}
-
-header{
-    background:#0b3d91;
-    color:white;
-    padding:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:15px;
-}
-header img{ width:40px; }
-h1{ font-size:22px; margin:0; }
-
-.main{ display:flex; flex:1; overflow:hidden; }
-
-.sidebar{
-    width:220px;
-    background:#0b3d91;
-    color:white;
-    padding:15px;
-    display:flex;
-    flex-direction:column;
-}
-.sidebar h3{ margin-top:0; text-align:center; }
-.sidebar ul{ list-style:none; padding:0; flex:1; }
-.sidebar li{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.2); font-size:14px; cursor:pointer;}
-.sidebar li:hover{background: rgba(255,255,255,0.1);}
-.sidebar button{ margin-top:15px; width:100%; padding:10px; background:#f59e0b; border:none; cursor:pointer; font-weight:bold; }
-
-.chat-container{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    background:white;
-    border-radius:10px;
-    margin:10px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.2);
-    overflow:hidden;
-}
-
-.messages{ flex:1; padding:20px; overflow-y:auto; }
-.message{ margin-bottom:15px; }
-.user{ text-align:right; }
-.bot{ text-align:left; }
-.bubble{ display:inline-block; padding:12px; border-radius:10px; max-width:70%; }
-.user .bubble{ background:#0b3d91; color:white; }
-.bot .bubble{ background:#e9e9e9; }
-
-.input-area{ display:flex; border-top:1px solid #ddd; }
-input{ flex:1; padding:15px; border:none; font-size:16px; }
-button{ background:#f59e0b; border:none; padding:15px; cursor:pointer; font-weight:bold; }
-button:hover{ background:#d97706; }
-
-.sugestoes{
-    background:#f3f3f3;
-    padding:8px;
-    font-size:13px;
-}
-.sugestoes span{
-    margin-right:10px;
-    cursor:pointer;
-    color:#0b3d91;
-}
-
-.footer{
-    text-align:center;
-    font-size:12px;
-    padding:6px;
-    background:#0b3d91;
-    color:white;
-}
-
-@media (max-width: 768px){
-    .main{flex-direction:column;}
-    .sidebar{width:100%; flex-direction:row; overflow-x:auto;}
-    .sidebar ul{display:flex; gap:10px;}
-    .sidebar li{border:none;}
-}
+body { font-family: Arial,sans-serif; display:flex; flex-direction:column; height:100vh; margin:0; }
+header { background:#0b3d91; color:white; padding:15px; text-align:center; display:flex; justify-content:center; align-items:center; gap:15px; }
+header img { width:40px; border-radius:50%; }
+.main { display:flex; flex:1; overflow:hidden; }
+.sidebar { width:260px; background:#0b3d91; color:white; padding:15px; border-right:2px solid #f59e0b; display:flex; flex-direction:column; }
+.sidebar h3 { text-align:center; margin-bottom:15px; }
+.sidebar ul { list-style:none; padding:0; flex:1; overflow-y:auto; }
+.sidebar li { padding:10px; cursor:pointer; margin-bottom:5px; border-radius:6px; }
+.sidebar li:hover { background: rgba(255,255,255,0.2); }
+.sidebar button { margin-top:10px; padding:10px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; background:#f59e0b; }
+.sidebar button:hover { background:#d97706; }
+.chat-container { flex:1; display:flex; flex-direction:column; background:#f8f8f8; margin:10px; border-radius:12px; overflow:hidden; }
+.messages { flex:1; overflow-y:auto; padding:15px; }
+.message { margin-bottom:12px; display:flex; }
+.user { justify-content:flex-end; }
+.bot { justify-content:flex-start; }
+.bubble { max-width:70%; padding:12px 16px; border-radius:15px; word-wrap:break-word; }
+.user .bubble { background:#0b3d91; color:white; border-bottom-right-radius:0; }
+.bot .bubble { background:#e9e9e9; color:#333; border-bottom-left-radius:0; }
+.input-area { display:flex; border-top:1px solid #ccc; }
+input { flex:1; padding:12px; font-size:16px; border:none; outline:none; }
+button.send-btn { padding:12px; background:#f59e0b; border:none; cursor:pointer; font-weight:bold; }
+button.send-btn:hover { background:#d97706; }
+.embedded { width:100%; margin-top:10px; border-radius:6px; }
+.sugestoes { background:#f3f3f3; padding:10px; font-size:13px; border-top:1px solid #ddd; display:flex; flex-wrap:wrap; gap:8px; }
+.sugestoes span { cursor:pointer; color:#0b3d91; background:#e0e7ff; padding:5px 8px; border-radius:5px; transition: all 0.2s; }
+.sugestoes span:hover { background:#c7d2fe; }
+.footer { text-align:center; font-size:12px; padding:6px; background:#0b3d91; color:white; box-shadow:0 -3px 10px rgba(0,0,0,0.2); }
+@media(max-width:768px){ .main { flex-direction:column; } .sidebar{width:100%; flex-direction:row; overflow-x:auto;} .sidebar ul{display:flex; gap:10px;} .sidebar li{border:none;} }
 </style>
 </head>
 
@@ -103,51 +47,50 @@ button:hover{ background:#d97706; }
 
 <header>
 <img src="imagens/insignia.png" alt="Insígnia Angola">
-<h1>VUNONGUE IA • Tutor Completo</h1>
+<h1>VUNONGUE IA • Tutor Final</h1>
 <img src="imagens/logo01.png" alt="Logo Menongue Educa">
 </header>
 
 <div class="main">
 
 <div class="sidebar">
-<h3>Disciplinas</h3>
-<ul>
-<li onclick="perguntar('Matemática')">📘 Matemática</li>
-<li onclick="perguntar('Português')">📗 Português</li>
-<li onclick="perguntar('Geografia')">🌍 Geografia</li>
-<li onclick="perguntar('História')">📜 História</li>
-<li onclick="perguntar('Ciências')">🔬 Ciências</li>
-<li onclick="perguntar('Cultura Nganguela')">🏛 Cultura Nganguela</li>
-</ul>
+<h3>Biblioteca por Ano</h3>
+<select id="anoSelect" onchange="mostrarLivros()">
+  <option value="1">1º Ano</option>
+  <option value="2">2º Ano</option>
+  <option value="3">3º Ano</option>
+  <option value="4">4º Ano</option>
+  <option value="5">5º Ano</option>
+  <option value="6">6º Ano</option>
+</select>
+<ul id="listaLivros"></ul>
 <button onclick="window.location.href='index.html'">⬅ Voltar</button>
+<button onclick="window.location.href='estudo/index.html'">📚 Estude Aqui</button>
 </div>
 
 <div class="chat-container">
 <div class="messages" id="messages">
-<div class="message bot">
-<div class="bubble">
-Olá 👋<br><br>
-Sou a <b>IA VUNONGUE</b>.<br>
-Posso gerar resumos, exercícios, correção automática, tabelas, gráficos, imagens, vídeos e PDFs educativos.<br>
-Escolha uma disciplina ou faça sua pergunta.
-</div>
-</div>
+<div class="message bot"><div class="bubble">
+Olá 👋<br>
+Sou a IA <b>VUNONGUE</b>!<br>
+Clique em um livro para abrir PDF, gerar resumo e exercícios automáticos.
+</div></div>
 </div>
 
 <div class="sugestoes">
 Sugestões rápidas:
-<span onclick="perguntar('Explique a tabuada do 7')">Tabuada</span>
-<span onclick="perguntar('O que é um verbo?')">Verbo</span>
-<span onclick="perguntar('Quem são os Nganguela?')">Nganguela</span>
-<span onclick="perguntar('Províncias de Angola')">Angola</span>
-<span onclick="perguntar('Fotossíntese')">Ciências</span>
+<span onclick="perguntar('Explique Matemática')">Matemática</span>
+<span onclick="perguntar('O que é um verbo?')">Português</span>
+<span onclick="perguntar('Cite fatos históricos')">História</span>
+<span onclick="perguntar('Elementos de Ciências')">Ciências</span>
 </div>
 
 <div class="input-area">
 <input id="input" placeholder="Digite sua pergunta...">
-<button onclick="send()">Enviar</button>
+<button class="send-btn" onclick="send()">Enviar</button>
 </div>
 </div>
+
 </div>
 
 <div class="footer">
@@ -155,96 +98,84 @@ Menongue Educa • Assistente Educativo Inteligente
 </div>
 
 <script>
-let pontos = 0;
-let estado = null;
-
-// --- Base de dados local pedagógica ---
-const baseLocal = {
-  "matemática":"A tabuada é usada para multiplicação. Ex: 7x1=7, 7x2=14...",
-  "português":"Um verbo indica ação. Ex: correr, estudar. Substantivo indica objeto. Ex: casa, livro.",
-  "história":"Angola conquistou independência em 11/11/1975. Primeiro presidente: Agostinho Neto.",
-  "geografia":"Angola tem 18 províncias. Algumas: Luanda, Huíla, Benguela, Moxico, Cuando Cubango.",
-  "ciências":"Fotossíntese: processo em que plantas produzem alimento usando luz solar, água e clorofila.",
-  "cultura nganguela":"Nganguela vivem no sudeste de Angola, língua própria, agricultura e cultura tradicional forte."
+// ================= BASE DE LIVROS =================
+const livros = {
+1:[{nome:"Matemática",file:"pdfs/mat_1.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_1.pdf"},{nome:"Estudo do Meio",file:"pdfs/edm_1.pdf"},{nome:"Educação Física",file:"pdfs/ef_1.pdf"},{nome:"Educação Manual",file:"pdfs/emp_1.pdf"}],
+2:[{nome:"Matemática",file:"pdfs/mat_2.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_2.pdf"},{nome:"Estudo do Meio",file:"pdfs/edm_2.pdf"},{nome:"Educação Física",file:"pdfs/ef_2.pdf"},{nome:"Educação Manual",file:"pdfs/emp_2.pdf"}],
+3:[{nome:"Matemática",file:"pdfs/mat_3.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_3.pdf"},{nome:"Estudo do Meio",file:"pdfs/edm_3.pdf"},{nome:"Educação Física",file:"pdfs/ef_3.pdf"},{nome:"Educação Manual",file:"pdfs/emp_3.pdf"}],
+4:[{nome:"Matemática",file:"pdfs/mat_4.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_4.pdf"},{nome:"Estudo do Meio",file:"pdfs/edm_4.pdf"},{nome:"Educação Física",file:"pdfs/ef_4.pdf"},{nome:"Educação Manual",file:"pdfs/emp_4.pdf"}],
+5:[{nome:"Matemática",file:"pdfs/mat_5.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_5.pdf"},{nome:"Ciências",file:"pdfs/cn_5.pdf"},{nome:"Geografia",file:"pdfs/geo_5.pdf"},{nome:"História",file:"pdfs/hist_5.pdf"},{nome:"Educação Moral",file:"pdfs/emc_5.pdf"}],
+6:[{nome:"Matemática",file:"pdfs/mat_6.pdf"},{nome:"Língua Portuguesa",file:"pdfs/lp_6.pdf"},{nome:"Ciências",file:"pdfs/cn_6.pdf"},{nome:"Geografia",file:"pdfs/geo_6.pdf"},{nome:"História",file:"pdfs/hist_6.pdf"},{nome:"Educação Moral",file:"pdfs/emc_6.pdf"}]
 }
 
-// --- Perguntar via sidebar ou sugestões ---
-function perguntar(text){
-    document.getElementById("input").value=text;
-    send();
+// ================= MOSTRAR LIVROS =================
+function mostrarLivros(){
+  const ano = document.getElementById('anoSelect').value;
+  const lista = document.getElementById('listaLivros');
+  lista.innerHTML = '';
+  livros[ano].forEach((l,i)=>{
+    const li = document.createElement('li');
+    li.textContent = l.nome;
+    li.onclick = ()=>abrirPDF(l.file,l.nome);
+    lista.appendChild(li);
+  });
+}
+mostrarLivros();
+
+// ================= CHAT =================
+const messages = document.getElementById('messages');
+
+function addMessage(text,type='bot'){
+    const div = document.createElement('div');
+    div.className = 'message ' + type;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerHTML = text;
+    div.appendChild(bubble);
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    if(type==='bot'){ const utter = new SpeechSynthesisUtterance(text.replace(/<br>/g,'. ')); window.speechSynthesis.speak(utter);}
 }
 
-// --- Adicionar mensagens ---
-function addMessage(text,type){
-    const messages=document.getElementById("messages")
-    const msg=document.createElement("div")
-    msg.className="message "+type
-    const bubble=document.createElement("div")
-    bubble.className="bubble"
-    bubble.innerHTML=text
-    msg.appendChild(bubble)
-    messages.appendChild(msg)
-    messages.scrollTop=messages.scrollHeight
+function perguntar(text){ document.getElementById('input').value=text; send(); }
 
-    if(type=="bot"){
-        const utter = new SpeechSynthesisUtterance(text.replace(/<br>/g,". "))
-        window.speechSynthesis.speak(utter)
+function send(){
+    const input = document.getElementById('input').value.trim();
+    if(!input) return;
+    addMessage(input,'user');
+    document.getElementById('input').value='';
+    addMessage(`Processando pergunta: <b>${input}</b>. Consultando livros da biblioteca...`);
+}
+
+// ================= PDF INTERATIVO =================
+async function abrirPDF(file,name){
+    addMessage(`Abrindo PDF de <b>${name}</b>...`);
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.142/pdf.worker.min.js';
+    const loadingTask = pdfjsLib.getDocument(file);
+    const pdf = await loadingTask.promise;
+    let textoTotal = '';
+    for(let i=1;i<=pdf.numPages;i++){
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const strings = content.items.map(item => item.str);
+        textoTotal += strings.join(' ') + '\n';
     }
+    gerarResumo(textoTotal,name);
+    gerarExercicios(textoTotal,name);
 }
 
-// --- Enviar mensagem ---
-async function send(){
-    let input=document.getElementById("input").value.trim();
-    if(input==="") return;
-    addMessage(input,"user");
-    document.getElementById("input").value="";
-
-    if(navigator.onLine){
-        // Busca online via Google / Wikipedia (simples)
-        try{
-            const googleURL = "https://www.google.com/search?q="+encodeURIComponent(input)
-            const wikiURL = "https://pt.wikipedia.org/wiki/"+encodeURIComponent(input.replace(/ /g,"_"))
-            addMessage(`🔗 Pesquisa online:<br><a href="${googleURL}" target="_blank">Google</a> | <a href="${wikiURL}" target="_blank">Wikipedia</a>`,"bot");
-
-            // Chamada Hugging Face (IA real)
-            let response = await fetch("https://api-inference.huggingface.co/models/google/flan-t5-small",{
-                method:"POST",
-                headers:{
-                    "Authorization":"Bearer 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",
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify({ inputs: input })
-            }).then(r=>r.json());
-            let text = response[0]?.generated_text || baseLocal[input.toLowerCase()] || "Não consegui gerar a resposta.";
-            addMessage(text,"bot");
-        }catch(e){
-            addMessage("Erro ao conectar IA: "+e,"bot");
-        }
-    } else {
-        addMessage(baseLocal[input.toLowerCase()] || "Posso gerar resumos, exercícios, tabelas e gráficos mesmo offline.","bot");
-    }
+// ================= RESUMO =================
+function gerarResumo(texto,name){
+    const resumo = texto.split('.').slice(0,5).join('. ') + '.';
+    addMessage(`<b>Resumo de ${name}:</b><br>${resumo}`);
 }
 
-// --- Gráfico interativo exemplo ---
-function gerarGrafico(){
-    const canvas = document.createElement("canvas")
-    canvas.id="grafico"
-    canvas.style.width="100%"
-    canvas.style.height="300px"
-    document.querySelector(".messages").appendChild(canvas)
-
-    const ctx = canvas.getContext("2d")
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Matemática','Português','Ciências','História'],
-            datasets: [{
-                label:'Notas',
-                data:[8,7,9,6],
-                backgroundColor:['#0b3d91','#f59e0b','#0b3d91','#f59e0b']
-            }]
-        }
-    })
+// ================= EXERCÍCIOS =================
+function gerarExercicios(texto,name){
+    const linhas = texto.split('.').filter(s => s.length>10);
+    const exercicios = linhas.slice(0,3).map((l,i)=>`Questão ${i+1}: ${l.replace(/[0-9]/g,'____')}`);
+    addMessage(`<b>Exercícios de ${name}:</b><br>${exercicios.join('<br>')}`);
 }
 </script>
 
