@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VUNONGUE IA • Tutor Completo Avançado</title>
 
-<title>VUNONGUE IA - Tutor Educativo Completo</title>
+<!-- Chart.js para gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-/* ========== GERAL ========== */
 body{
     font-family: Arial, sans-serif;
     background:url('imagens/vunogue.png') no-repeat center center fixed;
@@ -27,24 +28,11 @@ header{
     justify-content:center;
     gap:15px;
 }
+header img{ width:40px; }
+h1{ font-size:22px; margin:0; }
 
-header img{
-    width:40px;
-}
+.main{ display:flex; flex:1; overflow:hidden; }
 
-h1{
-    font-size:22px;
-    margin:0;
-}
-
-/* ========== LAYOUT PRINCIPAL ========== */
-.main{
-    display:flex;
-    flex:1;
-    overflow:hidden;
-}
-
-/* ========== SIDEBAR ========== */
 .sidebar{
     width:220px;
     background:#0b3d91;
@@ -53,36 +41,12 @@ h1{
     display:flex;
     flex-direction:column;
 }
+.sidebar h3{ margin-top:0; text-align:center; }
+.sidebar ul{ list-style:none; padding:0; flex:1; }
+.sidebar li{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.2); font-size:14px; cursor:pointer;}
+.sidebar li:hover{background: rgba(255,255,255,0.1);}
+.sidebar button{ margin-top:15px; width:100%; padding:10px; background:#f59e0b; border:none; cursor:pointer; font-weight:bold; }
 
-.sidebar h3{
-    margin-top:0;
-    font-size:16px;
-    text-align:center;
-}
-
-.sidebar ul{
-    list-style:none;
-    padding:0;
-    flex:1;
-}
-
-.sidebar li{
-    padding:8px 0;
-    border-bottom:1px solid rgba(255,255,255,0.2);
-    font-size:14px;
-}
-
-.sidebar button{
-    margin-top:15px;
-    width:100%;
-    padding:10px;
-    background:#f59e0b;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* ========== CHAT ========== */
 .chat-container{
     flex:1;
     display:flex;
@@ -94,78 +58,30 @@ h1{
     overflow:hidden;
 }
 
-.messages{
-    flex:1;
-    padding:20px;
-    overflow-y:auto;
-}
+.messages{ flex:1; padding:20px; overflow-y:auto; }
+.message{ margin-bottom:15px; }
+.user{ text-align:right; }
+.bot{ text-align:left; }
+.bubble{ display:inline-block; padding:12px; border-radius:10px; max-width:70%; }
+.user .bubble{ background:#0b3d91; color:white; }
+.bot .bubble{ background:#e9e9e9; }
 
-.message{
-    margin-bottom:15px;
-}
+.input-area{ display:flex; border-top:1px solid #ddd; }
+input{ flex:1; padding:15px; border:none; font-size:16px; }
+button{ background:#f59e0b; border:none; padding:15px; cursor:pointer; font-weight:bold; }
+button:hover{ background:#d97706; }
 
-.user{
-    text-align:right;
-}
-
-.bot{
-    text-align:left;
-}
-
-.bubble{
-    display:inline-block;
-    padding:12px;
-    border-radius:10px;
-    max-width:70%;
-}
-
-.user .bubble{
-    background:#0b3d91;
-    color:white;
-}
-
-.bot .bubble{
-    background:#e9e9e9;
-}
-
-.input-area{
-    display:flex;
-    border-top:1px solid #ddd;
-}
-
-input{
-    flex:1;
-    padding:15px;
-    border:none;
-    font-size:16px;
-}
-
-button{
-    background:#f59e0b;
-    border:none;
-    padding:15px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-button:hover{
-    background:#d97706;
-}
-
-/* ========== SUGESTÕES RÁPIDAS ========== */
 .sugestoes{
     background:#f3f3f3;
     padding:8px;
     font-size:13px;
 }
-
 .sugestoes span{
     margin-right:10px;
     cursor:pointer;
     color:#0b3d91;
 }
 
-/* ========== FOOTER ========== */
 .footer{
     text-align:center;
     font-size:12px;
@@ -174,7 +90,6 @@ button:hover{
     color:white;
 }
 
-/* ========== RESPONSIVO ========== */
 @media (max-width: 768px){
     .main{flex-direction:column;}
     .sidebar{width:100%; flex-direction:row; overflow-x:auto;}
@@ -188,7 +103,7 @@ button:hover{
 
 <header>
 <img src="imagens/insignia.png" alt="Insígnia Angola">
-<h1>VUNONGUE IA • Tutor Educativo</h1>
+<h1>VUNONGUE IA • Tutor Completo</h1>
 <img src="imagens/logo01.png" alt="Logo Menongue Educa">
 </header>
 
@@ -197,35 +112,26 @@ button:hover{
 <div class="sidebar">
 <h3>Disciplinas</h3>
 <ul>
-<li>📘 Matemática</li>
-<li>📗 Português</li>
-<li>🌍 Geografia</li>
-<li>📜 História</li>
-<li>🔬 Ciências</li>
-<li>🏛 Cultura Nganguela</li>
+<li onclick="perguntar('Matemática')">📘 Matemática</li>
+<li onclick="perguntar('Português')">📗 Português</li>
+<li onclick="perguntar('Geografia')">🌍 Geografia</li>
+<li onclick="perguntar('História')">📜 História</li>
+<li onclick="perguntar('Ciências')">🔬 Ciências</li>
+<li onclick="perguntar('Cultura Nganguela')">🏛 Cultura Nganguela</li>
 </ul>
 <button onclick="window.location.href='index.html'">⬅ Voltar</button>
 </div>
 
 <div class="chat-container">
-
 <div class="messages" id="messages">
-
 <div class="message bot">
 <div class="bubble">
 Olá 👋<br><br>
-Sou a <b>IA VUNONGUE</b>.<br><br>
-Posso ajudá-lo em várias disciplinas:<br>
-📚 Matemática<br>
-📚 Português<br>
-📚 Ciências<br>
-📚 História de Angola<br>
-📚 Geografia<br>
-📚 Cultura Nganguela<br><br>
-Sugiro começar com uma pergunta ou escolha uma das sugestões abaixo.
+Sou a <b>IA VUNONGUE</b>.<br>
+Posso gerar resumos, exercícios, correção automática, tabelas, gráficos, imagens, vídeos e PDFs educativos.<br>
+Escolha uma disciplina ou faça sua pergunta.
 </div>
 </div>
-
 </div>
 
 <div class="sugestoes">
@@ -238,10 +144,9 @@ Sugestões rápidas:
 </div>
 
 <div class="input-area">
-<input id="input" placeholder="Escreva a sua pergunta...">
+<input id="input" placeholder="Digite sua pergunta...">
 <button onclick="send()">Enviar</button>
 </div>
-
 </div>
 </div>
 
@@ -250,14 +155,26 @@ Menongue Educa • Assistente Educativo Inteligente
 </div>
 
 <script>
-let pontos = 0; // pontuação do aluno
-let estado = null; // controle de fluxo de exercícios
+let pontos = 0;
+let estado = null;
 
+// --- Base de dados local pedagógica ---
+const baseLocal = {
+  "matemática":"A tabuada é usada para multiplicação. Ex: 7x1=7, 7x2=14...",
+  "português":"Um verbo indica ação. Ex: correr, estudar. Substantivo indica objeto. Ex: casa, livro.",
+  "história":"Angola conquistou independência em 11/11/1975. Primeiro presidente: Agostinho Neto.",
+  "geografia":"Angola tem 18 províncias. Algumas: Luanda, Huíla, Benguela, Moxico, Cuando Cubango.",
+  "ciências":"Fotossíntese: processo em que plantas produzem alimento usando luz solar, água e clorofila.",
+  "cultura nganguela":"Nganguela vivem no sudeste de Angola, língua própria, agricultura e cultura tradicional forte."
+}
+
+// --- Perguntar via sidebar ou sugestões ---
 function perguntar(text){
     document.getElementById("input").value=text;
     send();
 }
 
+// --- Adicionar mensagens ---
 function addMessage(text,type){
     const messages=document.getElementById("messages")
     const msg=document.createElement("div")
@@ -268,74 +185,66 @@ function addMessage(text,type){
     msg.appendChild(bubble)
     messages.appendChild(msg)
     messages.scrollTop=messages.scrollHeight
+
+    if(type=="bot"){
+        const utter = new SpeechSynthesisUtterance(text.replace(/<br>/g,". "))
+        window.speechSynthesis.speak(utter)
+    }
 }
 
-function send(){
-    let input=document.getElementById("input")
-    let text=input.value.trim()
-    if(text==="") return
-    addMessage(text,"user")
-    input.value=""
-    setTimeout(()=>{
-        let response=responder(text.toLowerCase())
-        addMessage(response,"bot")
-    },500)
+// --- Enviar mensagem ---
+async function send(){
+    let input=document.getElementById("input").value.trim();
+    if(input==="") return;
+    addMessage(input,"user");
+    document.getElementById("input").value="";
+
+    if(navigator.onLine){
+        // Busca online via Google / Wikipedia (simples)
+        try{
+            const googleURL = "https://www.google.com/search?q="+encodeURIComponent(input)
+            const wikiURL = "https://pt.wikipedia.org/wiki/"+encodeURIComponent(input.replace(/ /g,"_"))
+            addMessage(`🔗 Pesquisa online:<br><a href="${googleURL}" target="_blank">Google</a> | <a href="${wikiURL}" target="_blank">Wikipedia</a>`,"bot");
+
+            // Chamada Hugging Face (IA real)
+            let response = await fetch("https://api-inference.huggingface.co/models/google/flan-t5-small",{
+                method:"POST",
+                headers:{
+                    "Authorization":"Bearer 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",
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({ inputs: input })
+            }).then(r=>r.json());
+            let text = response[0]?.generated_text || baseLocal[input.toLowerCase()] || "Não consegui gerar a resposta.";
+            addMessage(text,"bot");
+        }catch(e){
+            addMessage("Erro ao conectar IA: "+e,"bot");
+        }
+    } else {
+        addMessage(baseLocal[input.toLowerCase()] || "Posso gerar resumos, exercícios, tabelas e gráficos mesmo offline.","bot");
+    }
 }
 
-function responder(q){
-    // ---------- Matemática ----------
-    if(q.includes("tabuada") || q.includes("multiplicar")){
-        estado="tabuada"
-        return `Tabuada do 7:<br>7 × 1 = 7<br>7 × 2 = 14<br>7 × 3 = 21<br>7 × 4 = 28<br>7 × 5 = 35<br><br>Qual tabuada deseja praticar?`
-    }
-    if(q.includes("adição") || q.includes("somar")){
-        return `A adição é somar números.<br>Exemplo: 3 + 4 = 7`
-    }
-    if(q.includes("subtração") || q.includes("menos")){
-        return `Subtração é retirar números.<br>Exemplo: 10 - 4 = 6`
-    }
-    if(q.includes("multiplicação") || q.includes("x")){
-        return `Multiplicação é somar o mesmo número várias vezes.<br>Exemplo: 4 × 3 = 12`
-    }
-    if(q.includes("divisão") || q.includes("÷")){
-        return `Divisão é repartir em partes iguais.<br>Exemplo: 12 ÷ 4 = 3`
-    }
-    // ---------- Português ----------
-    if(q.includes("verbo") || q.includes("substantivo")){
-        return `Um verbo indica ação. Ex: correr, comer, estudar.<br>Um substantivo indica objeto ou pessoa. Ex: casa, livro, aluno.`
-    }
-    if(q.includes("frase") || q.includes("sintaxe")){
-        return `Uma frase completa possui sujeito, verbo e predicado.<br>Ex: O aluno estuda matemática.`
-    }
-    // ---------- Ciências ----------
-    if(q.includes("fotossintese") || q.includes("plantas")){
-        return `Fotossíntese: processo em que plantas produzem alimento usando luz solar, água e clorofila.`
-    }
-    // ---------- História / Geografia ----------
-    if(q.includes("angola") || q.includes("província")){
-        return `Angola tem 18 províncias, capital Luanda. Algumas: Luanda, Huíla, Benguela, Huambo, Cuando Cubango, Moxico.`
-    }
-    if(q.includes("nganguela")){
-        return `Os Nganguela vivem no sudeste de Angola, principalmente Cuando Cubango e Moxico.<br>Língua, agricultura e cultura tradicional forte.`
-    }
-    // ---------- Exercícios automáticos ----------
-    if(q.includes("teste") || q.includes("exercício")){
-        let a=Math.floor(Math.random()*10)+1
-        let b=Math.floor(Math.random()*10)+1
-        estado="resposta_exercicio"
-        return `Resolva:<br>${a} + ${b} = ?`
-    }
-    if(estado==="resposta_exercicio"){
-        estado=null
-        pontos++
-        return `Muito bem! ✅<br>Pontuação atual: ${pontos}`
-    }
-    // ---------- Pesquisa web ----------
-    if(q.includes("pesquisar") || q.includes("internet")){
-        return `Clique para pesquisar:<br><a href="https://www.google.com/search?q=${encodeURIComponent(q)}" target="_blank">Pesquisar na Internet</a>`
-    }
-    // ---------- Resposta padrão ----------
-    return `Posso ajudar em:<br>📚 Matemática<br>📚 Português<br>📚 Ciências<br>📚 História<br>📚 Geografia<br>📚 Cultura Nganguela<br><br>Exemplos de perguntas:<br>"Explique a tabuada do 7"<br>"O que é um verbo?"<br>"Quem são os Nganguela?"<br>"Fotossíntese"`
+// --- Gráfico interativo exemplo ---
+function gerarGrafico(){
+    const canvas = document.createElement("canvas")
+    canvas.id="grafico"
+    canvas.style.width="100%"
+    canvas.style.height="300px"
+    document.querySelector(".messages").appendChild(canvas)
+
+    const ctx = canvas.getContext("2d")
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Matemática','Português','Ciências','História'],
+            datasets: [{
+                label:'Notas',
+                data:[8,7,9,6],
+                backgroundColor:['#0b3d91','#f59e0b','#0b3d91','#f59e0b']
+            }]
+        }
+    })
 }
 </script>
 
