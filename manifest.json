@@ -1,6 +1,6 @@
 {
   "name": "Menongue Educa",
-  "short_name": "Educa",
+  "short_name": "Menongue Educa",
   "description": "Plataforma educativa digital para apoio ao ensino em Angola",
   "start_url": "./index.html",
   "display": "standalone",
@@ -8,28 +8,16 @@
   "theme_color": "#0d47a1",
   "lang": "pt-AO",
   "dir": "ltr",
-  "orientation": "portrait",
-  "categories": ["education", "learning"],
   "icons": [
     {
-      "src": "./imagens/icon-192.png",
-      "sizes": "192x192",
+      "src": "imagens/icon-192.png",
+      "sizes": "1535x1024",
       "type": "image/png"
     },
     {
-      "src": "./imagens/icon-512.png",
-      "sizes": "512x512",
+      "src": "imagens/icon-512.png",
+      "sizes": "1535x1024",
       "type": "image/png"
-    }
-  ],
-  "display_override": ["standalone"],
-  "shortcuts": [
-    {
-      "name": "Estudo",
-      "short_name": "Estudo",
-      "description": "Acesse o material de estudo rapidamente",
-      "url": "./estudo.html",
-      "icons": [{ "src": "./imagens/livro.png", "sizes": "192x192" }]
     }
   ]
 }
