@@ -3,10 +3,13 @@
   "short_name": "Educa",
   "description": "Plataforma educativa digital para apoio ao ensino em Angola",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0d47a1",
+  "lang": "pt-AO",
+  "dir": "ltr",
+  "orientation": "portrait",
+  "categories": ["education", "learning"],
   "icons": [
     {
       "src": "./imagens/icon-192.png",
