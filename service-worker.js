@@ -1,6 +1,6 @@
 const CACHE_NAME = "menongue-v1";
 
-// Lista de URLs para cache (páginas, imagens, ícones e PDFs)
+// URLs para cache (páginas, imagens, ícones)
 const urlsToCache = [
   "./",
   "./index.html",
@@ -18,10 +18,10 @@ const urlsToCache = [
   "./imagens/livro.png",
   "./imagens/ia.png",
   "./imagens/historia.png",
-  "./imagens/institucional.png",
+  "./imagens/institucional.png"
 ];
 
-// Lista de PDFs (base de livros)
+// PDFs da base de livros
 const livros = {
   1:[ "mat_1.pdf","lp_1.pdf","edm_1.pdf","ef_1.pdf","emp_1.pdf" ],
   2:[ "mat_2.pdf","lp_2.pdf","edm_2.pdf","ef_2.pdf","emp_2.pdf" ],
@@ -31,7 +31,7 @@ const livros = {
   6:[ "mat_6.pdf","lp_6.pdf","cn_6.pdf","geo_6.pdf","hist_6.pdf","emc_6.pdf" ]
 };
 
-// Adiciona todos os PDFs da pasta pfds ao cache
+// Adiciona PDFs ao cache
 for (const ano in livros) {
   livros[ano].forEach(file => urlsToCache.push(`./pfds/${file}`));
 }
