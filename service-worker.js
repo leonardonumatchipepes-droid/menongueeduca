@@ -1,4 +1,6 @@
 const CACHE_NAME = "menongue-v1";
+
+// Lista de URLs para cache (páginas, imagens, ícones e PDFs)
 const urlsToCache = [
   "./",
   "./index.html",
@@ -16,11 +18,23 @@ const urlsToCache = [
   "./imagens/livro.png",
   "./imagens/ia.png",
   "./imagens/historia.png",
-  "./imagens/institucional.png"
-  // Se houver PDFs ou outros arquivos:
-  // "./pdfs/material1.pdf",
-  // "./pdfs/material2.pdf"
+  "./imagens/institucional.png",
 ];
+
+// Lista de PDFs (base de livros)
+const livros = {
+  1:[ "mat_1.pdf","lp_1.pdf","edm_1.pdf","ef_1.pdf","emp_1.pdf" ],
+  2:[ "mat_2.pdf","lp_2.pdf","edm_2.pdf","ef_2.pdf","emp_2.pdf" ],
+  3:[ "mat_3.pdf","lp_3.pdf","edm_3.pdf","ef_3.pdf","emp_3.pdf" ],
+  4:[ "mat_4.pdf","lp_4.pdf","edm_4.pdf","ef_4.pdf","emp_4.pdf" ],
+  5:[ "mat_5.pdf","lp_5.pdf","cn_5.pdf","geo_5.pdf","hist_5.pdf","emc_5.pdf" ],
+  6:[ "mat_6.pdf","lp_6.pdf","cn_6.pdf","geo_6.pdf","hist_6.pdf","emc_6.pdf" ]
+};
+
+// Adiciona todos os PDFs da pasta pfds ao cache
+for (const ano in livros) {
+  livros[ano].forEach(file => urlsToCache.push(`./pfds/${file}`));
+}
 
 // Instalação do service worker e cache inicial
 self.addEventListener("install", event => {
