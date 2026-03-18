@@ -1,6 +1,6 @@
 {
   "name": "Menongue Educa",
-  "short_name": "Educa",
+  "short_name": "Menongue Educa",
   "description": "Plataforma educativa digital para apoio ao ensino em Angola",
   "start_url": "./index.html",
   "display": "standalone",
