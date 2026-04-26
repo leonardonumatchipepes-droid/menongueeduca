@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudo - Menongue Educa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#0b3d91 url('imagens/vunongue.png') no-repeat center center fixed;
+    background-size:cover;
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+header{
+    background:rgba(0,0,0,0.85);
+    width:100%;
+    padding:25px;
+    text-align:center;
+    border-bottom:4px solid #f59e0b;
+    box-sizing: border-box;
+}
+header h1 { margin:0; font-size: 1.5rem; letter-spacing: 2px; }
+.container{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:15px;
+    padding:20px;
+    width:95%;
+    max-width:600px;
+    margin: 20px 0;
+}
+.btn-estudo{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 20px 10px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.btn-estudo img { width: 45px; margin-bottom: 12px; }
+.btn-estudo span {
+    font-size: 0.65rem;
+    font-weight: normal;
+    margin-top: 8px;
+    padding: 4px 8px;
+    background: rgba(245, 158, 11, 0.3);
+    border-radius: 5px;
+    color: #FFD700;
+}
+.btn-estudo:active{ transform:scale(0.95); background: rgba(245, 158, 11, 0.4); }
+
+.full-width { grid-column: span 2; }
+.desativado { opacity: 0.7; cursor: not-allowed; border-color: #666; }
+
+.btn-voltar{
+    margin: 20px 0 40px 0;
+    background:#cc0000;
+    color:white;
+    padding:12px 35px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow: 0 5px 15px rgba(204,0,0,0.3);
+}
+</style>
+</head>
+<body>
+    <header><h1>📚 PAINEL DE ESTUDO</h1></header>
+
+    <div class="container">
+        <!-- FUNCIONAL -->
+        <a href="manuais.html" class="btn-estudo">
+            <img src="imagens/livro.png">
+            MANUAIS ESCOLARES
+        </a>
+
+        <!-- FUNCIONAL -->
+        <a href="programas.html" class="btn-estudo">
+            <img src="imagens/historia.png">
+            PROGRAMAS ENSINO
+        </a>
+
+        <!-- PRÓXIMA VERSÃO -->
+        <div class="btn-estudo desativado" onclick="avisar()">
+            <img src="imagens/institucional.png">
+            DOSSIFICAÇÃO
+            <span>Próxima Versão</span>
+        </div>
+
+        <!-- FUNCIONAL -->
+        <a href="pdfs/calendario_2025_2026.pdf" class="btn-estudo">
+            <img src="imagens/jogo.png">
+            CALENDÁRIO 25/26
+        </a>
+
+        <!-- PRÓXIMA VERSÃO -->
+        <div class="btn-estudo full-width desativado" onclick="avisar()">
+            <img src="imagens/ia.png">
+            NOVO MODELO CURRICULAR (5ª e 6ª)
+            <span>Disponível em breve</span>
+        </div>
+    </div>
+
+    <a href="index.html" class="btn-voltar">⬅ VOLTAR AO MENU</a>
+
+    <script>
+        function avisar() {
+            alert("Esta funcionalidade está a ser preparada e estará disponível na próxima versão do Menongue Educa.");
+        }
+    </script>
+</body>
+</html>

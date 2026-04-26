@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.9, user-scalable=no">
+<title>Direção Municipal da Educação - Dados</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif; }
+body { background: url('imagens/vunongue.png') no-repeat center center fixed; background-size: cover; color: #fff; overflow-x: hidden; width: 100%; }
+.container { background-color: rgba(0,0,0,0.85); width: 92%; max-width: 1100px; margin: 15px auto; padding: 15px; border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+.banner { text-align: center; font-size: 1.5rem; font-weight: bold; color: #FFD700; margin-bottom: 15px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 10px; }
+h2 { font-size: 1.1rem; margin: 15px 0 10px; color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 5px;}
+.stats-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.85rem; background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; }
+.stats-table th, .stats-table td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.stats-table th { background: rgba(255,215,0,0.2); color: #FFD700; }
+.stats-table .total-row { background: rgba(255,215,0,0.1); font-weight: bold; }
+.subsistema-box { background: rgba(255,215,0,0.05); padding: 12px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #FFD700; }
+.btn-voltar { display: block; width: 100%; background-color: #FFD700; color: #000; font-weight: bold; padding: 12px; border-radius: 10px; text-decoration: none; text-align: center; margin-top: 15px; font-size: 0.9rem; }
+.signature { margin-top: 30px; text-align: right; font-style: italic; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 10px; color: #FFD700; font-weight: bold; }
+.footer { text-align: center; padding: 10px; margin-top: 20px; border-top: 2px solid #FFD700; font-size: 0.65rem; background-color: rgba(0,0,0,0.5); }
+@media(max-width:600px){ .stats-table { font-size: 0.75rem; } .stats-table th, .stats-table td { padding: 6px; } }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="banner">Estatísticas da Educação - Menongue</div>
+
+    <h2>Alunos Matriculados (2025/2026)</h2>
+    <table class="stats-table">
+        <tr><th>Subsistema / Classe</th><th>Nº Alunos</th></tr>
+        <tr><td>Iniciação</td><td>6.845</td></tr>
+        <tr><td>1ª Classe</td><td>9.444</td></tr>
+        <tr><td>2ª Classe</td><td>10.074</td></tr>
+        <tr><td>3ª Classe</td><td>9.784</td></tr>
+        <tr><td>4ª Classe</td><td>9.937</td></tr>
+        <tr><td>5ª Classe</td><td>9.455</td></tr>
+        <tr><td>6ª Classe</td><td>7.842</td></tr>
+        <tr class="total-row"><td>TOTAL ENSINO PRIMÁRIO</td><td>63.381</td></tr>
+        <tr><td>7ª Classe</td><td>8.074</td></tr>
+        <tr><td>8ª Classe</td><td>6.203</td></tr>
+        <tr><td>9ª Classe</td><td>5.058</td></tr>
+        <tr class="total-row"><td>TOTAL Iº CICLO SECUNDÁRIO</td><td>19.332</td></tr>
+        <tr><td>Módulo 3 (EJA)</td><td>422</td></tr>
+        <tr><td>Módulo 4 (EJA)</td><td>185</td></tr>
+        <tr class="total-row"><td>TOTAL EDUCAÇÃO ADULTOS</td><td>607</td></tr>
+    </table>
+
+    <div class="subsistema-box" style="border-left-color: #00bcd4; background: rgba(0,188,212,0.1); text-align: center;">
+        <p style="font-size: 1.1rem;"><strong>TOTAL GERAL: 83.320 Alunos</strong></p>
+        <p>Masculino: 40.648 | Feminino: 42.672</p>
+    </div>
+
+    <h2>Corpo Docente e Funcionários</h2>
+    <table class="stats-table">
+        <tr><td>Professores Iniciação</td><td>139</td></tr>
+        <tr><td>Professores Ensino Primário</td><td>1.157</td></tr>
+        <tr><td>Professores Iº Ciclo</td><td>955</td></tr>
+        <tr><td>Professores Módulos (EJA)</td><td>91</td></tr>
+        <tr class="total-row"><td>TOTAL DE PROFESSORES</td><td>2.342</td></tr>
+        <tr class="total-row"><td>TOTAL FUNCIONÁRIOS DIRECÇÃO</td><td>3.166</td></tr>
+    </table>
+
+    <h2>Infraestrutura e Rede Escolar (79 Escolas)</h2>
+    <div class="subsistema-box" style="border-left-color: #4caf50;">
+        <p>Salas Definitivas: 1.108 | Salas Provisórias: 609</p>
+        <p><strong>Total de Salas: 1.858</strong></p>
+    </div>
+    <table class="stats-table">
+        <tr><td>35 Complexos Escolares</td><td>23 Escolas Ensino Primário</td></tr>
+        <tr><td>17 Escolas Comparticipadas</td><td>03 Colégios Privados</td></tr>
+        <tr><td>02 Centros Infantis</td><td>07 Escolas Agrupadas</td></tr>
+        <tr><td>02 Escolas Definitivas</td><td>---</td></tr>
+    </table>
+
+    <button class="btn-voltar" style="background: #2196f3; color: white; margin-bottom: 10px;" onclick="window.location.href='leitor.html?file=calendario_escolar.pdf'">📅 VER CALENDÁRIO ESCOLAR</button>
+
+    <div class="signature">
+        Assinado por: Bento Laurindo Catolo, MsC.
+    </div>
+
+    <a href="index.html" class="btn-voltar">Voltar ao Menu Principal</a>
+</div>
+<div class="footer">Direção Municipal da Educação de Menongue | © 2026</div>
+</body>
+</html>

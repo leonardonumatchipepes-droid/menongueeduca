@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Menongue Subway Quiz - Educacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { --primary: #0b3d91; --secondary: #f59e0b; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Fredoka', sans-serif; }
+
+    body {
+        background: #000;
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #game-container {
+        position: relative;
+        flex: 1;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        background: #222;
+        overflow: hidden;
+    }
+
+    /* CENÁRIO SUBWAY SURF EM MOVIMENTO */
+    #road {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url('imagens/menonguestreet.png') center bottom/cover repeat-y;
+        z-index: 1;
+        animation: roadMove 20s linear infinite;
+    }
+    @keyframes roadMove {
+        from { background-position: center 0; }
+        to { background-position: center 1000px; }
+    }
+
+    /* CAMADA DE INTERFACE */
+    header {
+        position: absolute;
+        top: 0; left: 0; width: 100%;
+        background: rgba(11, 61, 145, 0.9);
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 50;
+        border-bottom: 3px solid var(--secondary);
+    }
+    header h1 { font-size: 1rem; color: #fff; margin:0; }
+    .stats { color: #fff; font-weight: bold; font-size: 0.9rem; }
+
+    #pergunta-box {
+        position: absolute;
+        top: 60px; left: 5%; width: 90%;
+        background: rgba(255, 255, 255, 0.95);
+        color: var(--primary);
+        padding: 15px;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 40;
+        border: 2px solid var(--secondary);
+    }
+
+    /* TELAS DE OVERLAY */
+    .overlay {
+        position: absolute;
+        top:0; left:0; width:100%; height:100%;
+        background: rgba(0,0,0,0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .box {
+        background: white;
+        padding: 30px;
+        border-radius: 25px;
+        width: 100%;
+        border: 4px solid var(--secondary);
+    }
+
+    .btn-main {
+        background: var(--secondary);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    #gameCanvas {
+        position: absolute;
+        top: 0; left: 0;
+        z-index: 10;
+    }
+
+    .medalha-anim { width: 100px; margin: 15px 0; animation: bounce 1s infinite alternate; }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+</style>
+</head>
+<body>
+
+<div id="game-container">
+    <header>
+        <h1>🏃 Menongue Surf Quiz</h1>
+        <div class="stats">⭐ <span id="score">0</span> | ❤️ <span id="lives">3</span></div>
+    </header>
+
+    <div id="pergunta-box">Carregando pergunta...</div>
+
+    <div id="road"></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- TELA INICIAL -->
+    <div id="telaInicial" class="overlay">
+        <div class="box">
+            <h2 style="color:var(--primary)">Pronto para o Desafio?</h2>
+            <p style="margin:10px 0; color:#666">Corre em Menongue e responde corretamente para ganhar!</p>
+            <input type="text" id="nomeJogador" placeholder="Teu Nome" style="width:100%; padding:12px; margin:10px 0; border-radius:10px; border:1px solid #ccc; text-align:center">
+            <button class="btn-main" onclick="start()">🚀 COMEÇAR</button>
+            <button onclick="window.location.href='index.html'" style="background:none; border:none; color:#999; margin-top:10px; cursor:pointer">Voltar</button>
+        </div>
+    </div>
+
+    <!-- TELA FINAL -->
+    <div id="telaFinal" class="overlay" style="display:none">
+        <div class="box">
+            <h2 id="msgFinal">Fim da Corrida!</h2>
+            <img id="medalhaImg" class="medalha-anim" src="imagens/medalha_broze.png">
+            <p id="resultTxt" style="font-size:1.2rem; color:#333"></p>
+            <button class="btn-main" onclick="location.reload()">RECOMENTAR</button>
+            <button onclick="window.location.href='index.html'" class="btn-main" style="background:#333">MENU</button>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPTS DE DADOS -->
+<script src="dados/BancoPerguntasMatematica.js"></script>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const pBox = document.getElementById('pergunta-box');
+    const road = document.getElementById('road');
+
+    let width, height, player, obstacles = [], gameActive = false;
+    let score = 0, lives = 3, speed = 3, frame = 0;
+    let currentQuestion, banco = window.BancoPerguntasMatematica;
+
+    const imgPlayer = new Image();
+    imgPlayer.src = 'imagens/jogador.png';
+
+    function init() {
+        width = canvas.width = canvas.parentElement.offsetWidth;
+        height = canvas.height = canvas.parentElement.offsetHeight;
+
+        player = {
+            lane: 1, // 0: esquerda, 1: centro, 2: direita
+            x: width / 2,
+            y: height - 120,
+            w: 60,
+            h: 80,
+            targetX: width / 2
+        };
+    }
+
+    function start() {
+        const nome = document.getElementById('nomeJogador').value;
+        if(!nome) return alert("Diz-nos o teu nome!");
+        document.getElementById('telaInicial').style.display = 'none';
+        gameActive = true;
+        newQuestion();
+        animate();
+    }
+
+    function newQuestion() {
+        currentQuestion = banco[Math.floor(Math.random() * banco.length)];
+        pBox.innerText = currentQuestion.pergunta;
+        obstacles = [];
+
+        // Gerar 3 portais (um para cada faixa) com a mesma cor para esconder a correta
+        const lanes = [0, 1, 2].sort(() => Math.random() - 0.5);
+        for(let i=0; i<3; i++) {
+            obstacles.push({
+                lane: lanes[i],
+                y: -100,
+                text: currentQuestion.opcoes[i],
+                isCorrect: i === currentQuestion.correta,
+                w: width / 3.5,
+                h: 60
+            });
+        }
+    }
+
+    function animate() {
+        if(!gameActive) return;
+        ctx.clearRect(0, 0, width, height);
+
+        // Aumentar velocidade progressivamente
+        speed += 0.0005;
+        // Ajustar a velocidade da animação do fundo para acompanhar
+        road.style.animationDuration = (20 / (speed / 3)) + 's';
+
+        // Suavizar movimento do jogador
+        const laneW = width / 3;
+        player.targetX = (player.lane * laneW) + (laneW / 2);
+        player.x += (player.targetX - player.x) * 0.2;
+
+        // Desenhar Jogador
+        ctx.drawImage(imgPlayer, player.x - player.w/2, player.y, player.w, player.h);
+
+        // Atualizar e Desenhar Obstáculos (Portais de Resposta)
+        obstacles.forEach((obs) => {
+            obs.y += speed;
+
+            // Desenhar Portal (Sempre laranja, sem revelar a correta pela cor)
+            ctx.fillStyle = '#f59e0b';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+
+            const obsX = (obs.lane * laneW) + (laneW / 2) - (obs.w / 2);
+
+            // Retângulo arredondado
+            ctx.beginPath();
+            ctx.roundRect(obsX, obs.y, obs.w, obs.h, 10);
+            ctx.fill();
+
+            // Texto da Resposta
+            ctx.fillStyle = '#fff';
+            ctx.shadowBlur = 0;
+            ctx.font = 'bold 16px Fredoka';
+            ctx.textAlign = 'center';
+            ctx.fillText(obs.text, obsX + obs.w/2, obs.y + obs.h/1.7);
+
+            // Colisão
+            if(obs.y + obs.h > player.y && obs.y < player.y + player.h && obs.lane === player.lane) {
+                if(obs.isCorrect) {
+                    score += 10;
+                    scoreEl.innerText = score;
+                    // Som de acerto pode ser adicionado aqui
+                } else {
+                    lives--;
+                    livesEl.innerText = lives;
+                    if(lives <= 0) gameOver();
+                    // Som de erro pode ser adicionado aqui
+                }
+                newQuestion();
+            }
+        });
+
+        // Limpar obstáculos que passaram sem colisão
+        if(obstacles.length > 0 && obstacles[0].y > height) {
+            newQuestion();
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    function gameOver() {
+        gameActive = false;
+        document.getElementById('telaFinal').style.display = 'flex';
+        document.getElementById('resultTxt').innerText = `Fizeste ${score} pontos!`;
+
+        const mImg = document.getElementById('medalhaImg');
+        if(score >= 100) mImg.src = 'imagens/medalha_ouro.png';
+        else if(score >= 50) mImg.src = 'imagens/medalha_prata.png';
+        else mImg.src = 'imagens/medalha_broze.png';
+    }
+
+    // Controles por toque
+    let touchStartX = 0;
+    canvas.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+    canvas.addEventListener('touchend', e => {
+        const diff = e.changedTouches[0].clientX - touchStartX;
+        if(Math.abs(diff) > 30) {
+            if(diff > 0 && player.lane < 2) player.lane++;
+            else if(diff < 0 && player.lane > 0) player.lane--;
+        }
+    });
+
+    // Controles por teclado
+    window.addEventListener('keydown', e => {
+        if(e.key === 'ArrowLeft' && player.lane > 0) player.lane--;
+        if(e.key === 'ArrowRight' && player.lane < 2) player.lane++;
+    });
+
+    window.addEventListener('resize', init);
+    init();
+
+</script>
+</body>
+</html>

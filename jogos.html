@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.9, user-scalable=no">
+<title>Menongue Educa - Jogos</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary: #0b3d91;
+        --secondary: #f59e0b;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body{
+        font-family:'Inter', sans-serif;
+        background: #f0f2f5 url('imagens/vunongue.png') no-repeat center center fixed;
+        background-size:cover;
+        color:white;
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    body::before {
+        content: "";
+        position: fixed; top:0; left:0; width:100%; height:100%;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(4px);
+        z-index:-1;
+    }
+    header{
+        background:rgba(11,61,145,0.9);
+        color:white;
+        padding:15px 20px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        border-bottom: 3px solid var(--secondary);
+        width: 100%;
+    }
+    header img{ height:40px; }
+    header span { font-size: 1.1rem; font-weight: 700; }
+
+    .container{
+        flex: 1;
+        width: 90%;
+        max-width: 800px;
+        margin: auto;
+        padding: 40px 0;
+        display: grid;
+        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: center;
+    }
+    .card{
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+    h2{ font-family:'Poppins', sans-serif; color:var(--secondary); font-weight:700; font-size:1.4rem; margin-bottom:15px; }
+    .card p{ font-size:1rem; color:#eee; margin-bottom:20px; line-height: 1.4; }
+    .card button{
+        background: var(--secondary);
+        color:white;
+        border:none;
+        border-radius:12px;
+        padding: 14px 30px;
+        font-size:1rem;
+        font-weight:700;
+        cursor:pointer;
+        width: 100%;
+        box-shadow: 0 4px 0 #cc6600;
+    }
+    .card button:active { transform: translateY(3px); box-shadow: 0 1px 0 #cc6600; }
+
+    .btn-voltar {
+        display: block;
+        margin: 0 auto 40px;
+        background: #333;
+        color: white;
+        text-decoration: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: bold;
+        width: fit-content;
+    }
+
+    footer{
+        text-align:center;
+        padding:15px;
+        background:rgba(11,61,145,0.9);
+        font-size:0.75rem;
+        color:white;
+        border-top: 3px solid var(--secondary);
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="imagens/logo.png" alt="Logo">
+        <span>🎮 Jogos Educativos</span>
+    </div>
+    <img src="imagens/insignia.png" alt="Insígnia" style="height:35px;">
+</header>
+
+<div class="container">
+    <div class="card">
+        <h2>📘 Quiz de Questões</h2>
+        <p>Escolha a sua classe e disciplina para testar os teus conhecimentos!</p>
+        <button onclick="window.location.href='questoes.html'">JOGAR AGORA</button>
+    </div>
+
+    <div class="card">
+        <h2>🏃 Corrida Menongue</h2>
+        <p>Corre pelas ruas de Menongue enquanto respondes a desafios rápidos!</p>
+        <button onclick="window.location.href='corrida.html'">COMEÇAR CORRIDA</button>
+    </div>
+</div>
+
+<a href="index.html" class="btn-voltar">⬅ VOLTAR AO MENU</a>
+
+<footer>
+    Administração Municipal de Menongue | © 2026
+</footer>
+
+</body>
+</html>

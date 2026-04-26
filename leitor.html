@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor PDF - Menongue Educa</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #333; }
+        object, embed, iframe { width: 100%; height: 100%; border: none; }
+        .error-msg { color: white; text-align: center; padding: 50px; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="container" style="height: 100%;">
+        <!-- O WebView do Android tentará abrir se tiver suporte nativo -->
+        <iframe id="pdfFrame"></iframe>
+    </div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const fileName = urlParams.get('file');
+
+    if (fileName) {
+        const path = "pdfs/" + fileName;
+        // Tenta carregar no iframe
+        document.getElementById('pdfFrame').src = path;
+    } else {
+        document.body.innerHTML = "<div class='error-msg'>Arquivo não encontrado.</div>";
+    }
+</script>
+</body>
+</html>

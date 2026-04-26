@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manuais Escolares</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{ margin:0; font-family:'Inter',sans-serif; background:#000; color:#fff; min-height:100vh; display:flex; flex-direction:column; }
+header{ background:rgba(11,61,145,0.9); padding:20px; text-align:center; border-bottom:3px solid #FFD700; position: sticky; top: 0; z-index: 100; }
+.main{ flex:1; padding:20px; }
+.classe-section { margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border-left: 4px solid #FFD700; }
+.classe-titulo { font-size: 1.3rem; color: #FFD700; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+.grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:20px; }
+.livro{ background:#1e1e1e; padding:10px; border-radius:10px; text-align:center; cursor:pointer; transition:.3s; border: 1px solid #333; }
+.livro:hover{ transform:translateY(-10px); box-shadow:0 10px 20px rgba(255,215,0,.3); border-color:#FFD700; }
+.livro img{ width:100%; height:180px; object-fit:cover; border-radius:5px; margin-bottom:8px; }
+.livro-nome{ font-size: 0.75rem; font-weight: bold; color: #eee; height: 35px; overflow: hidden; }
+.btn-voltar { background:#cc0000; color:white; border:none; padding:12px 30px; border-radius:10px; font-weight:bold; cursor:pointer; margin: 20px auto; display: block; text-decoration: none; width: fit-content; }
+</style>
+</head>
+<body>
+<header><h2>MANUAIS ESCOLARES</h2></header>
+<div class="main" id="conteudo">
+    <!-- Seções geradas via JS -->
+</div>
+<a href="estudo.html" class="btn-voltar">⬅ Voltar</a>
+
+<script>
+const acervo = {
+    1: ["mat_1","lp_1","edm_1","emp_1","em_1_2","ef_1"],
+    2: ["mat_2","lp_2","edm_2","emp_2","em_2","ef_2"],
+    3: ["mat_3","lp_3","edm_3","emp_3","em_3","ef_3"],
+    4: ["mat_4","lp_4","edm_4","emp_4","em_4","ef_4"],
+    5: ["mat_5","lp_5","cn_5","geo_5","hist_5","emc_5","emp_5","em_5","ef_5"],
+    6: ["mat_6","lp_6","cn_6","geo_6","hist_6","emc_6","emp_6","em_6","ef_6"]
+};
+
+function obterNome(sigla) {
+    const nomes = {
+        'mat': 'MATEMÁTICA', 'lp': 'LÍNGUA PORTUGUESA', 'edm': 'ESTUDO DO MEIO', 'emp': 'ED. PLÁSTICA',
+        'em': 'ED. MORAL', 'ef': 'ED. FÍSICA', 'cn': 'CIÊNCIAS', 'geo': 'GEOGRAFIA', 'hist': 'HISTÓRIA', 'emc': 'ED. MORAL'
+    };
+    const p = sigla.split('_');
+    return (nomes[p[0]] || p[0].toUpperCase()) + ' - ' + p[1] + 'ª';
+}
+
+const container = document.getElementById("conteudo");
+
+for (let cl = 1; cl <= 6; cl++) {
+    let html = `<div class="classe-section"><div class="classe-titulo">${cl}ª CLASSE</div><div class="grid">`;
+    acervo[cl].forEach(l => {
+        html += `
+        <div class="livro" onclick="abrirPDF('${l}.pdf')">
+            <img src="imagens/${l}.jpg" onerror="this.src='imagens/livro.png'">
+            <div class="livro-nome">${obterNome(l)}</div>
+        </div>`;
+    });
+    html += `</div></div>`;
+    container.innerHTML += html;
+}
+
+function abrirPDF(arquivo){
+    if (window.Android && Android.abrirPdf) { Android.abrirPdf(arquivo); }
+    else { alert("Abrindo: " + arquivo); }
+}
+</script>
+</body>
+</html>

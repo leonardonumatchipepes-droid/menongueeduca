@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novo Modelo Curricular</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{ margin:0; font-family:'Inter',sans-serif; background:#000; color:#fff; min-height:100vh; display:flex; flex-direction:column; }
+header{ background:rgba(11,61,145,0.9); padding:20px; text-align:center; border-bottom:3px solid #f59e0b; position: sticky; top: 0; z-index: 100; }
+.main{ flex:1; padding:20px; }
+.classe-section { margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border-left: 4px solid #f59e0b; }
+.classe-titulo { font-size: 1.3rem; color: #f59e0b; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+.grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:20px; }
+.livro{ background:#1e1e1e; padding:15px; border-radius:10px; text-align:center; cursor:pointer; transition:.3s; border: 1px solid #333; }
+.livro:hover{ transform:translateY(-10px); box-shadow:0 10px 20px rgba(245,158,11,.3); border-color:#f59e0b; }
+.livro img{ width:100%; height:160px; object-fit:contain; border-radius:5px; margin-bottom:8px; }
+.livro-nome{ font-size: 0.8rem; font-weight: bold; color: #eee; }
+.btn-voltar { background:#cc0000; color:white; border:none; padding:12px 30px; border-radius:10px; font-weight:bold; cursor:pointer; margin: 20px auto; display: block; text-decoration: none; width: fit-content; }
+
+/* Estilo para o botão principal do documento */
+.doc-geral {
+    background: rgba(245,158,11,0.15);
+    border: 2px solid #f59e0b;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.doc-geral:hover { background: rgba(245,158,11,0.3); transform: scale(1.02); }
+.doc-geral img { width: 40px; }
+.doc-geral span { font-weight: bold; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+<header><h2>NOVO MODELO CURRICULAR</h2></header>
+<div class="main">
+
+    <!-- Botão Principal para o PDF do Novo Modelo -->
+    <div class="doc-geral" onclick="abrirPDF('novomodelocurricular.pdf')">
+        <img src="imagens/livro.png">
+        <span>DOCUMENTO DO NOVO MODELO CURRICULAR</span>
+    </div>
+
+    <div class="classe-section">
+        <div class="classe-titulo">5ª CLASSE</div>
+        <div class="grid">
+            <div class="livro" onclick="abrirPDF('modelo_5_lp.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Língua Portuguesa</div>
+            </div>
+            <div class="livro" onclick="abrirPDF('modelo_5_mat.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Matemática</div>
+            </div>
+            <div class="livro" onclick="abrirPDF('modelo_5_cn.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Ciências Natureza</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="classe-section">
+        <div class="classe-titulo">6ª CLASSE</div>
+        <div class="grid">
+            <div class="livro" onclick="abrirPDF('modelo_6_lp.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Língua Portuguesa</div>
+            </div>
+            <div class="livro" onclick="abrirPDF('modelo_6_mat.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Matemática</div>
+            </div>
+            <div class="livro" onclick="abrirPDF('modelo_6_cn.pdf')">
+                <img src="imagens/livro.png">
+                <div class="livro-nome">Ciências Natureza</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<a href="estudo.html" class="btn-voltar">⬅ Voltar</a>
+
+<script>
+function abrirPDF(arquivo){
+    if (window.Android && Android.abrirPdf) { Android.abrirPdf(arquivo); }
+    else { alert("Abrindo: " + arquivo); }
+}
+</script>
+</body>
+</html>
