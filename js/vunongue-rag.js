@@ -55,7 +55,7 @@
   async function ensureIndex(status) {
     const pdfjs = window["pdfjs-dist/build/pdf"];
     if (!pdfjs) throw new Error("O leitor PDF não foi carregado. Actualiza a página e tenta novamente.");
-    let pages = await getAllPages(); if (pages.length) return pages;
+    let pages = await getAllPages();
     let completed = 0, available = 0;
     for (const book of BOOKS) {
       status.textContent = "A preparar biblioteca escolar: " + book.title + "…";
