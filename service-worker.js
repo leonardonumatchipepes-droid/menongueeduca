@@ -1,4 +1,4 @@
-const CACHE_NAME = "menongue-lite-v3";
+const CACHE_NAME = "menongue-lite-v4";
 const PDF_CACHE = "pdf-cache-v1";
 
 // 🔹 Apenas arquivos essenciais (APP leve)
@@ -8,7 +8,8 @@ const CORE_ASSETS = [
   "./jogos.html",
   "./estudo.html",
   "./ia.html",
-  "./js/vunongue-rag.js",
+  "./js/vunongue.js",
+  "./dados/BaseConhecimentoIA.js",
   "./historia.html",
   "./institucional.html",
 
