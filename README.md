@@ -38,3 +38,17 @@ A funcionalidade principal deste app é a **Vunongue IA**, um tutor digital proj
 ---
 *Administração Municipal de Menongue | Direção Municipal da Educação*
 *© 2026 — Transformando a Educação através da Tecnologia.*
+
+
+## 🤖 VUNONGUE IA — pesquisa nos manuais e respostas com IA
+
+A VUNONGUE IA está a ser evoluída para uma arquitectura RAG incremental:
+
+- O navegador extrai o texto dos PDFs configurados em `js/vunongue-rag.js` com PDF.js.
+- Os excertos são guardados localmente em IndexedDB para reduzir leituras repetidas.
+- A pesquisa selecciona excertos relevantes e envia apenas esse contexto para uma função segura no Netlify.
+- A função utiliza a API OpenAI Responses; a chave permanece no servidor.
+
+**Configuração obrigatória:** definir `OPENAI_API_KEY` nas variáveis de ambiente do Netlify e executar um novo deploy. Opcionalmente, definir `OPENAI_MODEL`. Sem a chave, o endpoint informa que falta configuração e não simula respostas.
+
+**Nota sobre funcionamento:** a pesquisa dos conteúdos já indexados pode ocorrer no dispositivo; a geração de respostas pela IA requer Internet. PDFs digitalizados sem texto seleccionável necessitam de OCR. Consultar [a documentação de configuração](docs/VUNONGUE-IA-SETUP.md).
