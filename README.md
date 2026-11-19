@@ -6,7 +6,7 @@
 
 ## 🤖 VUNONGUE IA — Tutor Inteligente Offline
 
-A funcionalidade principal deste app é a **Vunongue IA**, um tutor digital projetado para funcionar **100% offline**.
+A **VUNONGUE IA** é o tutor digital do Menongue Educa. A sua evolução segue uma arquitectura *offline-first*: o objectivo é permitir pesquisa e respostas locais depois de descarregar os conteúdos necessários. **A versão actualmente integrada ainda não cumpre o funcionamento integral offline**; consultar a documentação técnica.
 
 ### Como funciona:
 1.  **Pesquisa nos Livros**: A IA utiliza a tecnologia `PDF.js` para ler e indexar todos os manuais escolares (Português, Matemática, Ciências, História, Geografia, etc.) armazenados localmente na pasta `assets/pfds`.
@@ -30,10 +30,14 @@ A funcionalidade principal deste app é a **Vunongue IA**, um tutor digital proj
 
 ## 🛠️ Detalhes Técnicos
 
-*   **Plataforma**: Android (Kotlin/WebView).
-*   **Tecnologias Web**: HTML5, CSS3 (Responsivo/Glassmorphism), JavaScript (Vanilla).
-*   **Leitura de Dados**: Acesso universal a arquivos locais habilitado no WebView para permitir que a IA processe os PDFs internos.
-*   **Modo Offline**: Todo o conteúdo, incluindo a lógica da IA e os livros, está embutido no arquivo APK.
+*   **Plataforma**: aplicação Web/PWA com integração Android/WebView.
+*   **Tecnologias Web**: HTML5, CSS3 e JavaScript.
+*   **Pesquisa local**: a integração RAG guarda excertos em IndexedDB no dispositivo.
+*   **Geração remota**: a versão actual ainda depende de Internet e de uma função Netlify/API para gerar respostas.
+*   **PDF.js**: a página actual carrega a biblioteca e o worker por CDN; o empacotamento local é uma tarefa pendente.
+*   **Offline integral**: ainda não implementado nem validado. Os manuais disponíveis em cache podem abrir offline, mas isso não significa que todo o tutor funcione sem rede.
+
+A especificação de execução está em [docs/PROMPT-IMPLEMENTACAO-VUNONGUE-OFFLINE.md](docs/PROMPT-IMPLEMENTACAO-VUNONGUE-OFFLINE.md).
 
 ---
 *Administração Municipal de Menongue | Direção Municipal da Educação*
