@@ -56,3 +56,10 @@ A VUNONGUE IA está a ser evoluída para uma arquitectura RAG incremental:
 **Configuração obrigatória:** definir `OPENAI_API_KEY` nas variáveis de ambiente do Netlify e executar um novo deploy. Opcionalmente, definir `OPENAI_MODEL`. Sem a chave, o endpoint informa que falta configuração e não simula respostas.
 
 **Nota sobre funcionamento:** a pesquisa dos conteúdos já indexados pode ocorrer no dispositivo; a geração de respostas pela IA requer Internet. PDFs digitalizados sem texto seleccionável necessitam de OCR. Consultar [a documentação de configuração](docs/VUNONGUE-IA-SETUP.md).
+
+
+## VUNONGUE IA — versão local inicial
+
+A página `ia.html` utiliza agora um único motor local em `js/vunongue.js`, sem dependências CDN, sem chamadas obrigatórias à API e sem executar código matemático com `eval()`. A base de conhecimento existente em `dados/BaseConhecimentoIA.js` e o motor de operações aritméticas estão disponíveis no dispositivo. O service worker inclui estes recursos na cache e a entrada da VUNONGUE no ecrã inicial abre directamente o tutor.
+
+**Limite importante:** esta entrega corrige a interface e disponibiliza respostas offline para os tópicos existentes na base local e cálculos reconhecidos. Ainda não é uma IA generativa offline nem pesquisa os manuais PDF: os pacotes dos manuais, a extracção de texto/OCR e a validação de referências de página continuam pendentes. A função Netlify existente foi preservada, mas esta página não a chama.
